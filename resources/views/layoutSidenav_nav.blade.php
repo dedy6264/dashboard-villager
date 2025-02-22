@@ -40,7 +40,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{route('categoryProducts')}}">Category</a>
                                 <a class="nav-link" href="{{route('productTypes')}}">Product Type</a>
-                                <a class="nav-link" href="register.html">Product</a>
+                                <a class="nav-link" href="{{route('products')}}">Product</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">

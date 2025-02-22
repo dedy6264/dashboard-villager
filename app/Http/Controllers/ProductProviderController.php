@@ -28,7 +28,8 @@ class ProductProviderController extends Controller
             "draw"=>(int)request()->draw,
         ];
         $payload=[
-            "id"=>0,
+            "id"=>(int)request()->id,
+            "providerId"=>(int)request()->provider_id,
             "clientName"=>"",
             "filter"=>$filter,
         ];

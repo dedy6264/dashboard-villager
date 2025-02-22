@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ProductProviderController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -89,4 +90,11 @@ Route::controller(ProductProviderController::class)->group(function () {
     Route::post('/productProviders/update', 'update')->name('productProviders.update');
     Route::post('/productProviders/store', 'store')->name('productProviders.store');
     Route::get('/productProviders/destroy/{id}', 'destroy')->name('productProviders.destroy');
+});
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products', 'index')->name('products');
+    Route::post('/products/getAll', 'getAll')->name('products.getAll');
+    Route::post('/products/update', 'update')->name('products.update');
+    Route::post('/products/store', 'store')->name('products.store');
+    Route::get('/products/destroy/{id}', 'destroy')->name('products.destroy');
 });
