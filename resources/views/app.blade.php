@@ -7,6 +7,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Dashboard - SB Admin</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         {{-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" /> --}}
         <link href="{{url('css/styles.css')}}" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -21,16 +23,19 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> --}}
 
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        {{-- @yield('style') --}}
     </head>
     <body class="sb-nav-fixed">
         <div id="app">
             <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            {{-- <nav class=" navbar navbar-expand navbar-dark bg-dark d-md-none d-lg-none d-xl-none fixed-bottom"> --}}
+
                 <!-- Navbar Brand-->
                 <a class="navbar-brand ps-3" href="{{route('homes')}}">Start Bootstrap</a>
                 <!-- Sidebar Toggle-->
-                <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+                <button class="order-1 btn btn-link btn-sm order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
                 <!-- Navbar Search-->
-                <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <form class="my-2 d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-md-0">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                         <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
@@ -44,7 +49,15 @@
                             <li><a class="dropdown-item" href="#!">Settings</a></li>
                             <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Logout</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                    
+                                    <button type="submit" class="dropdown-item">
+                                        Logout
+                                    </button>
+                                </form>
+                                {{-- <a class="dropdown-item" href="{{url('logout')}}">Logout</a></li> --}}
                         </ul>
                     </li>
                 </ul>

@@ -1,0 +1,80 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTableTiaraTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('divisions', function (Blueprint $table) {
+            $table->id();
+            $table->string('division_name');
+            $table->timestamps();
+        });
+        Schema::create('portofolios', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('division_id');
+            $table->string('division_name');
+            $table->string('portofolio_name');
+            $table->timestamps();
+        });
+        Schema::create('departments', function (Blueprint $table) {
+            $table->id();
+            $table->string('department_name');
+            $table->timestamps();
+        });
+        Schema::create('groups', function (Blueprint $table) {
+            $table->id();
+            $table->string('group_name');
+            $table->string('tele_group_id')->unique();
+            $table->timestamps();
+        });
+        Schema::create('userpics', function (Blueprint $table) {
+            $table->id();
+            $table->string('username');
+            $table->string('tele_first_name');
+            $table->string('tele_chat_id');
+            $table->string('role');
+            $table->timestamps();
+        });
+        Schema::create('segments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('user_pic_id');
+            $table->string('tele_chat_id');
+            $table->unsignedInteger('group_id');
+            $table->string('tele_group_id');
+            $table->string('tele_group_name');
+            $table->unsignedInteger('department_id');
+            $table->string('department_name');
+            $table->unsignedInteger('portofolio_id');
+            $table->string('portofolio_name');
+            $table->unsignedInteger('division_id');
+            $table->string('division_name');
+            $table->string('segment_name');
+            $table->string('segment_index')->unique();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('divisions');
+        Schema::dropIfExists('portofolios');
+        Schema::dropIfExists('departments');
+        Schema::dropIfExists('group');
+        Schema::dropIfExists('userpics');
+        Schema::dropIfExists('segments');
+    }
+}
