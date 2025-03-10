@@ -19,7 +19,7 @@ class GroupController extends Controller
                 "draw"=>(int)request()->draw,
             ],
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/client/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/client/gets', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -40,7 +40,7 @@ class GroupController extends Controller
             "groupName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/group/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/gets', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -55,7 +55,7 @@ class GroupController extends Controller
             "clientId"=>$request->client_id,
             "groupName"=>$request->group_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/group/add', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
@@ -71,7 +71,7 @@ class GroupController extends Controller
             "clientId"=>$request->client_id,
             "groupName"=>$request->group_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/group/update', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -84,7 +84,7 @@ class GroupController extends Controller
         $payload=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/group/drop', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

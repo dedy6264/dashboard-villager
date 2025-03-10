@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPOB Mobile App</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        body{
-            background-color: #03a1fc
-        }
+        
         .service-card {
             /* background-color: #1E90FF; Warna biru */
             border-radius: 10px;
@@ -19,11 +20,16 @@
             color: white;
             text-align: center;
         }
+        .bt-nav {
+            background-color: #03a1fc;
+            color: rgba(255, 255, 255, 0.7) !important;
+
+        }
         .bottom-nav {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: #4682B4;
+            /* background-color: #4682B4; */
             padding: 10px 0;
         }
         .bottom-nav a {
@@ -58,33 +64,42 @@
             margin-top: 3px;
             margin-bottom: 3px;
         }
+        .card-name {
+            margin-top: 10px;
+            margin-bottom: 100px;
+            padding-top:10px;
+            background-color: #81d0fd !important;
+            height: 300px;
+            border-radius: 30px 30px 0px 0px ;
+        }
+        .promo-carousel {
+            margin-top: 150px;
+        }
+        .disabled-link {
+          pointer-events: none;
+          color: white; /* Opsional: Ubah warna agar terlihat nonaktif */
+          text-decoration: none;
+        }
+        .page-confirm {
+            text-align: center;
+            text-color:rgb(255, 255, 255) !important;
+        }
     </style>
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100 ">
-    <div class="p-4 shadow card" style="width: 350px">
-        {{-- <img class="d-flex justify-content-center align-items-center" src="/assets/img/undraw_mobile-site_qjby.svg" alt="" sizes="" srcset="" style="width: 100%;margin-bottom:50px"> --}}
-        <h2 class="text-center">Login</h2>
-        @if(session('warning'))
-        <div class="alert alert-warning" role="alert">
-            {{ session('warning') }}
-          </div>
-        @endif
+<body class="">
+    <div id="app">
 
-        <form class="mt-3" method="POST" action="{{route('mobile.login')}}">
-            @csrf
-            @method('POST')
-            <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter your password">
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-        <p class="mt-3 text-center">Don't have an account? <a href="#" class="text-primary">Sign up</a></p>
+        <!-- Search Bar -->
+        {{-- <div class="container mt-3 navbar fixed-top bg-slate-300"> --}}
+            {{-- info saldo --}}
+            
+            @yield('home')
+            
+            <!-- Bottom Navigation -->
+            @include('mobile.bottomNavigation')
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{url('js/scripts.js')}}"></script>
+
+@yield('customScript')
 </body>
 </html>

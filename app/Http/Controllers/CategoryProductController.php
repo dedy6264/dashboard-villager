@@ -24,7 +24,7 @@ class CategoryProductController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/category/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/category/gets', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -37,7 +37,7 @@ class CategoryProductController extends Controller
         $payload=[
             "productCategoryName"=>$request->product_category_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/category/add', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/category/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
@@ -50,7 +50,7 @@ class CategoryProductController extends Controller
             "id"=>(int)$request->id,
             "productCategoryName"=>$request->product_category_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/category/update', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/category/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -63,7 +63,7 @@ class CategoryProductController extends Controller
         $payload=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/category/drop', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/category/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

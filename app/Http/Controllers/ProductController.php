@@ -20,7 +20,7 @@ class ProductController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/provider/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/provider/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
@@ -35,7 +35,7 @@ class ProductController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/type/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/type/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
@@ -50,7 +50,7 @@ class ProductController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/category/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/category/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
@@ -71,7 +71,7 @@ class ProductController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/product/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/product/gets', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -105,7 +105,7 @@ class ProductController extends Controller
             "product_type_name"=>$request->product_type_name,
             "product_category_name"=>$request->product_category_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/product/add', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/product/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
@@ -128,7 +128,7 @@ class ProductController extends Controller
             "productPrice"=>(int)$request->product_price,
             "productMerchantFee"=>(int)$request->product_merchant_fee,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/product/update', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/product/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -143,7 +143,7 @@ class ProductController extends Controller
         $payload=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post('http://localhost:10010/product/drop', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/product/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

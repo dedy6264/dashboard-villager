@@ -42,6 +42,7 @@ class AddNewHierarchyTable extends Migration
             $table->string('merchant_outlet_name');
             $table->string('merchant_outlet_username')->unique();
             $table->string('merchant_outlet_password');
+            $table->string("saving_account")->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
 

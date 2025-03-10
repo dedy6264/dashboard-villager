@@ -12,6 +12,9 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ProductProviderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Mobile\MobileLoginController;
+use App\Http\Controllers\Mobile\MobileHomeController;
+use App\Http\Controllers\Mobile\MobileProductController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -128,4 +131,22 @@ Route::get('/u',function(){
 Route::get('/l',function(){
     return view('mobile.login');
 })->name('l');
+Route::get('/pulsa',function(){
+    return view('mobile.pulsa');
+})->name('pulsa');
+Route::get('/payment',function(){
+    return view('mobile.payment');
+})->name('py');
+
+Route::get('/mobile/login', [MobileLoginController::class,'index'])->name('mobile.login');
+Route::post('/mobile/login', [MobileLoginController::class,'mobileLogin'])->name('mobile.login');
+Route::get('/mobile/logout', [MobileLoginController::class,'mobileLogout'])->name('mobile.logout');
+Route::get('/mobile/loading',function(){return view('mobile.loading');})->name('mobileLoading');
+Route::get('/mobile/home', [MobileHomeController::class,'index'])->name('mobile.home');
+Route::post('/mobile/validate', [MobileHomeController::class,'userValidate'])->name('mobile.validate');
+Route::get('/mobile/pulsa-pra', [MobileProductController::class,'pulsaPrabayar'])->name('mobile.pulsa-pra');
+Route::post('/mobile/pulsa-pra/get-product', [MobileProductController::class,'getProduct'])->name('mobile.pulsa-pra.getproduct');
+Route::post('/mobile/inquiry', [MobileProductController::class,'inquiry'])->name('mobile.inquiry');
+Route::post('/mobile/payment', [MobileProductController::class,'payment'])->name('mobile.payment');
+
 require __DIR__.'/auth.php';
