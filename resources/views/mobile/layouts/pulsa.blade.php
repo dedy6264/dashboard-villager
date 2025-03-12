@@ -1,10 +1,31 @@
 @extends('mobile.app')
+@section('style')
+<style>
+      .img-icon{
+            display: block;
+            margin: auto;
+            width: 50%;
+    
+        }
+        .header-payment{
+            margin-top: 75px;
+            margin-bottom: 20px;
+        }
+        .payment-modal{
+            z-index: 100;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+        }
+</style>
+@endsection
 @section('home')
 <div class="mt-3" >
     <div class="container">
         <div class="row">
             <div class="col-12">
-                    <input type="text" pattern="[0-9]*" v-model="form.customerId" @input="getProduct" name="customer_id" class="form-control" placeholder="Nomor hp" >
+                    <input type="text" pattern="[0-9]*" v-model="form.customerId" @input="getProduct" name="customer_id" class="form-control" placeholder="Nomor hp" autofocus>
             </div>
         </div>
     </div>
@@ -49,46 +70,8 @@
     </div>
 </div>
 {{-- modals inquiry --}}
-<div v-show="form.pageInq" class=" bottom-nav" id="collapseInquiry" style="width:100%;border-radius:50px;background-color:#03a1fc">
-    <h2 class="mt-2 mb-5 page-confirm" >@{{formPayment.productName}}</h2>
-    <div class="m-3 row" v-if="formPayment.referenceNumber!==''">
-        <div class="text-left col-4 bg-slate-300">No Reff</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.referenceNumber}}</div>
-    </div>
-    <div class="m-3 row" v-if="formPayment.createdAt!==''">
-        <div class="text-left col-4 bg-slate-300">Datetime</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.createdAt}}</div>
-    </div>
-    <div class="m-3 row" v-if="formPayment.customerId!==''">
-        <div class="text-left col-4 bg-slate-300">No Cust</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.customerId}}</div>
-    </div>
-    <div class="m-3 row" v-if="formPayment.productPrice!==''">
-        <div class="text-left col-4 bg-slate-300">Harga</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.productPrice}}</div>
-    </div>
-    <div class="m-3 row" v-if="formPayment.productAdminFee!==''">
-        <div class="text-left col-4 bg-slate-300">Biaya Admin</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.productAdminFee}}</div>
-    </div>
-    <div class="m-3">
-        <hr>
-    </div>
-    <div class="m-3 row" v-if="formPayment.totalTrxAmount!==''">
-        <div class="text-left col-4 bg-slate-300">Total</div>
-        <div class="bg-red-600 col-8 text-end">@{{formPayment.totalTrxAmount}}</div>
-    </div>
-    <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px">
-        <div class="row">
-            <div class="col-6">
-                <button type="button"  class="ml-4 mr-4 btn btn-lg justify btn-danger" style="width: 100%" @click="inqCancel">Batal</button>
-            </div>
-            <div class="col-6">
-                <button type="button"  class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Lanjutkan</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('mobile.layouts.inquiry')
+@include('mobile.layouts.payment')
 {{-- end modal inquiry --}}
 @endsection
 @section('customScript')
@@ -102,9 +85,10 @@
                     customerId:'',
                     productCode:'',
                     pageInq:false,
+                    pagePayment:false,
                     btnInq:false,
                 })
-                const formPayment=ref({
+                const formInquiry=ref({
                     createdAt:'',
                     referenceNumber:'',
                     customerId:'',
@@ -116,7 +100,12 @@
                     totalTrxAmount:0,
                     pageInq:false,
                 })
-
+                const payment=()=>{
+                  console.log("sdhgsjd");
+                    form.value.pageInq=false;
+                    form.value.btnInq=false;
+                    form.value.pagePayment=true;
+                }
                 const inqCancel=()=>{
                     form.value.pageInq=false;
                     form.value.btnInq=false;
@@ -134,15 +123,15 @@
                         })
                         .then(response => {
                             console.log(response.data);
-                            formPayment.value.createdAt=response.data.result.createdAt
-                            formPayment.value.referenceNumber=response.data.result.referenceNumber
-                            formPayment.value.customerId=response.data.result.subscriberNumber
-                            formPayment.value.productCode=response.data.result.productCode
-                            formPayment.value.productName=response.data.result.productName
-                            formPayment.value.productPrice=response.data.result.productPrice
-                            formPayment.value.productAdminFee=response.data.result.productAdminFee
-                            formPayment.value.productMerchantFee=response.data.result.productMerchantFee
-                            formPayment.value.totalTrxAmount=response.data.result.totalTrxAmount
+                            formInquiry.value.createdAt=response.data.result.createdAt
+                            formInquiry.value.referenceNumber=response.data.result.referenceNumber
+                            formInquiry.value.customerId=response.data.result.subscriberNumber
+                            formInquiry.value.productCode=response.data.result.productCode
+                            formInquiry.value.productName=response.data.result.productName
+                            formInquiry.value.productPrice=response.data.result.productPrice
+                            formInquiry.value.productAdminFee=response.data.result.productAdminFee
+                            formInquiry.value.productMerchantFee=response.data.result.productMerchantFee
+                            formInquiry.value.totalTrxAmount=response.data.result.totalTrxAmount
                             // mainData.value=response.data.data;
                             form.value.pageInq=true;
                             form.value.btnInq=true;
@@ -193,7 +182,8 @@
                     });
 
                 return{
-                    formPayment,
+                    payment,
+                    formInquiry,
                     inqCancel,
                     inquiry,
                     form,

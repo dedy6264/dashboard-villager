@@ -76,6 +76,16 @@
             text-align: center;
             text-color:rgb(255, 255, 255) !important;
         }
+        .img-icon{
+            display: block;
+            margin: auto;
+            width: 50%;
+    
+        }
+        .header-payment{
+            margin-top: 75px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="">
@@ -106,6 +116,13 @@
 
           
         <a class="p-2 btn btn-primary w-100 d-flex align-items-center" style="margin-top:30px" data-bs-toggle="collapse"  href="#collapseInquiry" role="button" aria-expanded="false" aria-controls="collapseInquiry">
+            <img src="{{ asset('assets/img/error-404-monochrome.svg') }}" class="img-fluid" style="max-height: 40px;" alt="Produk">
+            <div class="ms-2 flex-grow-1 text-start">
+                <h6 class="m-0 fw-bold ">Pulsa Telkomsel 5.000</h6>
+                <p class="m-0 ">Rp 5.200</p>
+            </div>
+        </a>
+        <a class="p-2 btn btn-primary w-100 d-flex align-items-center" style="margin-top:30px" data-bs-toggle="collapse"  href="#collapsePayment" role="button" aria-expanded="false" aria-controls="collapsePayment">
             <img src="{{ asset('assets/img/error-404-monochrome.svg') }}" class="img-fluid" style="max-height: 40px;" alt="Produk">
             <div class="ms-2 flex-grow-1 text-start">
                 <h6 class="m-0 fw-bold ">Pulsa Telkomsel 5.000</h6>
@@ -168,11 +185,60 @@
         <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;margin-bottom:50px">
             <div class="row">
                 <div class="col-6">
-                    <button type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseInquiry" class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Batal</button>
+                    <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseInquiry" aria-expanded="false" aria-controls="collapseInquiry" class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Batal</button>
                 </div>
                 <div class="col-6">
                     <button type="button"  class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Lanjutkan</button>
                 </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="content-center bg-white multi-collapse collapse " id="collapsePayment" style="z-index: 100;position: absolute;top: 0;left: 0;">
+        <div class="" style="height:100px">
+                <img src="/assets/img/verified.gif" class="img-icon" style="" alt="" sizes="" srcset="">
+        </div>
+        <h1 class="text-center header-payment">SUCCESS</h1>
+        <h2 class=" page-confirm">Pulsa Telkomsel 15K</h2>
+        <h4 class=" page-confirm">Rp 15.000</h4>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">No Reff</div>
+            <div class="bg-red-600 col-8 text-end">DV-20250302-00002</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">Datetime</div>
+            <div class="bg-red-600 col-8 text-end">2 Maret 2025 08:50:22</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">No Cust</div>
+            <div class="bg-red-600 col-8 text-end">089678971119</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">Denom</div>
+            <div class="bg-red-600 col-8 text-end">5.000</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">Harga</div>
+            <div class="bg-red-600 col-8 text-end">6.500</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">Admin</div>
+            <div class="bg-red-600 col-8 text-end">1.500</div>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300">Biaya Layanan</div>
+            <div class="bg-red-600 col-8 text-end">1.500</div>
+        </div>
+        <div class="m-3">
+            <hr>
+        </div>
+        <div class="m-3 row">
+            <div class="text-left col-4 bg-slate-300"><b>Total</b></div>
+            <div class="bg-red-600 col-8 text-end"><b>9.500</b></div>
+        </div>
+        <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;">
+            <div class="">
+                <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
             </div>
         </div>
         

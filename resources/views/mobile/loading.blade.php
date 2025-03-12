@@ -72,11 +72,17 @@
         .promo-carousel {
             margin-top: 150px;
         }
+        .img-icon{
+            display: block;
+            margin: auto;
+            width: 50%;
+    
+        }
     </style>
 </head>
 <body class="">
-    <div class="container bg-white" style="margin-bottom: 50%; margin-top:50%;display: flex;justify-content: center;  align-items: center;  height: calc(100vh - 50px); ">
-        <img class="d-flex justify-content-center align-items-center"  src="/assets/img/undraw_speed-test_wdyh.svg" alt="" sizes="" srcset="" >
+    <div class="content-center m-4 bg-white" style="margin-bottom: 50%; margin-top:50%;display: flex;justify-content: center;  align-items: center;  height: calc(100vh - 50px); ">
+        <img class="d-flex justify-content-center align-items-center img-icon"  src="/assets/img/protection.gif" alt="" sizes="" srcset="" >
     </div>
 <!-- Bottom Navigation -->
     <div class="navbar navbar-dark navbar-expand d-md-none d-lg-none d-xl-none bottom-nav d-flex justify-content-around bt-nav" >

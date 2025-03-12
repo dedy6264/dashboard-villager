@@ -85,6 +85,7 @@
             text-color:rgb(255, 255, 255) !important;
         }
     </style>
+    @yield('style')
 </head>
 <body class="">
     <div id="app">
