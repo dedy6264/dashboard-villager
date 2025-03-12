@@ -104,7 +104,34 @@
                   console.log("sdhgsjd");
                     form.value.pageInq=false;
                     form.value.btnInq=false;
-                    form.value.pagePayment=true;
+                    axios.post('{{route('mobile.inquiry')}}',{
+                        referenceNumber:formInquiry.value.referenceNumber,
+                        },{
+                            headers: {
+                                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                            }
+                        })
+                        .then(response => {
+                            console.log(response.data);
+                            formInquiry.value.createdAt=response.data.result.createdAt
+                            formInquiry.value.referenceNumber=response.data.result.referenceNumber
+                            formInquiry.value.customerId=response.data.result.subscriberNumber
+                            formInquiry.value.productCode=response.data.result.productCode
+                            formInquiry.value.productName=response.data.result.productName
+                            formInquiry.value.productPrice=response.data.result.productPrice
+                            formInquiry.value.productAdminFee=response.data.result.productAdminFee
+                            formInquiry.value.productMerchantFee=response.data.result.productMerchantFee
+                            formInquiry.value.totalTrxAmount=response.data.result.totalTrxAmount
+                            form.value.pagePayment=true;
+
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data:", error);
+                            if (error.response) {
+                                this.errorMessage = error.response.data.message;
+                                this.successMessage = '';  // Reset success jika ada
+                            }
+                        });
                 }
                 const inqCancel=()=>{
                     form.value.pageInq=false;
