@@ -94,7 +94,7 @@
         {{-- <div class="container mt-3 navbar fixed-top bg-slate-300"> --}}
             {{-- info saldo --}}
             
-            @yield('home')
+            @yield('content')
             
             <!-- Bottom Navigation -->
             @include('mobile.bottomNavigation')

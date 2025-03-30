@@ -83,7 +83,7 @@
     
         }
         .header-payment{
-            margin-top: 75px;
+            margin-top: 150px;
             margin-bottom: 20px;
         }
     </style>
@@ -91,11 +91,19 @@
 <body class="">
     <div class="mt-3" >
         <div class="container">
+            <form action="">
             <div class="row">
-                <div class="col-12">
-                    <input type="text" class="form-control" placeholder="Nomor hp">
+                    <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Nomor hp">
+                    </div>
+                    <div class="col-6"> 
+                        d
+                    </div>
+                    <div class="col-6">
+                        <button type="button"  class="mt-4 ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Lanjutkan</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <div class="container bg-white">

@@ -12,7 +12,10 @@ class MobileProductController extends Controller
     {
         return view("mobile.layouts.pulsa");
     }
-
+    public function bpjsks()
+    {
+        return view("mobile.layouts.bpjs");
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -50,40 +53,52 @@ class MobileProductController extends Controller
     public function inquiry(Request $request)
     {
         // dd($request->bearerToken());
-        // $additionalField=[
-        //     "subscriberNumber"=>$request->customerId,
-        // ];
-        // $payload=[
-        //     "productCode"=>$request->productCode,
-        //     "additionalField"=>$additionalField,
-        // ];
-        // $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/inquiry', $payload)->json();
-        // if($response['statusCode']!=="00"){
-        //     return redirect()->back()->with('warning', 'Failed Inquiry!');
-        // }
-        $response=[
-            "statusCode"=>"10",
-            "statusMessage"=>"INQUIRY SUCCESS",
-            "responseDatetime"=>"2025-03-10T19:15:13+07:00",
-            "result"=>[
-                "createdAt"=>"2025-03-10 19:15:13",
-                "merchantOutletName"=>"TAWCI 01",
-                "merchantOutletUsername"=>"taucikuenak",
-                "referenceNumber"=>"DB-20250310-0000001",
-                "productName"=>"PULSA TELKOMSEL 10K",
-                "productCode"=>"htelkomsel10000",
-                "subscriberNumber"=>"082137789378",
-                "productPrice"=>11000,
-                "productAdminFee"=>0,
-                "productMerchantFee"=>0,
-                "totalTrxAmount"=>11000,
-                "billInfo"=>null,
-            ],  
-        ];
+       switch ($request->productCode) {
+        case 'BPJSKS':
+            $additionalField=[
+                "subscriberNumber"=>$request->customerId,
+                "periode"=>(int)$request->periode,
+            ];
+            break;
         
-        // dd($response);
+        default:
+            $additionalField=[
+                "subscriberNumber"=>$request->customerId,
+            ];
+            break;
+       }
+        $payload=[
+            "productCode"=>$request->productCode,
+            "additionalField"=>$additionalField,
+        ];
+        $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/inquiry', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
+            if($response['message']==="invalid or expired jwt"){
+                // $mainData=[
+                //     // 'token'=>$response['result']['token'],
+                //     'endpoint'=>"login",
+                // ];
+                // return view('mobile.layouts.loading',compact('mainData'));
+                return response()->json(['error' => $response['message']], 500);
+            }
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
+        }
+        if($response['statusCode']!=="10"){//harus dikirim data failed
+            switch ($response['result']['statusMessage']) {
+                case 'NO PELANGGAN TIDAK DITEMUKAN':
+                    $payload=['error' => $response['result']['statusMessage']];
+                    break;
+                case 'TAGIHAN SUDAH LUNAS':
+                    $payload=['error' => $response['result']['statusMessage']];
+                    break;
+                case 'TIMEOUT':
+                    $payload=['error' => $response['result']['statusMessage']];
+                    break;
+                default:
+                    $payload=['error' => $response['message']];
+                    break;
+            }
+            return response()->json($payload, 500);
         }
         // $response = $response['result'];
         return $response;
@@ -91,39 +106,48 @@ class MobileProductController extends Controller
 
     public function payment(Request $request)
     {
-        $response=[
-            "statusCode"=> "05",
-            "statusMessage"=> "PAYMENT PENDING",
-            "responseDatetime"=> "2024-12-06T23:06:49+07:00",
-            "result"=> [
-                "createdAt"=> "2024-12-06T23:01:38Z",
-                "merchantOutletName"=> "TAWCI 02",
-                "merchantOutletUsername"=> "taucikuenak",
-                "referenceNumber"=> "DB-20241206-0000003",
-                "productName"=> "PULSA TELKOMSEL 10K",
-                "productCode"=> "htelkomsel10000",
-                "subscriberNumber"=> "082137789378",
-                "productPrice"=> 11000,
-                "productAdminFee"=> 0,
-                "productMerchantFee"=> 0,
-                "totalTrxAmount"=> 11000,
-                "billInfo"=> [
-                    "billDesc"=> [
-                        "customerId"=> "",
-                        "customerName"=> "",
-                        "detail"=> null,
-                    ],
-                    "sn"=> "",
-                ],
-            ],
+        // $response=[
+        //     "statusCode"=> "05",
+        //     "statusMessage"=> "PAYMENT PENDING",
+        //     "responseDatetime"=> "2024-12-06T23:06:49+07:00",
+        //     "result"=> [
+        //         "createdAt"=> "2024-12-06T23:01:38Z",
+        //         "merchantOutletName"=> "TAWCI 02",
+        //         "merchantOutletUsername"=> "taucikuenak",
+        //         "referenceNumber"=> "DB-20241206-0000003",
+        //         "productName"=> "PULSA TELKOMSEL 10K",
+        //         "productCode"=> "htelkomsel10000",
+        //         "subscriberNumber"=> "082137789378",
+        //         "productPrice"=> 11000,
+        //         "productAdminFee"=> 0,
+        //         "productMerchantFee"=> 0,
+        //         "totalTrxAmount"=> 11000,
+        //         "billInfo"=> [
+        //             "billDesc"=> [
+        //                 "customerId"=> "",
+        //                 "customerName"=> "",
+        //                 "detail"=> null,
+        //             ],
+        //             "sn"=> "",
+        //         ],
+        //     ],
+        // ];
+        $payload=[
+            "referenceNumber"=>$request->referenceNumber,
         ];
-        
+        $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/payment', $payload)->json();
         // dd($response);
+        
+        // if($response['statusCode']!=="10"){
+        //     return redirect()->back()->with('warning', 'Failed Inquiry!');
+        // }
+        // dump($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
         // $response = $response['result'];
-        return view("mobile.layouts.payment");
+        return $response;
+        // return view("mobile.layouts.payment");
     }
 
     /**

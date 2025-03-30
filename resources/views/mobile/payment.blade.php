@@ -83,7 +83,7 @@
     
         }
         .header-payment{
-            margin-top: 75px;
+            margin-top: 150px;
             margin-bottom: 20px;
         }
     </style>
@@ -91,7 +91,7 @@
 <body>
     <div class="content-center m-4 bg-slate-200" >
         <div class="" style="height:100px">
-                <img src="/assets/img/verified.gif" class="img-icon" style="" alt="" sizes="" srcset="">
+                <img src="/assets/img/failed.gif" class="img-icon" style="" alt="" sizes="" srcset="">
         </div>
         <h1 class="text-center header-payment">SUCCESS</h1>
         <h2 class=" page-confirm">Pulsa Telkomsel 15K</h2>

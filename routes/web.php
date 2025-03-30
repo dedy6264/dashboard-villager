@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Mobile\MobileLoginController;
 use App\Http\Controllers\Mobile\MobileHomeController;
 use App\Http\Controllers\Mobile\MobileProductController;
+use App\Http\Controllers\Mobile\MobileHistoryController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -131,22 +132,31 @@ Route::get('/u',function(){
 Route::get('/l',function(){
     return view('mobile.login');
 })->name('l');
-Route::get('/pulsa',function(){
-    return view('mobile.pulsa');
-})->name('pulsa');
+Route::get('/bpjs',function(){
+    return view('mobile.bpjs');
+})->name('bpjs');
 Route::get('/payment',function(){
     return view('mobile.payment');
 })->name('py');
 
+Route::post('/mobile/splash', [MobileLoginController::class,'splash'])->name('mobile.splash');
 Route::get('/mobile/login', [MobileLoginController::class,'index'])->name('mobile.login');
 Route::post('/mobile/login', [MobileLoginController::class,'mobileLogin'])->name('mobile.login');
 Route::get('/mobile/logout', [MobileLoginController::class,'mobileLogout'])->name('mobile.logout');
-Route::get('/mobile/loading',function(){return view('mobile.loading');})->name('mobileLoading');
+// Route::get('/mobile/loading',function(){return view('mobile.loading');})->name('mobileLoading');
+Route::get('/mobile/loading', [MobileHomeController::class,'loading'])->name('mobileLoading');
+
 Route::get('/mobile/home', [MobileHomeController::class,'index'])->name('mobile.home');
 Route::post('/mobile/validate', [MobileHomeController::class,'userValidate'])->name('mobile.validate');
 Route::get('/mobile/pulsa-pra', [MobileProductController::class,'pulsaPrabayar'])->name('mobile.pulsa-pra');
+Route::get('/mobile/bpjsks', [MobileProductController::class,'bpjsks'])->name('mobile.bpjsks');
 Route::post('/mobile/pulsa-pra/get-product', [MobileProductController::class,'getProduct'])->name('mobile.pulsa-pra.getproduct');
 Route::post('/mobile/inquiry', [MobileProductController::class,'inquiry'])->name('mobile.inquiry');
 Route::post('/mobile/payment', [MobileProductController::class,'payment'])->name('mobile.payment');
+Route::get('/mobile/history', [MobileHistoryController::class,'index'])->name('mobile.history');
+Route::post('/mobile/history/get-trx', [MobileHistoryController::class,'getTrx'])->name('mobile.history.get-trx');
+Route::post('/mobile/history/advice', [MobileHistoryController::class,'advice'])->name('mobile.history.advice');
+Route::get('/cekk', [MobileHistoryController::class,'cekcek'])->name('cekk');
+
 
 require __DIR__.'/auth.php';

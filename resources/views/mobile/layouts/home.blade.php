@@ -1,5 +1,5 @@
 @extends('mobile.app')
-@section('home')
+@section('content')
 <div class=" sb-topnav navbar-expand navbar-dark fixed-top" style="z-index: -1;margin-top:4rem" >
     <div class="container card-name" >
         <div class="row">
@@ -68,16 +68,16 @@
     <!-- Produk -->
     <div class="py-4 mt-0 mb-0 content-section" >
         <div class="text-center row g-2">
-            <div class="col-4 ">
+            <div class="col-4">
                 <div class="">
-                    <button class="btn service-card " style="background-color: #81d0fd" type="submit">
+                    <a href="{{route('mobile.bpjsks')}}" class="btn service-card " style="background-color: #81d0fd" type="submit">
                         {{-- <img src="https://via.placeholder.com/50" alt="Icon" class="img-fluid"> --}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-                        </svg>
-                    </button>
-                    <div>Pln Token</div>  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857q.09.083.176.171a3 3 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01zM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5"/>
+                            <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162z"/>
+                          </svg>
+                    </a>
+                    <div>BPJS</div>
                 </div>
             </div>
             <div class="col-4">
@@ -144,13 +144,13 @@
     </div>
     <!-- Last Transaction -->
     <div class="py-4 mt-0 content-section" style="margin-bottom: 50px">
-        <div class="card">
+        <div class="mb-4 card" v-if="mainDataTrx" v-for="item, index in mainDataTrx" :key="index">
             <h6 class="card-header">Last Transaction</h6>
-            <div class="card-body">
-            <p class="card-text">Pulsa Telkomsel 10.000 / 082137789378</p>
+            <div class=" card-body">
+            <p class="card-text">@{{ item.productName }} / @{{item.customerId}}</p>
             {{-- <small>082137789378</small> --}}
-            <footer class="blockquote-footer">14-02-2025 11:10:20 <cite title="Source Title">WIB</cite></footer>
-            <button disabled="disabled" class="btn btn-success btn-sm">Success</button>
+            <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer>
+            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusDesc}}</button>
             </div>
         </div>
     </div>
@@ -165,8 +165,9 @@
                 const outletName=ref();
                 const outletId=ref();
                 const merchantId=ref();
+                const mainDataTrx=ref({});
                 const refreshData=()=>{
-                    axios.post('{{route('mobile.validate')}}',{},{
+                    axios.post("{{route('mobile.validate')}}",{},{
                             headers: {
                                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
                             }
@@ -179,8 +180,30 @@
                     .catch(error => {
                         console.error("Error fetching data:", error);
                         if (error.response) {
-                            this.errorMessage = error.response.data.message;
-                            this.successMessage = '';  // Reset success jika ada
+                            // this.errorMessage = error.response.data.message;
+                            // this.successMessage = '';  // Reset success jika ada
+                            // setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                        setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
+                        }
+                    });
+                };
+                const getTrx=()=>{
+                    axios.post("{{route('mobile.history.get-trx')}}",{
+                        size:1,
+                    },{
+                            headers: {
+                                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                            }
+                        })
+                    .then(response => {
+                        mainDataTrx.value=response.data.data;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data:", error);//hrus menampilkan errornya apa
+                        if (error.response) {
+                            // this.errorMessage = error.response.data.message;
+                            // this.successMessage = '';  // Reset success jika ada
+                        setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
                         // setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
                         }
                     });
@@ -188,14 +211,18 @@
                 const checkUser=()=>{
                     if(localStorage.getItem("user")==null){
                         setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
+                    }else{
+                        refreshData();
+                        getTrx();
                     }
-                }
+                };
                 onMounted(() => {
                     checkUser();
-                    refreshData();
                     });
 
                 return{
+                    getTrx,
+                    mainDataTrx,
                     checkUser,
                     outletName,
                     refreshData,

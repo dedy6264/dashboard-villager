@@ -15,6 +15,10 @@ class MobileAuthenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            // $mainData=[
+            //     'endpoint'=>"",
+            // ];
+            // return view('mobile.layouts.loading',compact('mainData'));
             return route('mobile.login');
         }
     }

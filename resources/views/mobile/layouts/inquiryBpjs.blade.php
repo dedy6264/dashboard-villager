@@ -1,11 +1,11 @@
-<div class="content-center bg-slate-200 multi-collapse payment-modal " style="width: 100%;padding-bottom:50px" v-show="form.pagePayment"
-id="collapsePayment" >
-    <div class="mt-4" style="height:75px" >
-            <img  :src="gifTrx" class="img-icon" style="" alt="" sizes="" srcset="">
+
+{{-- modals inquiry --}}
+<div v-show="form.pageInq" class=" bottom-nav multi-collapse"  id="collapseInquiry" style="width:100%;border-radius:50px;background-color:#03a1fc">
+    <div class="mt-4" v-if="gifTrx!==''">
+        <img  :src="gifTrx" class="img-icon" style="" alt="" sizes="" srcset="">
     </div>
-    <h1 class="text-center header-payment">@{{statusTrx}}</h1>
-    <h2 class=" page-confirm" v-if="formInquiry.productName!==''">@{{formInquiry.productName}}</h2>
-    <h4 class=" page-confirm" v-if="formInquiry.totalTrxAmount!==''">@{{formInquiry.totalTrxAmount}}</h4>
+    <p class="mt-2 mb-5 page-confirm" v-if="statusTrx" >@{{statusTrx}}</h5>
+    <h2 class="mt-2 mb-5 page-confirm" >@{{formInquiry.productName}}</h2>
     <div class="m-3 row" v-if="formInquiry.referenceNumber!==''">
         <div class="text-left col-4 bg-slate-300">No Reff</div>
         <div class="bg-red-600 col-8 text-end">@{{formInquiry.referenceNumber}}</div>
@@ -32,10 +32,6 @@ id="collapsePayment" >
             <div class="bg-red-600 col-8 text-end">@{{item.jmlPeserta}}</div>
         </div>
     </div>
-    <div class="m-3 row" v-if="formInquiry.sn!==''">
-        <div class="text-left col-4 bg-slate-300">SN</div>
-        <div class="bg-red-600 col-8 text-end">@{{formInquiry.sn}}</div>
-    </div>
     <div class="m-3 row" v-if="formInquiry.productPrice!==''">
         <div class="text-left col-4 bg-slate-300">Harga</div>
         <div class="bg-red-600 col-8 text-end">@{{formInquiry.productPrice}}</div>
@@ -51,9 +47,20 @@ id="collapsePayment" >
         <div class="text-left col-4 bg-slate-300">Total</div>
         <div class="bg-red-600 col-8 text-end">@{{formInquiry.totalTrxAmount}}</div>
     </div>
-    <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;">
-        <div class="">
-            <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
+    <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px">
+        <div class="row" v-if="statusCode==='10'">
+            <div class="col-6">
+                <button type="button"  class="ml-4 mr-4 btn btn-lg justify btn-danger" style="width: 100%" @click="inqCancel">Batal</button>
+            </div>
+            <div class="col-6">
+                <button type="button"  class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%" @click="payment()">Lanjutkan</button>
+            </div>
+        </div>
+        <div v-else >
+            <div class="col-12">
+                <button type="button"  class="ml-4 mr-4 btn btn-lg justify btn-danger" style="width: 100%" @click="inqCancel">Kembali</button>
+            </div>
         </div>
     </div>
 </div>
+{{-- end modal inquiry --}}

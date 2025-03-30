@@ -27,13 +27,12 @@ class MobileLoginController extends Controller
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        // $response = $response['result'];
-        $mainData=[
+        $suggestData=[
+            'cmd'=>'set',
             'token'=>$response['result']['token'],
-            'endpoint'=>"home",
+            // 'endpoint'=>"home",
         ];
-        // dd($mainData);
-        return view('mobile.layouts.loading',compact('mainData'));
+        return view('mobile.layouts.loading',compact('suggestData'));
     }
     public function pulsaPrabayar()
     {
@@ -42,10 +41,10 @@ class MobileLoginController extends Controller
 
     public function mobileLogout()
     {
-        $mainData=[
-            'endpoint'=>"login",
+        $suggestData=[
+            'cmd'=>'destroy',
         ];
-        return view('mobile.layouts.loading',compact('mainData'));
+        return view('mobile.layouts.loading',compact('suggestData'));
     }
 
     public function edit($id)

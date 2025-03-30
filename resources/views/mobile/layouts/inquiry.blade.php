@@ -1,6 +1,10 @@
 
 {{-- modals inquiry --}}
 <div v-show="form.pageInq" class=" bottom-nav multi-collapse" id="collapseInquiry" style="width:100%;border-radius:50px;background-color:#03a1fc">
+    <div class="mt-4" v-if="gifTrx!==''">
+        <img  :src="gifTrx" class="img-icon" style="" alt="" sizes="" srcset="">
+    </div>
+    <p class="mt-2 mb-5 page-confirm" v-if="statusTrx" >@{{statusTrx}}</h5>
     <h2 class="mt-2 mb-5 page-confirm" >@{{formInquiry.productName}}</h2>
     <div class="m-3 row" v-if="formInquiry.referenceNumber!==''">
         <div class="text-left col-4 bg-slate-300">No Reff</div>

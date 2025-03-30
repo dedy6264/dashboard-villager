@@ -12,7 +12,7 @@
     }
 </style>
 @endsection
-@section('home')
+@section('content')
 <div class="content-center m-4 bg-white" style="margin-bottom: 50%; margin-top:50%;display: flex;justify-content: center;  align-items: center;  height: calc(100vh - 50px); ">
     <img class="d-flex justify-content-center align-items-center img-icon"  src="/assets/img/protection.gif" alt="" sizes="" srcset="" >
 </div>
@@ -22,22 +22,40 @@
         const{createApp, ref,onMounted,nextTick }=Vue;
         createApp({
             setup(){
-                const mainData=ref(@json($mainData));
+                const suggestData=ref(@json($suggestData));
                 const refreshData=()=>{
-                    const userData = { token: mainData.value.token };
-                    if(mainData.value.endpoint==="home"){
-                        if(localStorage.getItem("user")===null){
-                            localStorage.setItem("user", JSON.stringify(userData));
-                        }else{
+                    switch (suggestData.value.cmd) {
+                        case 'destroy':
                             localStorage.removeItem("user");
+                            setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
+                            break;
+                        case 'set':
+                            localStorage.removeItem("user");
+                            const userData = { token: suggestData.value.token };
                             localStorage.setItem("user", JSON.stringify(userData));
-                        }
-                        setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
-                    }else{
-                        localStorage.removeItem("user");
-                        setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
+                            setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                            break;
+                        default:
+                            localStorage.removeItem("user");
+                            setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
+                            break;
                     }
-                    // console.log(mainData.value);
+
+
+                    // const userData = { token: suggestData.value.token };
+                    // if(suggestData.value.endpoint==="home"){
+                    //     if(localStorage.getItem("user")===null){
+                    //         localStorage.setItem("user", JSON.stringify(userData));
+                    //     }else{
+                    //         localStorage.removeItem("user");
+                    //         localStorage.setItem("user", JSON.stringify(userData));
+                    //     }
+                    //     setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                    // }else{
+                    //     localStorage.removeItem("user");
+                    //     setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
+                    // }
+                    // console.log(suggestData.value);
                     // axios.post('{{route('clients.store')}}');
                 }
                 onMounted(() => {
@@ -45,7 +63,7 @@
                     });
 
                 return{
-                    mainData,
+                    suggestData,
                     refreshData,
                 };
             }
