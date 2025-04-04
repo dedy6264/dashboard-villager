@@ -23,22 +23,17 @@
 @section('content')
 <div class="mt-3" >
     <div class="container">
-        {{-- <div class="row">
-            <div class="col-12">
-                    <input type="text" pattern="[0-9]*" v-model="form.customerId" @input="getProduct" name="customer_id" class="form-control" placeholder="Nomor hp" autofocus>
-            </div>
-        </div> --}}
         <form @submit.prevent="inquiry()">
         <div class="row" :class="form.btnInq ? 'disabled-link':''" >
                 <div class="col-12">
-                    <input type="text" class="form-control" placeholder="Nomor hp" v-model="form.customerId">
+                    <input type="text" class="form-control" placeholder="No BPJS" v-model="form.customerId">
                 </div>
                 <div >
                     <p  v-if="validate!==''">@{{validate}}</p>
                   </div>
                 <div class="col-12">
                     Pilih Periode
-                    <select name="" class="form-control"  v-model="form.periode" id="" placeholder="Nomor hp">
+                    <select name="" class="form-control"  v-model="form.periode" id="" placeholder="Periode">
                         <option value="-">Pilih Periode</option>
                         <option value="1">1 Bulan</option>
                         <option value="2">2 Bulan</option>
@@ -60,7 +55,7 @@
     </div>
 </div>
 {{-- modals inquiry --}}
-@include('mobile.layouts.inquiryBpjs')
+@include('mobile.layouts.products.bpjs.inquiryBpjs')
 @include('mobile.layouts.payment')
 {{-- end modal inquiry --}}
 @endsection
@@ -185,23 +180,33 @@
                             if (error.response.data.error=="invalid or expired jwt") {
                             setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
                             }else{
-                                if (error.response.data.error=="NO PELANGGAN TIDAK DITEMUKAN"){
-                                    gifTrx.value="/assets/img/failed.gif";
-                                    statusTrx.value=error.response.data.error;
-                                    form.value.pageInq=true;
-                                    form.value.btnInq=true;
-                                }
-                                if (error.response.data.error=="TAGIHAN SUDAH LUNAS"){
-                                    gifTrx.value="/assets/img/failed.gif";
-                                    statusTrx.value=error.response.data.error;
-                                    form.value.pageInq=true;
-                                    form.value.btnInq=true;
-                                }
-                                if (error.response.data.error=="TIMEOUT"){
-                                    gifTrx.value="/assets/img/failed.gif";
-                                    statusTrx.value=error.response.data.error;
-                                    form.value.pageInq=true;
-                                    form.value.btnInq=true;
+                                switch (error.response.data.error) {
+                                    case 'NO PELANGGAN TIDAK DITEMUKAN':
+                                        gifTrx.value="/assets/img/failed.gif";
+                                        statusTrx.value=error.response.data.error;
+                                        form.value.pageInq=true;
+                                        form.value.btnInq=true;
+                                        break;
+                                
+                                    case 'TAGIHAN SUDAH LUNAS':
+                                        gifTrx.value="/assets/img/failed.gif";
+                                        statusTrx.value=error.response.data.error;
+                                        form.value.pageInq=true;
+                                        form.value.btnInq=true;
+                                        break;
+                                    case 'TIMEOUT':
+                                        gifTrx.value="/assets/img/failed.gif";
+                                        statusTrx.value=error.response.data.error;
+                                        form.value.pageInq=true;
+                                        form.value.btnInq=true;
+                                        break;
+                                
+                                    default:
+                                        gifTrx.value="/assets/img/failed.gif";
+                                        statusTrx.value='Failed';
+                                        form.value.pageInq=true;
+                                        form.value.btnInq=true;
+                                        break;
                                 }
                             }
                         });

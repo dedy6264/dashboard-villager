@@ -150,7 +150,7 @@
             <p class="card-text">@{{ item.productName }} / @{{item.customerId}}</p>
             {{-- <small>082137789378</small> --}}
             <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer>
-            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusDesc}}</button>
+            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusMessage}}</button>
             </div>
         </div>
     </div>

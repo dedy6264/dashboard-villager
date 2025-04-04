@@ -9,7 +9,7 @@
             <p class="card-text">@{{ item.productName }} / @{{item.customerId}}</p>
             {{-- <small>082137789378</small> --}}
             <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer>
-            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusDesc}}</button>
+            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusMessage}}</button>
             </div>
         </div>
         <button @click="getTrx()" class="btn btn-sm btn-primary">Next</button>
@@ -132,7 +132,8 @@
                         setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
                     }
                 }
-                const getTrx=()=>{
+                const getTrx=(status)=>{
+                    
                     console.log(size.value);
                     size.value=size.value+5;
                     console.log(size.value);
@@ -144,7 +145,13 @@
                             }
                         })
                     .then(response => {
+                        if(status!==""){
+                        
+                        }
+                        console.log(pagePayment.value);
                         mainData.value=response.data.data;
+                        pagePayment.value=true;
+                        console.log(pagePayment.value);
                     })
                     .catch(error => {
                         console.error("Error fetching data:", error);

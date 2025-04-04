@@ -14,7 +14,7 @@ class MobileProductController extends Controller
     }
     public function bpjsks()
     {
-        return view("mobile.layouts.bpjs");
+        return view("mobile.layouts.products.bpjs.index");
     }
     /**
      * Show the form for creating a new resource.
@@ -106,48 +106,18 @@ class MobileProductController extends Controller
 
     public function payment(Request $request)
     {
-        // $response=[
-        //     "statusCode"=> "05",
-        //     "statusMessage"=> "PAYMENT PENDING",
-        //     "responseDatetime"=> "2024-12-06T23:06:49+07:00",
-        //     "result"=> [
-        //         "createdAt"=> "2024-12-06T23:01:38Z",
-        //         "merchantOutletName"=> "TAWCI 02",
-        //         "merchantOutletUsername"=> "taucikuenak",
-        //         "referenceNumber"=> "DB-20241206-0000003",
-        //         "productName"=> "PULSA TELKOMSEL 10K",
-        //         "productCode"=> "htelkomsel10000",
-        //         "subscriberNumber"=> "082137789378",
-        //         "productPrice"=> 11000,
-        //         "productAdminFee"=> 0,
-        //         "productMerchantFee"=> 0,
-        //         "totalTrxAmount"=> 11000,
-        //         "billInfo"=> [
-        //             "billDesc"=> [
-        //                 "customerId"=> "",
-        //                 "customerName"=> "",
-        //                 "detail"=> null,
-        //             ],
-        //             "sn"=> "",
-        //         ],
-        //     ],
-        // ];
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
         $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/payment', $payload)->json();
-        // dd($response);
-        
-        // if($response['statusCode']!=="10"){
-        //     return redirect()->back()->with('warning', 'Failed Inquiry!');
-        // }
-        // dump($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
         // $response = $response['result'];
+        if($response['result']['productCode']==="BPJSKS"){
+            return view("mobile.layouts.products.bpjs.paymentBpjs",compact('response'));
+        }
         return $response;
-        // return view("mobile.layouts.payment");
     }
 
     /**

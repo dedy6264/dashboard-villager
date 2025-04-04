@@ -1,4 +1,4 @@
-<div class="content-center bg-slate-200 multi-collapse payment-modal" style="width: 100%" v-show="pagePayment"
+<div class="content-center bg-slate-200 multi-collapse payment-modal" style="width: 100%;z-index:100" v-show="pagePayment"
 id="collapsePayment" >
     <div class="mt-4" style="height:75px" >
             <img  src="" class="img-icon" style="" alt="" sizes="" srcset="">
@@ -38,5 +38,5 @@ id="collapsePayment" >
             <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
         </div>
     </div>
-    
+    <H1>hhhhhhhhh</H1>
 </div>

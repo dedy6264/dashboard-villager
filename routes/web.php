@@ -149,7 +149,10 @@ Route::get('/mobile/loading', [MobileHomeController::class,'loading'])->name('mo
 Route::get('/mobile/home', [MobileHomeController::class,'index'])->name('mobile.home');
 Route::post('/mobile/validate', [MobileHomeController::class,'userValidate'])->name('mobile.validate');
 Route::get('/mobile/pulsa-pra', [MobileProductController::class,'pulsaPrabayar'])->name('mobile.pulsa-pra');
-Route::get('/mobile/bpjsks', [MobileProductController::class,'bpjsks'])->name('mobile.bpjsks');
+{
+    Route::get('/mobile/product/bpjsks', [MobileProductController::class,'bpjsks'])->name('mobile.bpjsks');
+    // Route::get('/mobile/product/bpjsks/payment', [MobileProductController::class,'bpjsksPayment'])->name('mobile.bpjsks');
+}
 Route::post('/mobile/pulsa-pra/get-product', [MobileProductController::class,'getProduct'])->name('mobile.pulsa-pra.getproduct');
 Route::post('/mobile/inquiry', [MobileProductController::class,'inquiry'])->name('mobile.inquiry');
 Route::post('/mobile/payment', [MobileProductController::class,'payment'])->name('mobile.payment');
