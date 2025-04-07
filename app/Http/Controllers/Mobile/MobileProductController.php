@@ -84,20 +84,20 @@ class MobileProductController extends Controller
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
         if($response['statusCode']!=="10"){//harus dikirim data failed
-            switch ($response['result']['statusMessage']) {
-                case 'NO PELANGGAN TIDAK DITEMUKAN':
+            // switch ($response['result']['statusMessage']) {
+                // case 'NO PELANGGAN TIDAK DITEMUKAN':
+                //     $payload=['error' => $response['result']['statusMessage']];
+                //     break;
+                // case 'TAGIHAN SUDAH LUNAS':
+                //     $payload=['error' => $response['result']['statusMessage']];
+                //     break;
+                // case 'TIMEOUT':
+                //     break;
+                    // default:
                     $payload=['error' => $response['result']['statusMessage']];
-                    break;
-                case 'TAGIHAN SUDAH LUNAS':
-                    $payload=['error' => $response['result']['statusMessage']];
-                    break;
-                case 'TIMEOUT':
-                    $payload=['error' => $response['result']['statusMessage']];
-                    break;
-                default:
-                    $payload=['error' => $response['message']];
-                    break;
-            }
+                    // $payload=['error' => $response['message']];
+                    // break;
+            // }
             return response()->json($payload, 500);
         }
         // $response = $response['result'];
@@ -106,16 +106,32 @@ class MobileProductController extends Controller
 
     public function payment(Request $request)
     {
+        if (request()->bearerToken()) {
+            $token=$request->bearerToken();
+        }else{
+            $token=$request->token;
+        }
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/payment', $payload)->json();
+        $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/payment', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
-            return response()->json(['error' => 'Invalid API response format or data type'], 500);
+            if(isset($response['message'])){
+                if($response['message']==="invalid or expired jwt" || $response['message']==="missing or malformed jwt"){
+                    $suggestData=[
+                        'cmd'=>"destroy",
+                    ];
+                    return view('mobile.layouts.loading',compact('suggestData'));
+                }
+            }
+            $suggestData=[
+                'cmd'=>"home",
+            ];
+            return view('mobile.layouts.loading',compact('suggestData'));
+            // return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        // $response = $response['result'];
         if($response['result']['productCode']==="BPJSKS"){
-            return view("mobile.layouts.products.bpjs.paymentBpjs",compact('response'));
+            return view("mobile.layouts.products.bpjs.payment",compact('response'));
         }
         return $response;
     }

@@ -1,6 +1,11 @@
 
 {{-- modals inquiry --}}
-<div v-show="form.pageInq" class=" bottom-nav multi-collapse"  id="collapseInquiry" style="width:100%;border-radius:50px;background-color:#03a1fc">
+<div v-show="" class=" bottom-nav multi-collapse"  id="collapseInquiry" style="width:100%;border-radius:50px;background-color:#03a1fc">
+    <form action="{{ route('mobile.payment') }}" method="post">
+        @csrf
+        <input type="hidden" name="token" :value="formInquiry.token"> 
+        <input type="hidden" name="referenceNumber" :value="formInquiry.referenceNumber"> 
+        
     <div class="mt-4" v-if="gifTrx!==''">
         <img  :src="gifTrx" class="img-icon" style="" alt="" sizes="" srcset="">
     </div>
@@ -53,7 +58,7 @@
                 <button type="button"  class="ml-4 mr-4 btn btn-lg justify btn-danger" style="width: 100%" @click="inqCancel">Batal</button>
             </div>
             <div class="col-6">
-                <button type="button"  class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%" @click="payment()">Lanjutkan</button>
+                <button type="submit"  class="ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%" >Lanjutkan</button>
             </div>
         </div>
         <div v-else >
@@ -62,5 +67,6 @@
             </div>
         </div>
     </div>
+    </form>
 </div>
 {{-- end modal inquiry --}}

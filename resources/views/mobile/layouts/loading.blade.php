@@ -29,6 +29,9 @@
                             localStorage.removeItem("user");
                             setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
                             break;
+                        case 'home':
+                            setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                            break;
                         case 'set':
                             localStorage.removeItem("user");
                             const userData = { token: suggestData.value.token };
@@ -40,23 +43,6 @@
                             setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
                             break;
                     }
-
-
-                    // const userData = { token: suggestData.value.token };
-                    // if(suggestData.value.endpoint==="home"){
-                    //     if(localStorage.getItem("user")===null){
-                    //         localStorage.setItem("user", JSON.stringify(userData));
-                    //     }else{
-                    //         localStorage.removeItem("user");
-                    //         localStorage.setItem("user", JSON.stringify(userData));
-                    //     }
-                    //     setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
-                    // }else{
-                    //     localStorage.removeItem("user");
-                    //     setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 2000);
-                    // }
-                    // console.log(suggestData.value);
-                    // axios.post('{{route('clients.store')}}');
                 }
                 onMounted(() => {
                     refreshData();
