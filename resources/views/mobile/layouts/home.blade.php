@@ -187,13 +187,13 @@
                         merchantId.value=response.data.merchantId;
                     })
                     .catch(error => {
-                        console.error("Error fetching data:", error);
-                        if (error.response) {
-                            // this.errorMessage = error.response.data.message;
-                            // this.successMessage = '';  // Reset success jika ada
-                            // setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
-                        setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
-                        }
+                        console.error("Error fetching data:", error.response);
+                        // if (error.response) {
+                        //     // this.errorMessage = error.response.data.message;
+                        //     // this.successMessage = '';  // Reset success jika ada
+                        //     // setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                        // setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
+                        // }
                     });
                 };
                 const getTrx=()=>{
@@ -211,16 +211,16 @@
                     })
                     .catch(error => {
                         console.error("Error fetching data:", error.response);//hrus menampilkan errornya apa
-                        if (error.response) {
-                            // this.errorMessage = error.response.data.message;
-                            // this.successMessage = '';  // Reset success jika ada
-                        setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
-                        // setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
-                        }
+                        // if (error.response) {
+                        //     // this.errorMessage = error.response.data.message;
+                        //     // this.successMessage = '';  // Reset success jika ada
+                        // setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
+                        // // setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
+                        // }
                     });
                 };
                 const checkUser=()=>{
-                    // console.log(localStorage.getItem("user"));
+                    console.log(localStorage.getItem("user")==null);
                     if(localStorage.getItem("user")==null){
                         setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
                     }else{

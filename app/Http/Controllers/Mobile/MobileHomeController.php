@@ -19,9 +19,6 @@ class MobileHomeController extends Controller
     public function userValidate()
     {
         $command=request()->command;
-        //command= checkToken-rmToken
-        // switch ($command) {
-        //     case 'checkToken':
                 $token=request()->bearerToken();
                 try {
                     // Secret Key yang digunakan untuk encode JWT
@@ -29,6 +26,8 @@ class MobileHomeController extends Controller
                     // Decode token
                     $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
                     $now = Carbon::now('Asia/Jakarta')->timestamp;
+                    // dd($now);
+
                     if($now-$decoded->exp>0){
                         return redirect()->route('mobile.login');
                     }else{
