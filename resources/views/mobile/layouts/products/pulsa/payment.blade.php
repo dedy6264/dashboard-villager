@@ -121,11 +121,11 @@ id="collapsePayment" >
         </div>
         </div>
         <div class="" style="justify-content:center;margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px;border-top:1px">
-            {{-- <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;"> --}}
-                {{-- <div class=""> --}}
-                    <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
-                {{-- </div> --}}
-            {{-- </div> --}}
+          @if (mainData.statusCode=="00")
+          <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
+          @else
+          <button type="button"  class="btn btn-success btn-lg justify" style="width: 100%">Home</button>
+          @endif
         </div>
       </div>
     </div>
@@ -161,15 +161,15 @@ id="collapsePayment" >
                     switch (mainData.value.statusCode) {
                         case "00":
                         additionalData.value.gifTrx="/assets/img/success.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=mainData.value.statusMessage+''+mainData.value.statusDesc;
                             break;
                         case "09":
                         additionalData.value.gifTrx="/assets/img/failed.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=mainData.value.statusMessage+''+mainData.value.statusDesc;
                             break;
                         default:
                         additionalData.value.gifTrx="/assets/img/pending.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=mainData.value.statusMessage+''+mainData.value.statusDesc;
                             break;
                     }
                 }

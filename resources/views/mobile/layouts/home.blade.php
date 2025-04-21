@@ -188,12 +188,12 @@
                     })
                     .catch(error => {
                         console.error("Error fetching data:", error.response);
-                        // if (error.response) {
-                        //     // this.errorMessage = error.response.data.message;
-                        //     // this.successMessage = '';  // Reset success jika ada
-                        //     // setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
-                        // setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
-                        // }
+                        if (error.response) {
+                            // this.errorMessage = error.response.data.message;
+                            // this.successMessage = '';  // Reset success jika ada
+                            // setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                        setTimeout(() => { window.location.href = "{{ route('mobileLoading') }}"; }, 1000);
+                        }
                     });
                 };
                 const getTrx=()=>{
