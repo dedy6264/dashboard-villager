@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-@include('mobile.layouts.history.payment')
+{{-- @include('mobile.layouts.history.payment') --}}
 @endsection
 @section('customScript')
     <script>
@@ -148,10 +148,11 @@
                         if(status!==""){
                         
                         }
-                        console.log(pagePayment.value);
+                        console.log(response.data);
+                        // console.log(pagePayment.value);
                         mainData.value=response.data.data;
                         pagePayment.value=true;
-                        console.log(pagePayment.value);
+                        // console.log(pagePayment.value);
                     })
                     .catch(error => {
                         console.error("Error fetching data:", error);

@@ -37,15 +37,16 @@
                     <div class="col-6"> 
                     </div>
                     <div class="col-6">
-                        <button type="submit"  class="mt-4 ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%">Lanjutkan</button>
+                        <button type="submit"  class="mt-4 ml-4 mr-4 btn btn-primary btn-lg justify" style="width: 100%" >Lanjutkan</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div v-if="form.pageInq">
+    <div v-if="form.btnInq">
         <div  class="modal-backdrop fade show"></div>
     </div>
+    @include('mobile.utils.loading')
     @include('mobile.layouts.products.bpjs.inquiry')
 @endsection
 @section('customScript')
@@ -59,6 +60,7 @@
                 const statusCode=ref();
                 const validate=ref();
                 const details=ref();
+                const fade=ref(false);
                 const form=ref({
                     customerId:'',
                     productCode:'BPJSKS',
@@ -82,6 +84,10 @@
                     pageInq:false,
                     token:'',
                 });
+                const loadingPayment=(event)=>{
+                    form.value.pageInq=false;
+                    fade.value=true;
+                }
                 const inqCancel=()=>{
                     form.value.pageInq=false;
                     form.value.btnInq=false;
@@ -89,8 +95,7 @@
                     statusTrx.value='';
                 }
                 const inquiry=()=>{
-                    // console.log(form.value);
-                    // console.log("jkjk",JSON.parse(localStorage.getItem("user")).token);
+                    fade.value=true;
                     axios.post('{{route('mobile.inquiry')}}',{
                             customerId:form.value.customerId,
                             productCode:form.value.productCode,
@@ -117,6 +122,7 @@
                             // mainData.value=response.data.data;
                             form.value.pageInq=true;
                             form.value.btnInq=true;
+                            fade.value=false;
                         })
                         .catch(error => {
                             if (error.response.data.error=="invalid or expired jwt") {
@@ -126,6 +132,7 @@
                                         statusTrx.value=error.response.data.error;
                                         form.value.pageInq=true;
                                         form.value.btnInq=true;
+                                        fade.value=false;
                             }
                         });
                 }
@@ -133,6 +140,8 @@
                     });
 
                 return{
+                    loadingPayment,
+                    fade,
                     statusCode,
                     details,
                     validate,

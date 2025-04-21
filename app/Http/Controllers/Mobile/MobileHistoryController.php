@@ -27,12 +27,16 @@ class MobileHistoryController extends Controller
         // if($response['statusCode']!=="00"){
         //     return redirect()->back()->with('warning', 'wrong username or password!');
         // }
-        // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        $response = $response['result'];
-        return $response;
+        dump($response);
+        if((int)$request->size===1){
+            $response = $response['result'];
+            return $response;
+        }
+        return view("mobile.layouts.history.payment",compact('response'));
+
     }
     public function cekcek(){
         // dump(Carbon::createFromTimestamp('1742846007')->toDateTimeString()->setTimezone('Asia/Jakarta'));

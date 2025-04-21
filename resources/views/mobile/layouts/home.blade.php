@@ -155,6 +155,14 @@
         </div>
     </div>
 </div>
+@include('mobile.utils.loading')
+<div v-if="fade">
+    <div  class="content-center modal-backdrop fade show">
+        <div style="margin-bottom: 25%; margin-top:25%;display: flex;justify-content: center;  align-items: center;  height: calc(100vh - 50px); ">
+            <img class="content-center d-flex justify-content-center align-items-center img-icon"  src="/assets/img/loading.gif" style="" >
+        </div>
+    </div>
+</div>
 @endsection
 @section('customScript')
     <script>
@@ -166,6 +174,7 @@
                 const outletId=ref();
                 const merchantId=ref();
                 const mainDataTrx=ref({});
+                const fade=ref(false);
                 const refreshData=()=>{
                     axios.post("{{route('mobile.validate')}}",{},{
                             headers: {
@@ -188,6 +197,7 @@
                     });
                 };
                 const getTrx=()=>{
+                    fade.value=true;
                     axios.post("{{route('mobile.history.get-trx')}}",{
                         size:1,
                     },{
@@ -197,9 +207,10 @@
                         })
                     .then(response => {
                         mainDataTrx.value=response.data.data;
+                        fade.value=false;
                     })
                     .catch(error => {
-                        console.error("Error fetching data:", error);//hrus menampilkan errornya apa
+                        console.error("Error fetching data:", error.response);//hrus menampilkan errornya apa
                         if (error.response) {
                             // this.errorMessage = error.response.data.message;
                             // this.successMessage = '';  // Reset success jika ada
@@ -209,6 +220,7 @@
                     });
                 };
                 const checkUser=()=>{
+                    // console.log(localStorage.getItem("user"));
                     if(localStorage.getItem("user")==null){
                         setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
                     }else{
@@ -221,6 +233,7 @@
                     });
 
                 return{
+                    fade,
                     getTrx,
                     mainDataTrx,
                     checkUser,

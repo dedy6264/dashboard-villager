@@ -10,7 +10,7 @@ class MobileProductController extends Controller
 {
     public function pulsaPrabayar()
     {
-        return view("mobile.layouts.pulsa");
+        return view("mobile.layouts.products.pulsa.index");
     }
     public function bpjsks()
     {
@@ -130,8 +130,12 @@ class MobileProductController extends Controller
             return view('mobile.layouts.loading',compact('suggestData'));
             // return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        if($response['result']['productCode']==="BPJSKS"){
+
+        if($response['result']['productCode']==="BPJSKS" ){
             return view("mobile.layouts.products.bpjs.payment",compact('response'));
+        }
+        if($response['result']['productCode']==="htelkomsel5000" ){
+            return view("mobile.layouts.products.pulsa.payment",compact('response'));
         }
         return $response;
     }
