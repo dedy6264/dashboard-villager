@@ -124,7 +124,7 @@ id="collapsePayment" >
           @if (mainData.statusCode=="00")
           <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
           @else
-          <button type="button"  class="btn btn-success btn-lg justify" style="width: 100%">Home</button>
+          <button type="button"  class="btn btn-success btn-lg justify" style="width: 100%" click="backHome">Home</button>
           @endif
         </div>
       </div>
@@ -149,7 +149,7 @@ id="collapsePayment" >
                     statusTrx:'',
                 })
                 const backHome=()=>{
-                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 100);
                 }
                 const dataPayment=()=>{
                     pagePayment.value=true;

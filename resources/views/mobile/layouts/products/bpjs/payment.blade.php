@@ -61,11 +61,11 @@
         </div>
         </div>
         <div class="" style="justify-content:center;margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px;border-top:1px">
-            {{-- <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;"> --}}
-                {{-- <div class=""> --}}
-                    <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
-                {{-- </div> --}}
-            {{-- </div> --}}
+            @if (mainData.statusCode=="00")
+            <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
+            @else
+            <button type="button"  class="btn btn-success btn-lg justify" style="width: 100%" click="backHome">Home</button>
+            @endif
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
                     statusTrx:'',
                 })
                 const backHome=()=>{
-                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 100);
                 }
                 const dataPayment=()=>{
                     pagePayment.value=true;
