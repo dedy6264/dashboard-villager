@@ -15,7 +15,25 @@ class MobileHistoryController extends Controller
         return view('mobile.layouts.history.index');
     }
     public function getTrx(Request $request){
-        // dump($request->size);
+        $payload=[
+            "referenceNumber"=>$request->referenceNumber,
+        ];
+        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
+        // if($response['statusCode']!=="00"){
+        //     return redirect()->back()->with('warning', 'wrong username or password!');
+        // }
+        if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
+            return response()->json(['error' => 'Invalid API response format or data type'], 500);
+        }
+        // dump($response);
+        if((int)$request->size===1){
+            $response = $response['result'];
+            return $response;
+        }
+        return view("mobile.layouts.history.payment",compact('response'));
+
+    }
+    public function getTrxs(Request $request){
         $filter=[
             "length"=>$request->size,
         ];
@@ -30,12 +48,11 @@ class MobileHistoryController extends Controller
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        dump($response);
-        if((int)$request->size===1){
+        // if((int)$request->size===1){
             $response = $response['result'];
             return $response;
-        }
-        return view("mobile.layouts.history.payment",compact('response'));
+        // }
+        // return view("mobile.layouts.history.payment",compact('response'));
 
     }
     public function cekcek(){

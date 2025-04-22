@@ -198,7 +198,7 @@
                 };
                 const getTrx=()=>{
                     fade.value=true;
-                    axios.post("{{route('mobile.history.get-trx')}}",{
+                    axios.post("{{route('mobile.history.get-trxs')}}",{
                         size:1,
                     },{
                             headers: {

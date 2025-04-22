@@ -157,6 +157,7 @@ Route::post('/mobile/pulsa-pra/get-product', [MobileProductController::class,'ge
 Route::post('/mobile/inquiry', [MobileProductController::class,'inquiry'])->name('mobile.inquiry');
 Route::post('/mobile/payment', [MobileProductController::class,'payment'])->name('mobile.payment');
 Route::get('/mobile/history', [MobileHistoryController::class,'index'])->name('mobile.history');
+Route::post('/mobile/history/get-trxs', [MobileHistoryController::class,'getTrxs'])->name('mobile.history.get-trxs');
 Route::post('/mobile/history/get-trx', [MobileHistoryController::class,'getTrx'])->name('mobile.history.get-trx');
 Route::post('/mobile/history/advice', [MobileHistoryController::class,'advice'])->name('mobile.history.advice');
 Route::get('/cekk', [MobileHistoryController::class,'cekcek'])->name('cekk');

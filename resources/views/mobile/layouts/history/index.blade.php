@@ -134,10 +134,10 @@
                 }
                 const getTrx=(status)=>{
                     
-                    console.log(size.value);
+                    // console.log(size.value);
                     size.value=size.value+5;
-                    console.log(size.value);
-                    axios.post("{{route('mobile.history.get-trx')}}",{
+                    // console.log(size.value);
+                    axios.post("{{route('mobile.history.get-trxs')}}",{
                         size:size.value,
                     },{
                             headers: {
@@ -148,14 +148,14 @@
                         if(status!==""){
                         
                         }
-                        console.log(response.data);
+                        // console.log(response.data);
                         // console.log(pagePayment.value);
                         mainData.value=response.data.data;
                         pagePayment.value=true;
                         // console.log(pagePayment.value);
                     })
                     .catch(error => {
-                        console.error("Error fetching data:", error);
+                        // console.error("Error fetching data:", error);
                         if (error.response) {
                             this.errorMessage = error.response.data.message;
                             this.successMessage = '';  // Reset success jika ada

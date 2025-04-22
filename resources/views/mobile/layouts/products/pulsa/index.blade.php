@@ -54,6 +54,7 @@
         </a>
     </div>
 
+
     {{-- <div class="mb-0 card" style="max-width: 540px;margin-top:30px">
         <div class="row g-0">
           <div class="m-2 col-4" style="max-width: 50px">
@@ -208,9 +209,7 @@
                         });
                 }
                 const getProduct=(event)=>{
-                    // fade.value=true;
                     form.value.customerId = event.target.value.replace(/\D/g, ""); // Hanya angka
-                    // console.log(customerId.value);
                     if(form.value.customerId.length>10){
                         axios.post('{{route('mobile.pulsa-pra.getproduct')}}',{
                             customerId:form.value.customerId,
@@ -218,7 +217,6 @@
                         })
                         .then(response => {
                             mainData.value=response.data.data;
-                            // fade.value=false;
                         })
                         .catch(error => {
                             console.error("Error fetching data:", error);
