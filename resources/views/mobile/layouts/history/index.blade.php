@@ -4,12 +4,6 @@
 <div class="" style="margin-bottom:10px;margin-top:100px;border-radius:30px 30px 0px 0px; background-color:cadetblue">
     <div class="container py-4 mt-0 " style="margin-bottom: 50px">
         <div class="mb-4 card" v-if="mainData" v-for="item, index in mainData" :key="index"> 
-            {{-- <div class=" card-body" @click="checkTrx(item.statusCode, item.referenceNumber)">
-            <p class="card-text">@{{ item.productName }} / @{{item.customerId}}</p>
-            <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer> --}}
-            {{-- <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusMessage}}</button> --}}
-            {{-- <span class="badge " :class="item.statusCode=='00'?'bg-success':'bg-warning'">@{{item.statusMessage}}</span>
-            </div> --}}
             <form v-if="item.statusCode == '00'" action="{{route('mobile.history.get-trx')}}" method="POST" class="card-body" @click="$event.target.closest('form').submit()">
                 @csrf
                 <input type="hidden" name="referenceNumber" :value="item.referenceNumber">
@@ -19,10 +13,25 @@
                   @{{ item.referenceNumber }} | 
                   <cite title="Source Title">@{{ item.createdAt }} </cite>
                 </footer>
-                <span class="badge bg-success">@{{ item.statusMessage }}</span>
+                <span class="badge bg-primary">@{{ item.statusMessage }}</span>
                 
                 <!-- form bisa dikirim otomatis atau kamu bisa tambah <button type="submit"> jika perlu -->
               </form>
+
+            <form v-else-if="item.statusCode == '09'" action="{{route('mobile.history.get-trx')}}" method="POST" class="card-body" @click="$event.target.closest('form').submit()">
+                @csrf
+                <input type="hidden" name="referenceNumber" :value="item.referenceNumber">
+                <input type="hidden" name="token" :value="token"> 
+                <p class="card-text">@{{ item.productName }} / @{{ item.customerId }}</p>
+                <footer class="blockquote-footer">
+                  @{{ item.referenceNumber }} | 
+                  <cite title="Source Title">@{{ item.createdAt }} </cite>
+                </footer>
+                <span class="badge bg-danger">@{{ item.statusMessage }}</span>
+                
+                <!-- form bisa dikirim otomatis atau kamu bisa tambah <button type="submit"> jika perlu -->
+              </form>
+              
               <div v-else class="card-body" @click="checkTrx(item.statusCode, item.referenceNumber)">
                 <p class="card-text">@{{ item.productName }} / @{{ item.customerId }}</p>
                 <footer class="blockquote-footer">
@@ -129,6 +138,7 @@
                                 });
                             break;
                         default:
+                            fade.value=false;
                             break;
                     }
                 };
@@ -159,10 +169,8 @@
                     }
                 }
                 const getTrx=(status)=>{
-                    
-                    // console.log(size.value);
+                    fade.value=true;
                     size.value=size.value+5;
-                    // console.log(size.value);
                     axios.post("{{route('mobile.history.get-trxs')}}",{
                         size:size.value,
                     },{
@@ -171,14 +179,9 @@
                             }
                         })
                     .then(response => {
-                        if(status!==""){
-                        
-                        }
-                        // console.log(response.data);
-                        // console.log(pagePayment.value);
                         mainData.value=response.data.data;
                         pagePayment.value=true;
-                        // console.log(pagePayment.value);
+                        fade.value=false;
                     })
                     .catch(error => {
                         // console.error("Error fetching data:", error);

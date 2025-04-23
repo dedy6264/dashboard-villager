@@ -89,7 +89,7 @@
                     statusTrx:'',
                 })
                 const backHome=()=>{
-                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 1);
+                    setTimeout(() => { window.location.href = "{{ route('mobile.history') }}"; }, 1);
                 }
                 const dataPayment=()=>{
                     pagePayment.value=true;
@@ -99,18 +99,19 @@
                     if(infoDescData.value.detail.length>0){
                         details.value=infoDescData.value.detail;
                     }
-                    switch (mainData.value.statusCode) {
+                    // console.log(resData.value.statusCode);
+                    switch (resData.value.statusCode) {
                         case "00":
                         additionalData.value.gifTrx="/assets/img/success.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=resData.value.statusMessage;
                             break;
                         case "09":
                         additionalData.value.gifTrx="/assets/img/failed.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=resData.value.statusMessage;
                             break;
                         default:
                         additionalData.value.gifTrx="/assets/img/pending.gif";
-                        additionalData.value.statusTrx=mainData.value.statusMessage;
+                        additionalData.value.statusTrx=resData.value.statusMessage;
                             break;
                     }
                 }
