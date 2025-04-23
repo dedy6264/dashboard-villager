@@ -84,7 +84,7 @@
             <div class="row">
                 <div class="col-2">
                     <div class="media">
-                        <img src="/assets/img/dev.png" class="mr-3 " style="width: 50px;border-radius:30px" alt="...">
+                        <img src="/assets/img/dev.jpg" class="mr-3 " style="width: 50px;border-radius:30px" alt="...">
                     </div>
                 </div>
                 <div class="col-5">
