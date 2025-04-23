@@ -22,9 +22,9 @@
             <div class="text-left col-4 bg-slate-300">Datetime</div>
             <div class="bg-red-600 col-8 text-end">@{{resData.createdAt}}</div>
         </div>
-        <div class="m-3 row" v-if="infoDescData.customerId!==''">
+        <div class="m-3 row" v-if="resData.customerId!==''">
             <div class="text-left col-4 bg-slate-300">No Cust</div>
-            <div class="bg-red-600 col-8 text-end">@{{infoDescData.customerId}}</div>
+            <div class="bg-red-600 col-8 text-end">@{{resData.customerId}}</div>
         </div>
         <div class="m-3 row" v-if="infoDescData.customerName!==''">
             <div class="text-left col-4 bg-slate-300">Name Cust ww</div>
@@ -89,15 +89,16 @@
                     statusTrx:'',
                 })
                 const backHome=()=>{
-                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 2000);
+                    setTimeout(() => { window.location.href = "{{ route('mobile.home') }}"; }, 1);
                 }
                 const dataPayment=()=>{
                     pagePayment.value=true;
-                    console.log(mainData.value.result);
-                    resData.value=mainData.value.result;
-                    infoData.value=resData.value.billInfo;
+                    resData.value=mainData.value.result.data;
+                    infoData.value=JSON.parse(resData.value.otherMsg.replace(/\"/g, '"'));
                     infoDescData.value=infoData.value.billDesc;
-                    details.value=infoDescData.value.detail;
+                    if(infoDescData.value.detail.length>0){
+                        details.value=infoDescData.value.detail;
+                    }
                     switch (mainData.value.statusCode) {
                         case "00":
                         additionalData.value.gifTrx="/assets/img/success.gif";
@@ -114,6 +115,7 @@
                     }
                 }
                 onMounted(() => {
+                    console.log(mainData);
                     dataPayment();
                     });
 

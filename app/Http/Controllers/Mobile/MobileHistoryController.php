@@ -15,21 +15,27 @@ class MobileHistoryController extends Controller
         return view('mobile.layouts.history.index');
     }
     public function getTrx(Request $request){
+        if (request()->bearerToken()) {
+            $token=$request->bearerToken();
+        }else{
+            $token=$request->token;
+        }
+        // dump($token);
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
+        $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
         // if($response['statusCode']!=="00"){
-        //     return redirect()->back()->with('warning', 'wrong username or password!');
-        // }
+            //     return redirect()->back()->with('warning', 'wrong username or password!');
+            // }
+            // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        // dump($response);
-        if((int)$request->size===1){
-            $response = $response['result'];
-            return $response;
-        }
+        // if((int)$request->size===1){
+        //     $response = $response['result'];
+        //     return $response;
+        // }
         return view("mobile.layouts.history.payment",compact('response'));
 
     }
@@ -41,7 +47,7 @@ class MobileHistoryController extends Controller
             "filter"=>$filter,
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
+        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/trx/getTrxs', $payload)->json();
         // if($response['statusCode']!=="00"){
         //     return redirect()->back()->with('warning', 'wrong username or password!');
         // }
@@ -50,6 +56,7 @@ class MobileHistoryController extends Controller
         }
         // if((int)$request->size===1){
             $response = $response['result'];
+            // dd(is_array($response));
             return $response;
         // }
         // return view("mobile.layouts.history.payment",compact('response'));
@@ -69,11 +76,11 @@ class MobileHistoryController extends Controller
         // if($response['statusCode']!=="00"){
         //     return redirect()->back()->with('warning', 'wrong username or password!');
         // }
-        dd($response);
+        // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-        $response = $response['result'];
+        // $response = $response['result'];
         return $response;
     }
 }

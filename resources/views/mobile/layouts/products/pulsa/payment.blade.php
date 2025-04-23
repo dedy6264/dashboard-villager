@@ -121,11 +121,11 @@ id="collapsePayment" >
         </div>
         </div>
         <div class="" style="justify-content:center;margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px;border-top:1px">
-          @if (mainData.statusCode=="00")
+          {{-- @if ($mainData.statusCode=="00") --}}
           <button type="button"  class="btn btn-primary btn-lg justify" style="width: 100%">Bagikan</button>
-          @else
+          {{-- @else
           <button type="button"  class="btn btn-success btn-lg justify" style="width: 100%" click="backHome">Home</button>
-          @endif
+          @endif --}}
         </div>
       </div>
     </div>

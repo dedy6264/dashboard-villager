@@ -3,14 +3,34 @@
 <!-- Last Transaction -->
 <div class="" style="margin-bottom:10px;margin-top:100px;border-radius:30px 30px 0px 0px; background-color:cadetblue">
     <div class="container py-4 mt-0 " style="margin-bottom: 50px">
-        <div class="mb-4 card" v-if="mainData" v-for="item, index in mainData" :key="index">
-            {{-- <h6 class="card-header">Last Transaction</h6> --}}
-            <div class=" card-body" @click="checkTrx(item.statusCode, item.referenceNumber)">
+        <div class="mb-4 card" v-if="mainData" v-for="item, index in mainData" :key="index"> 
+            {{-- <div class=" card-body" @click="checkTrx(item.statusCode, item.referenceNumber)">
             <p class="card-text">@{{ item.productName }} / @{{item.customerId}}</p>
-            {{-- <small>082137789378</small> --}}
-            <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer>
-            <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusMessage}}</button>
-            </div>
+            <footer class="blockquote-footer">@{{ item.referenceNumber }} | <cite title="Source Title">@{{ item.createdAt }} </cite></footer> --}}
+            {{-- <button :disabled="item.statusCode!='00'?'disabled':''" class="btn btn-sm" :class="item.statusCode=='00'?'btn-success':'btn-warning'">@{{item.statusMessage}}</button> --}}
+            {{-- <span class="badge " :class="item.statusCode=='00'?'bg-success':'bg-warning'">@{{item.statusMessage}}</span>
+            </div> --}}
+            <form v-if="item.statusCode == '00'" action="{{route('mobile.history.get-trx')}}" method="POST" class="card-body" @click="$event.target.closest('form').submit()">
+                @csrf
+                <input type="hidden" name="referenceNumber" :value="item.referenceNumber">
+                <input type="hidden" name="token" :value="token"> 
+                <p class="card-text">@{{ item.productName }} / @{{ item.customerId }}</p>
+                <footer class="blockquote-footer">
+                  @{{ item.referenceNumber }} | 
+                  <cite title="Source Title">@{{ item.createdAt }} </cite>
+                </footer>
+                <span class="badge bg-success">@{{ item.statusMessage }}</span>
+                
+                <!-- form bisa dikirim otomatis atau kamu bisa tambah <button type="submit"> jika perlu -->
+              </form>
+              <div v-else class="card-body" @click="checkTrx(item.statusCode, item.referenceNumber)">
+                <p class="card-text">@{{ item.productName }} / @{{ item.customerId }}</p>
+                <footer class="blockquote-footer">
+                  @{{ item.referenceNumber }} | 
+                  <cite title="Source Title">@{{ item.createdAt }} </cite>
+                </footer>
+                <span class="badge bg-warning">@{{ item.statusMessage }}</span>
+              </div>
         </div>
         <button @click="getTrx()" class="btn btn-sm btn-primary">Next</button>
     </div>
@@ -41,6 +61,7 @@
     </div>
 </div>
 {{-- @include('mobile.layouts.history.payment') --}}
+@include('mobile.utils.loading')
 @endsection
 @section('customScript')
     <script>
@@ -54,9 +75,12 @@
                 const outletId=ref();
                 const merchantId=ref();
                 const size=ref(0);
+                const token=JSON.parse(localStorage.getItem("user")).token;
+                const fade=ref(false);
                 const pagePayment=ref(false);
                 const checkTrx=(statusCode,referenceNumber)=>{
-                    console.log(statusCode, referenceNumber);
+                    // console.log(statusCode, referenceNumber);
+                    fade.value=true;
                     switch (statusCode) {
                         case "00"://get trx
                             axios.post("{{route('mobile.history.get-trx')}}",{
@@ -70,6 +94,7 @@
                                     console.log(response.data);
                                     dataTrx.value=response.data.data;
                                     pagePayment.value=true;
+                                    fade.value=false;
                                 })
                                 .catch(error => {
                                     console.error("Error fetching data:", error);
@@ -89,9 +114,10 @@
                                         }
                                     })
                                 .then(response => {
-                                    console.log(response.data);
-                                    dataTrx.value=response.data.data;
-                                    pagePayment.value=true;
+                                    if(response.data.statusCode=="00"){
+                                        getTrx();
+                                    }
+                                    fade.value=false;
                                 })
                                 .catch(error => {
                                     console.error("Error fetching data:", error);
@@ -107,7 +133,7 @@
                     }
                 };
                 const refreshData=()=>{
-                    console.log(JSON.parse(localStorage.getItem("user")).token);
+                    // console.log(JSON.parse(localStorage.getItem("user")).token);
                     axios.post("{{route('mobile.validate')}}",{},{
                             headers: {
                                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
@@ -171,6 +197,8 @@
                     });
 
                 return{
+                    token,
+                    fade,
                     dataTrx,
                     pagePayment,
                     checkTrx,
