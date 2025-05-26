@@ -16,29 +16,24 @@ class MobileProductController extends Controller
     {
         return view("mobile.layouts.products.bpjs.index");
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getProduct()
+    public function plnToken()
     {
-        $payload=[
-            "subscriberId"=>request()->customerId,
-        ];
-        $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/helper/getReference', $payload)->json();
-        if($response['statusCode']!=="00"){
-            return redirect()->back()->with('warning', 'wrong username or password!');
+        return view("mobile.layouts.products.pln_token.index");
+    }
+    
+    public function getProduct(Request $request)
+    {
+        
+        if($request->productReferenceCode==""||$request->productReferenceCode==null){
+           $productReferenceCode=$this->getReferenceCode();
+        }else{
+           $productReferenceCode=$request->productReferenceCode;
         }
-        if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
-            return response()->json(['error' => 'Invalid API response format or data type'], 500);
-        }
-        $productReferenceCode = $response['result']['data']['productReferenceCode'];
-
         $payload=[
             "productReferenceCode"=>$productReferenceCode,
         ];
         $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/product/gets', $payload)->json();
+        // dd($response);
         if($response['statusCode']!=="00"){
             return redirect()->back()->with('warning', 'wrong username or password!');
         }
@@ -49,7 +44,19 @@ class MobileProductController extends Controller
         // dd($response);
         return $response;
     }
-
+    public function getReferenceCode(){
+        $payload=[
+            "subscriberId"=>request()->customerId,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/helper/getReference', $payload)->json();
+        if($response['statusCode']!=="00"){
+            return redirect()->back()->with('warning', 'wrong username or password!');
+        }
+        if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
+            return response()->json(['error' => 'Invalid API response format or data type'], 500);
+        }
+        return $response['result']['data']['productReferenceCode'];
+    }
     public function inquiry(Request $request)
     {
         // dd($request->bearerToken());
@@ -94,12 +101,52 @@ class MobileProductController extends Controller
                 // case 'TIMEOUT':
                 //     break;
                     // default:
-                    $payload=['error' => $response['result']['statusMessage']];
-                    // $payload=['error' => $response['message']];
+                    // $payload=['error' => $response['result']['statusMessage']];
+                    $payload=['error' => $response['statusDesc']];
                     // break;
             // }
             return response()->json($payload, 500);
         }
+        // $response=[
+        //     "statusCode"=>"10",
+        //     "statusMessage"=>"INQUIRY SUCCESS",
+        //     "statusDesc"=>"SUCCESS",
+        //     "responseDatetime"=>"2025-05-08T21:47:48+07:00",
+        //     "result"=>[
+        //         "statusMessage"=>"SUCCESS",
+        //         "createdAt"=>"20250508",
+        //         "merchantOutletName"=>"TAWCI 01",
+        //         "merchantOutletUsername"=>"taucikuenak",
+        //         "referenceNumber"=>"DB-20250508-0000025",
+        //         "productName"=>"PLN TOKEN 20.000",
+        //         "productCode"=>"plntkn20",
+        //         "subscriberNumber"=>"12345678901",
+        //         "productPrice"=>22500,
+        //         "productAdminFee"=>0,
+        //         "productMerchantFee"=>0,
+        //         "totalTrxAmount"=>0,
+        //         "billInfo"=>[
+        //         "billDesc"=>[
+        //         "subscriberName"=>"Test PLN",
+        //         "subscriberNumber"=>"12345678901",
+        //         "meterNo"=>"548933889287",
+        //         "lembarTagihan"=>0,
+        //         "detail"=>[
+        //         [
+        //         "periode"=>"",
+        //         "admin"=>0,
+        //         "denda"=>0,
+        //         "tagihan"=>0,
+        //         "meterAwal"=>"",
+        //         "meterAkhir"=>"",
+        //         "tarif"=>"R1M",
+        //         "daya"=>"/000000900"
+        //         ]
+        //         ]
+        //         ]
+        //         ]
+        // ]
+        // ];
         // $response = $response['result'];
         return $response;
     }
@@ -130,47 +177,46 @@ class MobileProductController extends Controller
             return view('mobile.layouts.loading',compact('suggestData'));
             // return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
-
-        if($response['result']['productCode']==="BPJSKS" ){
-            return view("mobile.layouts.products.bpjs.payment",compact('response'));
+        // $response=[
+        //     "statusCode"=>"05",
+        //     "statusMessage"=>"PAYMENT PENDING",
+        //     "statusDesc"=>"PENDING",
+        //     "responseDatetime"=>"2025-05-09T08:55:10+07:00",
+        //     "result"=>[
+        //     "createdAt"=>"2025-05-09T00:00:00Z",
+        //     "merchantOutletName"=>"TAWCI 01",
+        //     "merchantOutletUsername"=>"taucikuenak",
+        //     "referenceNumber"=>"DB-20250509-0000001",
+        //     "productName"=>"PLN TOKEN 20.000",
+        //     "productCode"=>"plntkn20",
+        //     "productCategoryId"=>4,
+        //     "productCategoryName"=>"PLN",
+        //     "subscriberNumber"=>"12345678901",
+        //     "productPrice"=>22500,
+        //     "productAdminFee"=>0,
+        //     "productMerchantFee"=>0,
+        //     "totalTrxAmount"=>22500,
+        //     "billInfo"=>[
+        //     "billDesc"=>[
+        //     "customerId"=>"",
+        //     "customerName"=>"",
+        //     "detail"=>null],
+        //     "sn"=>""]]];
+        switch ($response['result']['productCategoryId']) {
+            case 1:
+                return view("mobile.layouts.products.pulsa.payment",compact('response'));
+                break;
+            
+            case 11:
+                return view("mobile.layouts.products.bpjs.payment",compact('response'));
+                break;
+            case 4:
+                return view("mobile.layouts.products.pln_token.payment",compact('response'));
+                break;
+            
+            default:
+                return $response;
+                break;
         }
-        if($response['result']['productCode']==="htelkomsel5000" ){
-            return view("mobile.layouts.products.pulsa.payment",compact('response'));
-        }
-        return $response;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

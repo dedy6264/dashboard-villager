@@ -151,9 +151,10 @@ Route::post('/mobile/validate', [MobileHomeController::class,'userValidate'])->n
 Route::get('/mobile/pulsa-pra', [MobileProductController::class,'pulsaPrabayar'])->name('mobile.pulsa-pra');
 {
     Route::get('/mobile/product/bpjsks', [MobileProductController::class,'bpjsks'])->name('mobile.bpjsks');
+    Route::get('/mobile/product/plnToken', [MobileProductController::class,'plnToken'])->name('mobile.plnToken');
     // Route::get('/mobile/product/bpjsks/payment', [MobileProductController::class,'bpjsksPayment'])->name('mobile.bpjsks');
 }
-Route::post('/mobile/pulsa-pra/get-product', [MobileProductController::class,'getProduct'])->name('mobile.pulsa-pra.getproduct');
+Route::post('/mobile/product/get-product', [MobileProductController::class,'getProduct'])->name('mobile.product.getproduct');
 Route::post('/mobile/inquiry', [MobileProductController::class,'inquiry'])->name('mobile.inquiry');
 Route::post('/mobile/payment', [MobileProductController::class,'payment'])->name('mobile.payment');
 Route::get('/mobile/history', [MobileHistoryController::class,'index'])->name('mobile.history');
@@ -161,6 +162,10 @@ Route::post('/mobile/history/get-trxs', [MobileHistoryController::class,'getTrxs
 Route::post('/mobile/history/get-trx', [MobileHistoryController::class,'getTrx'])->name('mobile.history.get-trx');
 Route::post('/mobile/history/advice', [MobileHistoryController::class,'advice'])->name('mobile.history.advice');
 Route::get('/cekk', [MobileHistoryController::class,'cekcek'])->name('cekk');
+Route::get('/abc',
+    function () {
+       dd(request());
+    })->name('abc');
 
 
 require __DIR__.'/auth.php';
