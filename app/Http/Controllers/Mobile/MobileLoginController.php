@@ -16,23 +16,38 @@ class MobileLoginController extends Controller
 
     public function mobileLogin()
     {
-        $payload=[
-            "merchantOutletUsername"=>request()->username,
-            "merchantOutletPassword"=>request()->password,
-        ];
-        $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
-        if($response['statusCode']!=="00"){
-            return redirect()->back()->with('warning', 'wrong username or password!');
+        try {
+                $payload=[
+                    "username"=>request()->username,
+                    "password"=>request()->password,
+                ];
+                // $response = Http::withBasicAuth('joe','secret')->post('https://google.com'.'/login/', $payload)->json();
+                $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
+                if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
+                    // return response()->json(['error' => 'Invalid API response format or data type'], 500);
+                    $suggestData=[
+                        'cmd'=>'destroy',
+                    ];
+                    return view('mobile.layouts.loading',compact('suggestData'));
+                }
+                if($response['statusCode']!=="00"){
+                    return redirect()->back()->with('warning', 'wrong username or password!');
+                }
+
+                $suggestData=[
+                    'cmd'=>'set',
+                    'token'=>$response['result']['token'],
+                    // 'endpoint'=>"home",
+                ];
+                return view('mobile.layouts.loading',compact('suggestData'));
+        } catch (RequestException $e) {
+            // Tangkap error jaringan
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Gagal menghubungi server login: ' . $e->getMessage()
+            ], 500);
         }
-        if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
-            return response()->json(['error' => 'Invalid API response format or data type'], 500);
-        }
-        $suggestData=[
-            'cmd'=>'set',
-            'token'=>$response['result']['token'],
-            // 'endpoint'=>"home",
-        ];
-        return view('mobile.layouts.loading',compact('suggestData'));
     }
     public function pulsaPrabayar()
     {

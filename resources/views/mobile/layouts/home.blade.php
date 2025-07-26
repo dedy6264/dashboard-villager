@@ -175,12 +175,12 @@
                 const merchantId=ref();
                 const mainDataTrx=ref({});
                 const fade=ref(false);
-                const refreshData=()=>{
+                const refreshData=()=>{//problem
                     axios.post("{{route('mobile.validate')}}",{},{
-                            headers: {
-                                Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
-                            }
-                        })
+                        headers: {
+                            Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`,
+                        }
+                    })
                     .then(response => {
                         outletName.value=response.data.outletName;
                         outletId.value=response.data.outletId;
@@ -220,12 +220,12 @@
                     });
                 };
                 const checkUser=()=>{
-                    // console.log(localStorage.getItem("user")==null);
                     if(localStorage.getItem("user")==null){
+                        // console.log(localStorage.getItem("user"));
                         setTimeout(() => { window.location.href = "{{ route('mobile.login') }}"; }, 1000);
                     }else{
                         refreshData();
-                        getTrx();
+                        // getTrx();
                     }
                 };
                 onMounted(() => {

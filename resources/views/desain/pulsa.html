@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Web Mobile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
+            min-height: 100vh;
+        }
+
+        .app-header {
+            background: #fff;
+            border-bottom-left-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            padding: 1rem 1.5rem;
+        }
+
+        .logo-img {
+            height: 40px;
+        }
+
+        .card-form {
+            background: linear-gradient(90deg, #4f8cff 60%, #6dd5ed 100%);
+            color: #fff;
+            border-radius: 1.2rem;
+        }
+
+        .produk-card {
+            border-radius: 1rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .produk-card.selected {
+            border: 2px solid #4f8cff;
+            box-shadow: 0 0 0 2px #4f8cff33;
+        }
+
+        .produk-radio {
+            display: none;
+        }
+
+        .produk-label {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .telkomsel-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .navbar {
+            border-top-left-radius: 1.2rem;
+            border-top-right-radius: 1.2rem;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="mb-4 app-header d-flex align-items-center justify-content-between">
+        <img src="https://img.icons8.com/color/48/000000/rocket--v2.png" alt="Logo" class="logo-img">
+        <span class="fw-bold fs-5 text-primary">MyPayApp</span>
+    </div>
+
+    <div class="container pb-5">
+        <!-- Card: Form Input Konsumen & Produk -->
+        <div class="p-3 mb-4 shadow-sm card card-form">
+            <form id="formTransaksi">
+                <div class="mb-3">
+                    <label for="idKonsumen" class="text-white form-label fw-semibold">ID Konsumen / Nomor HP</label>
+                    <input type="text" class="form-control" id="idKonsumen" name="idKonsumen"
+                        placeholder="Masukkan ID Konsumen atau Nomor HP" required>
+                </div>
+                <div class="mb-3">
+                    <label class="text-white form-label fw-semibold">Pilih Denominasi Pulsa Telkomsel</label>
+                    <div class="row g-2">
+                        <!-- 20 Denominasi Pulsa Telkomsel -->
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel5" name="produk"
+                                value="Pulsa Telkomsel 5.000" required>
+                            <label for="telkomsel5" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 5.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel10" name="produk"
+                                value="Pulsa Telkomsel 10.000">
+                            <label for="telkomsel10" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 10.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel15" name="produk"
+                                value="Pulsa Telkomsel 15.000">
+                            <label for="telkomsel15" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 15.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel20" name="produk"
+                                value="Pulsa Telkomsel 20.000">
+                            <label for="telkomsel20" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 20.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel25" name="produk"
+                                value="Pulsa Telkomsel 25.000">
+                            <label for="telkomsel25" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 25.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel30" name="produk"
+                                value="Pulsa Telkomsel 30.000">
+                            <label for="telkomsel30" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 30.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel35" name="produk"
+                                value="Pulsa Telkomsel 35.000">
+                            <label for="telkomsel35" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 35.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel40" name="produk"
+                                value="Pulsa Telkomsel 40.000">
+                            <label for="telkomsel40" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 40.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel45" name="produk"
+                                value="Pulsa Telkomsel 45.000">
+                            <label for="telkomsel45" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 45.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel50" name="produk"
+                                value="Pulsa Telkomsel 50.000">
+                            <label for="telkomsel50" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 50.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel55" name="produk"
+                                value="Pulsa Telkomsel 55.000">
+                            <label for="telkomsel55" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 55.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel60" name="produk"
+                                value="Pulsa Telkomsel 60.000">
+                            <label for="telkomsel60" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 60.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel65" name="produk"
+                                value="Pulsa Telkomsel 65.000">
+                            <label for="telkomsel65" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 65.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel70" name="produk"
+                                value="Pulsa Telkomsel 70.000">
+                            <label for="telkomsel70" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 70.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel75" name="produk"
+                                value="Pulsa Telkomsel 75.000">
+                            <label for="telkomsel75" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 75.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel80" name="produk"
+                                value="Pulsa Telkomsel 80.000">
+                            <label for="telkomsel80" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 80.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel85" name="produk"
+                                value="Pulsa Telkomsel 85.000">
+                            <label for="telkomsel85" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 85.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel90" name="produk"
+                                value="Pulsa Telkomsel 90.000">
+                            <label for="telkomsel90" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 90.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel95" name="produk"
+                                value="Pulsa Telkomsel 95.000">
+                            <label for="telkomsel95" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 95.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <input type="radio" class="produk-radio" id="telkomsel100" name="produk"
+                                value="Pulsa Telkomsel 100.000">
+                            <label for="telkomsel100" class="produk-label">
+                                <div class="p-3 text-center card produk-card">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Telkomsel_2021_icon.svg"
+                                                alt="Telkomsel" class="telkomsel-icon">
+                                        </div>
+                                        <div class=" col-10">
+                                            <div class="mt-2 fw-semibold">Pulsa Telkomsel</div>
+                                            <div class="small">Rp 100.000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- END 20 DENOMINASI -->
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-light fw-bold text-primary">Beli Sekarang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom Navbar -->
+    <nav class="px-0 bg-white navbar navbar-light fixed-bottom">
+        <div class="container d-flex justify-content-around">
+            <a href="file:///Users/dedykusworo/mine/dashboard-villager/resources/views/desain/home.html"
+                class="text-center text-decoration-none text-primary">
+                <i class="bi bi-house-door-fill fs-4"></i>
+                <div class="small">Home</div>
+            </a>
+            <a href="file:///Users/dedykusworo/mine/dashboard-villager/resources/views/desain/history.html"
+                class="text-center text-decoration-none text-secondary">
+                <i class="bi bi-clock-history fs-4"></i>
+                <div class="small">History</div>
+            </a>
+            <a href="file:///Users/dedykusworo/mine/dashboard-villager/resources/views/desain/akun.html"
+                class="text-center text-decoration-none text-secondary">
+                <i class="bi bi-person-circle fs-4"></i>
+                <div class="small">Akun</div>
+            </a>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Highlight selected produk card
+        document.querySelectorAll('.produk-radio').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.produk-card').forEach(function (card) {
+                    card.classList.remove('selected');
+                });
+                if (radio.checked) {
+                    radio.closest('.col-6, .col-md-4').querySelector('.produk-card').classList.add('selected');
+                }
+            });
+        });
+
+        // Optional: Handle form submit
+        document.getElementById('formTransaksi').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Transaksi berhasil!\nID Konsumen: ' + this.idKonsumen.value + '\nProduk: ' + this.produk.value);
+        });
+    </script>
+</body>
+
+</html>

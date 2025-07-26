@@ -1,0 +1,82 @@
+body {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
+    min-height: 100vh;
+}
+
+
+.app-header {
+    background: #fff;
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    padding: 1rem 1.5rem;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.card-balance {
+    background: linear-gradient(90deg, #4f8cff 60%, #6dd5ed 100%);
+    color: #fff;
+    border-radius: 1.2rem;
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+    background: #f0f4ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.carousel-promo img {
+    border-radius: 1rem;
+    object-fit: cover;
+    height: 120px;
+}
+
+.navbar {
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+/* akun */
+.profile-card,
+.setting-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    margin-bottom: 1.5rem;
+}
+
+
+.setting-item {
+    transition: background 0.2s;
+}
+
+.setting-item:active {
+    background: #f0f4ff;
+}
+
+/* history */
+.filter-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.transaction-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    margin-bottom: 1rem;
+}
+
+/* ------------ */

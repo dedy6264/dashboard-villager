@@ -11,6 +11,7 @@ class CreateTableTiaraTable extends Migration
      *
      * @return void
      */
+     //untuk telegram tiara
     public function up()
     {
         Schema::create('divisions', function (Blueprint $table) {

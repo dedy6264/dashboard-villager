@@ -166,6 +166,20 @@ Route::get('/abc',
     function () {
        dd(request());
     })->name('abc');
-
+Route::get('/viller/home',function(){
+    return view('desain/viller/home/index');
+})->name('viller.home');
+Route::get('/viller/history',function(){
+    return view('desain/viller/history/index');
+})->name('viller.history');
+Route::get('/viller/account',function(){
+    return view('desain/viller/account/index');
+})->name('viller.account');
+Route::get('/viller/login',function(){
+    return view('desain/viller/login');
+})->name('viller.login');
+Route::get('/viller/loading',function(){
+    return view('desain/viller/loading');
+})->name('viller.loading');
 
 require __DIR__.'/auth.php';
