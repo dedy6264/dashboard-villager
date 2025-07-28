@@ -166,12 +166,27 @@ Route::get('/abc',
     function () {
        dd(request());
     })->name('abc');
+
 Route::get('/viller/home',function(){
     return view('desain/viller/home/index');
 })->name('viller.home');
 Route::get('/viller/history',function(){
     return view('desain/viller/history/index');
 })->name('viller.history');
+Route::get('/viller/inquiry',function(){
+    return view('desain/viller/inquiry/success');
+})->name('viller.inquiry');
+Route::get('/viller/inquiry/success',function(){
+    return view('desain/viller/inquiry/inqSuccess');
+})->name('viller.inquirysuccess');
+Route::get('/viller/inquiry/pin',function(){
+    return view('desain/viller/inquiry/pin');
+})->name('viller.inquirypin');
+Route::get('/viller/paymentsuccess',function(){
+    return view('desain/viller/payment/success');
+})->name('viller.paymentsuccess');
+
+
 Route::get('/viller/account',function(){
     return view('desain/viller/account/index');
 })->name('viller.account');

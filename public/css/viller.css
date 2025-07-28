@@ -80,3 +80,13 @@ body {
 }
 
 /* ------------ */
+.btn-light {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-light:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.02);
+}

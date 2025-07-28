@@ -18,45 +18,65 @@
             <!-- Card: Kategori Produk -->
             <div class="p-3 mb-4 shadow-sm card">
                 <div class="mb-3 fw-semibold">Kategori Produk</div>
-                <div class="text-center row row-cols-5 g-2">
+                <div class="text-center row row-cols-4 g-2">
                     <div class="col">
-                        <div class="category-icon text-primary"><i class="bi bi-phone-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-primary"><i class="bi bi-phone-fill"></i></div>
+                        </button>
                         <div class="small">Pulsa</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-success"><i class="bi bi-lightning-charge-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-success"><i class="bi bi-lightning-charge-fill"></i></div>
+                        </button>
                         <div class="small">Listrik</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-danger"><i class="bi bi-shield-shaded"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-danger"><i class="bi bi-shield-shaded"></i></div>
+                        </button>
                         <div class="small">Asuransi</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-warning"><i class="bi bi-wifi"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-warning"><i class="bi bi-wifi"></i></div>
+                        </button>
                         <div class="small">Paket Data</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-info"><i class="bi bi-tv-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-info"><i class="bi bi-tv-fill"></i></div>
+                        </button>
                         <div class="small">TV Kabel</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-primary"><i class="bi bi-droplet-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-primary"><i class="bi bi-droplet-fill"></i></div>
+                        </button>
                         <div class="small">PDAM</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-success"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-success"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                        </button>
                         <div class="small">E-Money</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-danger"><i class="bi bi-globe"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-danger"><i class="bi bi-globe"></i></div>
+                        </button>
                         <div class="small">Internet</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-warning"><i class="bi bi-mortarboard-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-warning"><i class="bi bi-mortarboard-fill"></i></div>
+                        </button>
                         <div class="small">Pendidikan</div>
                     </div>
                     <div class="col">
-                        <div class="category-icon text-info"><i class="bi bi-ticket-perforated-fill"></i></div>
+                        <button type="button" class="py-3 btn `w-100" @click="handlePulsa()">
+                            <div class="category-icon text-info"><i class="bi bi-ticket-perforated-fill"></i></div>
+                        </button>
                         <div class="small">Tiket</div>
                     </div>
                 </div>
@@ -120,4 +140,24 @@
                 </div>
             </div>
         </div>
+@endsection
+@section('customScript')
+    <script>
+        const{createApp, ref,onMounted,nextTick }=Vue;
+
+        createApp({
+            setup(){
+                const handlePulsa=()=>{//problem
+                        setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
+                };
+                // onMounted(() => {
+                //     checkUser();
+                //     });
+
+                return{
+                    handlePulsa,
+                };
+            }
+        }).mount("#app");
+    </script>
 @endsection
