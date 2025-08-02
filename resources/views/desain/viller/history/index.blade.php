@@ -21,7 +21,7 @@
         <!-- List Transaksi -->
         <div>
             <!-- Transaksi 1 -->
-            <div class="p-3 transaction-card d-flex align-items-center">
+            <div class="p-3 transaction-card d-flex align-items-center" @click="btnhandle()">
                 <div class="p-3 bg-primary bg-opacity-10 rounded-circle me-3">
                     <i class="bi bi-phone-fill fs-3 text-primary"></i>
                 </div>
@@ -172,4 +172,24 @@
             </div>
         </div>
     </div>
+@endsection
+@section('customScript')
+    <script>
+        const{createApp, ref,onMounted,nextTick }=Vue;
+
+        createApp({
+            setup(){
+                const btnhandle=()=>{//problem
+                        setTimeout(() => { window.location.href = "{{ route('viller.paymentsuccess') }}"; }, 1000);
+                };
+                // onMounted(() => {
+                //     checkUser();
+                //     });
+
+                return{
+                    btnhandle,
+                };
+            }
+        }).mount("#app");
+    </script>
 @endsection

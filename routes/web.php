@@ -16,6 +16,7 @@ use App\Http\Controllers\Mobile\MobileLoginController;
 use App\Http\Controllers\Mobile\MobileHomeController;
 use App\Http\Controllers\Mobile\MobileProductController;
 use App\Http\Controllers\Mobile\MobileHistoryController;
+use App\Http\Controllers\Viller\VillerController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -167,12 +168,19 @@ Route::get('/abc',
        dd(request());
     })->name('abc');
 
-Route::get('/viller/home',function(){
-    return view('desain/viller/home/index');
-})->name('viller.home');
-Route::get('/viller/history',function(){
-    return view('desain/viller/history/index');
-})->name('viller.history');
+Route::get('/viller/login',function(){
+    return view('viller/login');
+})->name('viller.login');
+Route::post('/viller/signin',[VillerController::class,'signin'])->name('viller.signin');
+Route::get('/viller/home',[VillerController::class,'index'])->name('viller.home');
+Route::post('/viller/getuser',[VillerController::class,'getuser'])->name('viller.getuser');
+Route::post('/viller/gettrx',[VillerController::class,'gettrx'])->name('viller.gettrx');
+Route::post('/viller/trxdetail',[VillerController::class,'trxdetail'])->name('viller.trxdetail');
+Route::get('/viller/history',[VillerController::class,'history'])->name('viller.history');
+
+// Route::get('/viller/history',function(){
+//     return view('desain/viller/history/index');
+// })->name('viller.history');
 Route::get('/viller/inquiry',function(){
     return view('desain/viller/inquiry/success');
 })->name('viller.inquiry');
@@ -190,9 +198,9 @@ Route::get('/viller/paymentsuccess',function(){
 Route::get('/viller/account',function(){
     return view('desain/viller/account/index');
 })->name('viller.account');
-Route::get('/viller/login',function(){
-    return view('desain/viller/login');
-})->name('viller.login');
+// Route::get('/viller/login',function(){
+//     return view('desain/viller/login');
+// })->name('viller.login');
 Route::get('/viller/loading',function(){
     return view('desain/viller/loading');
 })->name('viller.loading');

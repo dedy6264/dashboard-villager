@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrasi Akun</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #ff6e7f, #bfe9ff);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .card .header i {
+            font-size: 22px;
+            color: #ff6e7f;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .card .header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #ff6e7f;
+            box-shadow: 0 0 0 2px rgba(255, 110, 127, 0.2);
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            color: #888;
+            cursor: pointer;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            background: #ff6e7f;
+            color: white;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #ff4e63;
+        }
+
+        .bottom-text {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .bottom-text a {
+            color: #ff6e7f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 25px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="header">
+            <i class="bi bi-arrow-left" onclick="window.history.back()"></i>
+            <h2>Registrasi</h2>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <div class="input-wrapper">
+                    <input type="text" id="name" placeholder="Masukkan nama lengkap" required />
+                    <i class="bi bi-person-circle"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Nomor Telepon</label>
+                <div class="input-wrapper">
+                    <input type="tel" id="phone" placeholder="08xxxxxxxxxx" required />
+                    <i class="bi bi-telephone-fill"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Tanggal Lahir</label>
+                <div class="input-wrapper">
+                    <input type="date" id="dob" required />
+                    <i class="bi bi-calendar-event"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pin">PIN (6 Digit)</label>
+                <div class="input-wrapper">
+                    <input type="password" id="pin" maxlength="6" pattern="\d{6}" required />
+                    <i class="bi bi-eye-slash toggle-password" onclick="togglePassword('pin', this)"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPin">Ulangi PIN</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirmPin" maxlength="6" pattern="\d{6}" required />
+                    <i class="bi bi-eye-slash toggle-password" onclick="togglePassword('confirmPin', this)"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">DAFTAR</button>
+        </form>
+
+        <div class="bottom-text">
+            Sudah punya akun? <a href="#">Masuk</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id, icon) {
+            const input = document.getElementById(id);
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            icon.classList.toggle('bi-eye');
+            icon.classList.toggle('bi-eye-slash');
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const pin = document.getElementById('pin').value;
+            const confirmPin = document.getElementById('confirmPin').value;
+
+            if (pin !== confirmPin) {
+                alert('PIN tidak cocok!');
+                return;
+            }
+
+            // Lanjutkan ke backend atau aksi selanjutnya
+            alert('Registrasi berhasil!');
+        });
+    </script>
+</body>
+
+</html>
