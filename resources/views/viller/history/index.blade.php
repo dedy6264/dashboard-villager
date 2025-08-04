@@ -98,11 +98,15 @@
                         }
                     })
                     .then(response => {
-                        // console.log(":::::",response.data.data);
+                        // console.log(":::::",response.data);
+                        if(response.data.data===null){
+                            listTrx.value=[];
+                            return
+                        }
                         listTrx.value=response.data.data.filter(trx => ['00', '02','03'].includes(trx.statusCode));
                     })
                     .catch(error => {
-                        console.error(" getTrx Error fetching data:", error.response.data.raw.message);
+                        console.error(" getTrx Error fetching data:", error.response);
                         if (error.response.data.raw.message === "invalid or expired jwt") {
                             localStorage.removeItem("user");
                             window.location.href = "{{ route('viller.login') }}";
@@ -142,8 +146,6 @@
                     }
                 };
                 const openComplainDialog=(trx)=> {
-                    // contoh fungsi: buka modal, redirect, dsb
-                    // console.log('Status 03, buka form komplain untuk:', trx);
                      axios.post("{{route('viller.advice')}}",{
                         referenceNumber: trx.referenceNumber,
                      },{
@@ -153,7 +155,7 @@
                     })
                     .then(response => {
                         console.log(" response fetching data:", response.data.message);
-                        if (response.data.message === "PAYMENT" || response.data.message === "FAILED") {
+                        if (response.data.message === "00" || response.data.message === "03") {
                             // window.location.reload();
                         getTrx();
                             console.log("trx ok");

@@ -123,41 +123,48 @@
             <!-- Card: History Transaksi Terakhir -->
             <div class="p-3 mb-4 shadow-sm card">
                 <div class="mb-2 fw-semibold">Transaksi Terakhir</div>
+                <template v-if="lastTrx && lastTrx.length">
                <div
                 class="d-flex align-items-center"
-                v-if="lastTrx"
+                {{-- v-if="lastTrx" --}}
                 v-for="(trx, index) in lastTrx"
                 :key="index"
                 >
-                <form
-                    v-if="trx.statusCode === '00' || trx.statusCode === '03'"
-                    :action="'{{ route('viller.trxdetail') }}'"
-                    method="POST"
-                    @click="$event.currentTarget.submit()"
-                    class="d-flex align-items-center w-100"
-                >
-                    @csrf
-                    <input type="hidden" name="id" :value="trx.id" />
-                    <input v-if="token" type="hidden" name="bearerToken" :value="token" />
-                    <div class="d-flex justify-content-center align-items-center bg-primary bg-opacity-10 rounded-circle me-3" style="width: 56px; height: 56px;">
-                    <i class="bi bi-phone-fill fs-3 text-primary"></i>
-                    </div>
+                    <form
+                        v-if="trx.statusCode === '00' || trx.statusCode === '03'"
+                        :action="'{{ route('viller.trxdetail') }}'"
+                        method="POST"
+                        @click="$event.currentTarget.submit()"
+                        class="d-flex align-items-center w-100"
+                    >
+                        @csrf
+                        <input type="hidden" name="id" :value="trx.id" />
+                        <input v-if="token" type="hidden" name="bearerToken" :value="token" />
+                        <div class="d-flex justify-content-center align-items-center bg-primary bg-opacity-10 rounded-circle me-3" style="width: 56px; height: 56px;">
+                        <i class="bi bi-phone-fill fs-3 text-primary"></i>
+                        </div>
 
 
-                    <div class="flex-grow-1">
-                    <div class="text-sm fw-semibold">@{{ trx.productName }}</div>
-                    <div class="small text-muted">@{{ trx.customerId }}</div>
-                    <div class="small text-success">@{{ trx.statusDesc }}</div>
-                    </div>
+                        <div class="flex-grow-1">
+                        <div class="text-sm fw-semibold">@{{ trx.productName }}</div>
+                        <div class="small text-muted">@{{ trx.customerId }}</div>
+                        <div class="small text-success">@{{ trx.statusDesc }}</div>
+                        </div>
 
-                    <div class="text-end">
-                    <div class="fw-bold text-primary">@{{ formatCurrency(trx.transactionTotalAmount) }}</div>
-                    <div class="small text-muted">@{{ formatDate(trx.updatedAt) }}</div>
-                    </div>
-                </form>
-                <div v-else><p>wah, belum ada transaksi nih...</p></div>
+                        <div class="text-end">
+                        <div class="fw-bold text-primary">@{{ formatCurrency(trx.transactionTotalAmount) }}</div>
+                        <div class="small text-muted">@{{ formatDate(trx.updatedAt) }}</div>
+                        </div>
+                    </form>
+                    <div v-else><p>wah, belum ada transaksi nih...</p></div>
                 </div>
+                </template>
 
+                <template v-else>
+                <div >
+                Tidak ada transaksi terakhir.
+                </div>
+                </template>
             </div>
         </div>
 @endsection
@@ -187,6 +194,8 @@
                     .then(response => {
                         getTrx();
                         name.value=response.data.data.name;
+                        sessionStorage.removeItem("userData");
+                        sessionStorage.setItem('userData', JSON.stringify(response.data.data));
                     })
                     .catch(error => {
                         // console.error("Error fetching data:", error.response.data.error);
@@ -210,7 +219,7 @@
                         lastTrx.value=response.data.data;
                     })
                     .catch(error => {
-                        console.error(" getTrx Error fetching data:", error.response.data.error);
+                        console.error(" getTrx Error fetching data:", error);
                     });
                 };
                 const formatCurrency=(value)=> {

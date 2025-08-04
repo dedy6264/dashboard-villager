@@ -187,6 +187,9 @@ Route::post('/viller/getproductbyreference',[VillerController::class,'getproduct
 Route::get('/viller/successpaymentpage',function(){
     return view('viller/history/payment');
 })->name('viller.successpaymentpage');
+Route::get('/viller/account',function(){
+    return view('viller/account/index');
+})->name('viller.account');
 // Route::get('/viller/history',function(){
 //     return view('desain/viller/history/index');
 // })->name('viller.history');
@@ -207,9 +210,7 @@ Route::get('/viller/paymentsuccess',function(){
 })->name('viller.paymentsuccess');
 
 
-Route::get('/viller/account',function(){
-    return view('desain/viller/account/index');
-})->name('viller.account');
+
 // Route::get('/viller/login',function(){
 //     return view('desain/viller/login');
 // })->name('viller.login');

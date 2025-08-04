@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <style>
         body {
             background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
@@ -79,13 +80,17 @@
             border-color: #38a169;
             color: #22543d;
         }
+        .capture-hide {
+            display: none !important;
+        }
+
     </style>
 </head>
 
 <body>
     <div id="app">
         <div class="container pb-5">
-            <div class="mx-auto inquiry-card" style="max-width: 440px;">
+            <div class="mx-auto inquiry-card" style="max-width: 440px;" id="payment-receipt">
                 <div class="mb-4 text-center">
                     <div class="mb-2 " :class="{
                         'success-icon': dataTrx.statusCode === '00',
@@ -114,7 +119,7 @@
                         <tbody>
                             <tr>
                                 <td>Nomor HP</td>
-                                <td class="text-end fw-semibold">@{{dataTrx.customerId}}</td>
+                                <td class="text-end fw-semibold">@{{dataTrx.customerId ?? dataTrx.subscriberNumber}}</td>
                             </tr>
                             <tr>
                                 <td>Nominal</td>
@@ -126,7 +131,13 @@
                             </tr>
                             <tr>
                                 <td>Total Bayar</td>
-                                <td class="text-end fw-bold text-success">@{{formatCurrency(dataTrx.transactionTotalAmount)}}</td>
+                                <td class="text-end fw-bold text-success" 
+                                :class="{
+                                        'text-success':dataTrx.statusCode==='00',
+                                        'text-warning':dataTrx.statusCode==='02',
+                                        'text-danger':dataTrx.statusCode==='03',
+                                }"
+                                >@{{formatCurrency(dataTrx.transactionTotalAmount)}}</td>
                             </tr>
                             <tr>
                                 <td>Tanggal</td>
@@ -139,26 +150,28 @@
                         </tbody>
                     </table>
                 </div>
+                {{-- <template v-if="!iscapture"> --}}
                 <div class="gap-2 mb-3 d-grid">
-                    <a href="#" class="btn btn-outline-success">
+                    {{-- <a href="#" class="btn btn-outline-success">
                         <i class="bi bi-receipt"></i> Lihat Bukti Pembayaran
-                    </a>
-                    <a href="{{ route('viller.home') }}" class="btn btn-outline-secondary">
+                    </a> --}}
+                    <a href="{{ route('viller.home') }}" class="btn btn-outline-secondary" v-show="!iscapture">
                         <i class="bi bi-arrow-left"></i> Kembali ke Beranda
                     </a>
                 </div>
-                <div class="mb-2 text-center text-muted small">Atau pilih opsi lain:</div>
+                <div class="mb-2 text-center text-muted small" v-show="!iscapture">Atau pilih opsi lain:</div>
                 <div>
-                    <a href="#" class="option-link">
+                    <a href="#"  class="option-link" @click.prevent="shareReceipt" v-show="!iscapture">
                         <i class="bi bi-share"></i> Bagikan Bukti Pembayaran
                     </a>
-                    <a href="#" class="option-link">
+                    {{-- <a href="#" class="option-link">
                         <i class="bi bi-phone"></i> Beli Pulsa Lagi
-                    </a>
-                    <a href="#" class="option-link">
+                    </a> --}}
+                    <a href="{{ route('viller.history') }}" class="option-link" v-show="!iscapture">
                         <i class="bi bi-clock-history"></i> Lihat Riwayat Transaksi
                     </a>
                 </div>
+            {{-- </template> --}}
             </div>
         </div>
     </div>
@@ -181,32 +194,74 @@
                         initialData = {};
                     }
                 }
+                const iscapture=ref(false);
                 const dataTrx = ref(initialData);
                 const name=ref("");
                 const handlePulsa=()=>{
-                        setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
+                    setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
                 };
                 const formatCurrency=(value)=> {
-                  if (!value) return 'Rp 0';
-                  return new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0,
-                  }).format(value);
+                    if (!value) return 'Rp 0';
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 0,
+                    }).format(value);
                 };
                 const formatDate=(dateStr)=> {
-                  const date = new Date(dateStr);
-                  const day = String(date.getDate()).padStart(2, '0');
-                  const month = String(date.getMonth() + 1).padStart(2, '0');
-                  const year = date.getFullYear();
-                  return `${day}/${month}/${year}`;
+                    const date = new Date(dateStr);
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
                 };
+                const shareReceipt = async () => {
+                    const element = document.getElementById("payment-receipt");
+
+                    try {
+                        iscapture.value = true;           // Hide elemen
+                        await nextTick();                 // Tunggu DOM update
+
+                        await new Promise(resolve => setTimeout(resolve, 100)); // Delay render (fix masalah muncul)
+
+                        const canvas = await html2canvas(element);
+                        const image = canvas.toDataURL("image/png");
+
+                        const blob = await (await fetch(image)).blob();
+                        const file = new File([blob], "bukti-pembayaran.png", { type: "image/png" });
+
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            await navigator.share({
+                                title: "Bukti Pembayaran",
+                                text: "Ini bukti pembayaran dari MyPayApp",
+                                files: [file],
+                            });
+                        } else {
+                            const link = document.createElement('a');
+                            link.href = image;
+                            link.download = 'bukti-pembayaran.png';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            alert("Gambar disimpan. Silakan bagikan manual.");
+                        }
+
+                    } catch (error) {
+                        console.error("Gagal membagikan:", error);
+                        alert("Terjadi kesalahan saat membagikan bukti.");
+                    } finally {
+                        iscapture.value = false; // Show kembali
+                    }
+                };
+
                 onMounted(() => {
                     // getUser();
                     console.log("dataTrx",dataTrx.value);
                 }) // Memanggil fungsi getuser saat komponen dimuat);
 
                 return{
+                    iscapture,
+                    shareReceipt,
                     formatDate,
                     formatCurrency,
                     handlePulsa,

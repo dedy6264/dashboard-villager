@@ -61,19 +61,19 @@
                         </tr>
                         <tr>
                         <td>Nominal</td>
-                        <td class="text-end fw-semibold">Rp @{{ detail.productPrice }}</td>
+                        <td class="text-end fw-semibold"> @{{ formatCurrency(detail.productPrice) }}</td>
                         </tr>
                         <tr>
                         <td>No Customer</td>
-                        <td class="text-end fw-semibold">Rp @{{ detail.subscriberNumber }}</td>
+                        <td class="text-end fw-semibold"> @{{ detail.subscriberNumber }}</td>
                         </tr>
                         <tr>
                         <td v-if="detail.productAdminFee">Biaya Admin</td>
-                        <td class="text-end fw-semibold" v-if="detail.productAdminFee">Rp @{{ detail.productAdminFee }}</td>
+                        <td class="text-end fw-semibold" v-if="detail.productAdminFee"> @{{ formatCurrency(detail.productAdminFee) }}</td>
                         </tr>
                         <tr>
                         <td>Total Bayar</td>
-                        <td class="text-end fw-bold text-success">Rp @{{ detail.transactionTotalAmount }}</td>
+                        <td class="text-end fw-bold text-success">@{{ formatCurrency(detail.transactionTotalAmount) }}</td>
                         </tr>
                     </tbody>
                     </table>
@@ -104,11 +104,6 @@
                 @keyup.enter="submitPin"
                 autofocus
             >
-            {{-- <div class="mt-3 d-grid">
-                <button @click="submitPin" :disabled="pin.length !== 6 || pinLoading" class="btn btn-primary">
-                @{{ pinLoading ? 'Memproses...' : 'Bayar' }}
-                </button>
-            </div> --}}
              <div class="gap-2 mt-3 d-grid">
                     <button @click="submitPin" :disabled="pin.length !== 6 || pinLoading"  class="btn btn-success">
                     <i class="bi bi-cash-coin"></i> 
@@ -230,7 +225,6 @@
                     const inquiryModal = bootstrap.Modal.getInstance(inquiryModalEl);
                     if (inquiryModal) inquiryModal.hide();
                 };
-
                 const submitPin = async () => {
                     if (pin.value.length !== 6) return;
 
@@ -251,18 +245,33 @@
                         sessionStorage.setItem('paymentData', JSON.stringify(userData));
                         // Misal berhasil, redirect ke halaman lain (contoh: halaman pembayaran sukses)
                             setTimeout(() => { window.location.href = "{{ route('viller.successpaymentpage') }}"; }, 2000);
-                        alert('sukksess');
-                    } catch (error) {
-                        alert('PIN salah atau gagal melakukan pembayaran');
+                            // alert('sukksess');
+                        } catch (error) {
+                            alert('PIN salah atau gagal melakukan pembayaran');
+                            setTimeout(() => { window.location.href = "{{ route('viller.home') }}"; }, 2000);
                         console.error(error);
                     } finally {
                         pinLoading.value = false;
                     }
                 };
-
+                 const formatCurrency=(value)=> {
+                  if (!value) return 'Rp 0';
+                  return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                  }).format(value);
+                };
+                const formatDate=(dateStr)=> {
+                    const date = new Date(dateStr);
+                    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+                    return date.toLocaleDateString('id-ID', options);
+                };
 
 
             return {
+                formatCurrency,
+                formatDate,
                 pin,
                 pinLoading,
                 submitPin,

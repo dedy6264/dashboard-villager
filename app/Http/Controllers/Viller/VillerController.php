@@ -159,7 +159,11 @@ class VillerController extends Controller
                     "statusCode"=>request()->statusCode ?? "",
                 ],
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrxs',$payload)->json();
+            if(request()->statusCode==""){
+                $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getHistory',$payload)->json();
+            }else{
+                $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrxs',$payload)->json();
+            }
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -567,23 +571,23 @@ class VillerController extends Controller
                     $userData = $response['result']['data'] ?? null;
                     return response()->json([
                         'success' => true,
-                        'message' => $response['statusMessage'],
+                        'message' => $response['statusCode'],
                         'data' => $userData
                     ]);
                 case '02':
-                    // Berhasil
+                    // Pending
                     $userData = $response['result']['data'] ?? null;
                     return response()->json([
                         'success' => true,
-                        'message' => $response['statusMessage'],
+                        'message' => $response['statusCode'],
                         'data' => $userData
                     ]);
                 case '03':
-                    // Berhasil
+                    // gagal
                     $userData = $response['result']['data'] ?? null;
                     return response()->json([
                         'success' => true,
-                        'message' => $response['statusMessage'],
+                        'message' => $response['statusCode'],
                         'data' => $userData
                     ]);
 

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - MyPayApp</title>
+     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -45,6 +47,7 @@
 </head>
 
 <body>
+    <div id="app">
     <div class="container pb-5">
         <!-- Card: Login Form -->
         <div class="p-4 mx-auto mt-5 shadow-sm card card-login" style="max-width: 400px;">
@@ -101,38 +104,33 @@
             </form>
         </div>
     </div>
-
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url('js/scripts.js')}}"></script>
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toastEl = document.getElementById('myToast');
-    if (!toastEl) return;
-    const toast = new bootstrap.Toast(toastEl);
-    toast.show();
-  });
-</script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastEl = document.getElementById('myToast');
+        if (!toastEl) return;
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    });
+    </script>
 
     <script>
-        // document.getElementById('formLogin').addEventListener('submit', function (e) {
-        //     e.preventDefault();
-        //     var username = this.username.value.trim();
-        //     var password = this.password.value.trim();
-        //     var alertSuccess = document.getElementById('alertLoginSuccess');
-        //     var alertFailed = document.getElementById('alertLoginFailed');
-        //     alertSuccess.style.display = 'none';
-        //     alertFailed.style.display = 'none';
-
-        //     // Demo: username 'admin', password '1234' dianggap benar
-        //     if (username !== '' && password !== '') {
-        //         // alertSuccess.style.display = 'block';
-        //         setTimeout(function () {
-        //             window.location.href = "{{ route('viller.signin') }}";
-        //         }, 2000);
-        //     } else {
-        //         alertFailed.style.display = 'block';
-        //     }
-        // });
+        const{createApp, ref,onMounted,nextTick }=Vue;
+        createApp({
+            setup(){
+            onMounted(() => {
+                if (!localStorage.getItem("user")) {
+                    sessionStorage.removeItem("userData");
+                }else{
+                    setTimeout(() => { window.location.href = "{{ route('viller.home') }}"; }, 5);
+                }
+            }) // Memanggil fungsi getuser saat komponen dimuat);
+            }
+        }).mount("#app");
     </script>
 </body>
 
 </html>
+ 
