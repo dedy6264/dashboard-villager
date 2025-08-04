@@ -29,9 +29,9 @@
     <div class="m-3">
         <hr>
     </div>
-    <div class="m-3 row" v-if="formInquiry.totalTrxAmount!==''">
+    <div class="m-3 row" v-if="formInquiry.transactionTotalAmount!==''">
         <div class="text-left col-4 bg-slate-300">Total</div>
-        <div class="bg-red-600 col-8 text-end">@{{formInquiry.totalTrxAmount}}</div>
+        <div class="bg-red-600 col-8 text-end">@{{formInquiry.transactionTotalAmount}}</div>
     </div>
     <div class=" bt-nav" style="margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px">
         <div class="row">

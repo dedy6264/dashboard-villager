@@ -98,6 +98,7 @@
                         }
                     })
                     .then(response => {
+                        // console.log(":::::",response.data.data);
                         listTrx.value=response.data.data.filter(trx => ['00', '02','03'].includes(trx.statusCode));
                     })
                     .catch(error => {

@@ -200,6 +200,7 @@
                     token.value=JSON.parse(localStorage.getItem("user")).token;
                     axios.post("{{route('viller.gettrx')}}",{
                         "limit": 1,
+                        "statusCode":"00",
                     },{
                         headers: {
                             Authorization: `Bearer ${token.value}`,

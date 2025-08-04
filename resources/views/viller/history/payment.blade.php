@@ -47,6 +47,18 @@
             margin: 0 auto;
             font-size: 2.5rem;
         }
+        .pending-icon {
+            background: linear-gradient(45deg, #d1c44f 0%, #a18e38 100%);
+            color: #fff;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto;
+            font-size: 2.5rem;
+        }
 
         .option-link {
             display: flex;
@@ -75,11 +87,27 @@
         <div class="container pb-5">
             <div class="mx-auto inquiry-card" style="max-width: 440px;">
                 <div class="mb-4 text-center">
-                    <div class="mb-2 " :class="dataTrx.statusCode=='00'? 'success-icon':'failed-icon'">
-                        <i class="bi " :class="dataTrx.statusCode=='00'? 'bi-check-circle':'bi-x-circle'"></i>
+                    <div class="mb-2 " :class="{
+                        'success-icon': dataTrx.statusCode === '00',
+                        'pending-icon': dataTrx.statusCode === '02',
+                        'failed-icon': dataTrx.statusCode === '03',
+                    }">
+                        <i class="bi " :class="{
+                            'bi-check-circle':dataTrx.statusCode==='00',
+                            'bi-clock':dataTrx.statusCode==='02',
+                            'bi-x-circle':dataTrx.statusCode==='03',
+                    }"></i>
                     </div>
-                    <h4 class="mt-2 mb-1 fw-bold">Pembayaran @{{ dataTrx.statusCode=="00" ? "Berhasil":"Gagal"}}</h4>
-                    <div class="text-muted small">Transaksi pembayaran Anda telah @{{ dataTrx.statusCode=="00" ? "berhasil":"gagal"}}.</div>
+                    <h4 class="mt-2 mb-1 fw-bold">Pembayaran @{{ 
+                        dataTrx.statusCode === "00" ? "Berhasil" :
+                        dataTrx.statusCode === "02" ? "Pending" :
+                        dataTrx.statusCode === "03" ? "Gagal" : "Tidak Diketahui"
+                    }}</h4>
+                    <div class="text-muted small">Transaksi pembayaran Anda telah @{{ 
+                        dataTrx.statusCode === "00" ? "Berhasil" :
+                        dataTrx.statusCode === "02" ? "Pending" :
+                        dataTrx.statusCode === "03" ? "Gagal" : "Tidak Diketahui"
+                    }}.</div>
                 </div>
                 <div class="mb-4">
                     <table class="table mb-0 table-borderless" v-if="dataTrx">

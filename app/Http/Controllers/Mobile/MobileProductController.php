@@ -258,7 +258,7 @@ class MobileProductController extends Controller
         //         "productPrice"=>22500,
         //         "productAdminFee"=>0,
         //         "productMerchantFee"=>0,
-        //         "totalTrxAmount"=>0,
+        //         "transactionTotalAmount"=>0,
         //         "billInfo"=>[
         //         "billDesc"=>[
         //         "subscriberName"=>"Test PLN",
@@ -329,7 +329,7 @@ class MobileProductController extends Controller
         //     "productPrice"=>22500,
         //     "productAdminFee"=>0,
         //     "productMerchantFee"=>0,
-        //     "totalTrxAmount"=>22500,
+        //     "transactionTotalAmount"=>22500,
         //     "billInfo"=>[
         //     "billDesc"=>[
         //     "customerId"=>"",

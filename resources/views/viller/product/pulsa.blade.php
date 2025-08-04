@@ -73,7 +73,7 @@
                         </tr>
                         <tr>
                         <td>Total Bayar</td>
-                        <td class="text-end fw-bold text-success">Rp @{{ detail.totalTrxAmount }}</td>
+                        <td class="text-end fw-bold text-success">Rp @{{ detail.transactionTotalAmount }}</td>
                         </tr>
                     </tbody>
                     </table>

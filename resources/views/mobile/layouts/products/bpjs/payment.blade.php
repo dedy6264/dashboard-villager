@@ -13,7 +13,7 @@
             </div>
         <h1 class="text-center header-payment">@{{additionalData.statusTrx}}</h1>
         <h2 class=" page-confirm" v-if="resData.productName!==''">@{{resData.productName}}</h2>
-        <h4 class=" page-confirm" v-if="resData.totalTrxAmount!==''">@{{resData.totalTrxAmount}}</h4>
+        <h4 class=" page-confirm" v-if="resData.transactionTotalAmount!==''">@{{resData.transactionTotalAmount}}</h4>
         <div class="m-3 row" v-if="resData.referenceNumber!==''">
             <div class="text-left col-4 bg-slate-300">No Reff</div>
             <div class="bg-red-600 col-8 text-end">@{{resData.referenceNumber}}</div>
@@ -55,9 +55,9 @@
         <div class="m-3">
             <hr>
         </div>
-        <div class="m-3 row" v-if="resData.totalTrxAmount!==''">
+        <div class="m-3 row" v-if="resData.transactionTotalAmount!==''">
             <div class="text-left col-4 bg-slate-300">Total</div>
-            <div class="bg-red-600 col-8 text-end">@{{resData.totalTrxAmount}}</div>
+            <div class="bg-red-600 col-8 text-end">@{{resData.transactionTotalAmount}}</div>
         </div>
         </div>
         <div class="" style="justify-content:center;margin-left: 50px;margin-right:50px;margin-bottom:50px;margin-top:25px;border-top:1px">

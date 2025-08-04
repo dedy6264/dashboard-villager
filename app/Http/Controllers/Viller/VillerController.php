@@ -151,10 +151,13 @@ class VillerController extends Controller
                 "columns"=>"",
                 "search"=>"",
                 "order"=>"",
-                "sort"=>"",
+                "sort"=>"desc",
                 "startDate"=>"",
                 "endDate"=>"",
                 "draw"=>0,
+                "filter"=>[
+                    "statusCode"=>request()->statusCode ?? "",
+                ],
             ];
             $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrxs',$payload)->json();
             // dd($response);
@@ -171,12 +174,6 @@ class VillerController extends Controller
                 case '00':
                     // Berhasil
                     $userData = $response['result']['data'] ?? null;
-                    // $suggestData=[
-                    //     'cmd'=>'set',
-                    //     'token'=>$response['result']['token'],
-                    //     // 'endpoint'=>"home",
-                    // ];
-                    // return view('viller.loading',compact('suggestData'));
                     return response()->json([
                         'success' => true,
                         'message' => $response['statusMessage'],
@@ -412,6 +409,11 @@ class VillerController extends Controller
                 case '00':
                     // payBerhasil
                     $userData = $response['result'] ?? null;
+                    $userData = array_merge((array) ($response['result'] ?? []), [
+                        'statusCode' => $response['statusCode'],
+                        'statusDesc' => $response['statusDesc'],
+                        'statusMessage' => $response['statusMessage'],
+                    ]);
                     return response()->json([
                         'success' => true,
                         'message' => $response['statusMessage'],
@@ -420,6 +422,11 @@ class VillerController extends Controller
                 case '02':
                     // pay failed
                     $userData = $response['result'] ?? null;
+                     $userData = array_merge((array) ($response['result'] ?? []), [
+                        'statusCode' => $response['statusCode'],
+                        'statusDesc' => $response['statusDesc'],
+                        'statusMessage' => $response['statusMessage'],
+                    ]);
                     return response()->json([
                         'success' => true,
                         'message' => $response['statusMessage'],
@@ -428,6 +435,12 @@ class VillerController extends Controller
                 case '03':
                     // pay pending
                     $userData = $response['result'] ?? null;
+                     $userData = array_merge((array) ($response['result'] ?? []), [
+                        'statusCode' => $response['statusCode'],
+                        'statusDesc' => $response['statusDesc'],
+                        'statusMessage' => $response['statusMessage'],
+                    ]);
+                    dd($userData);
                     return response()->json([
                         'success' => true,
                         'message' => $response['statusMessage'],

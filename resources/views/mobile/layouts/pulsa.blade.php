@@ -101,7 +101,7 @@
                     productPrice:0,
                     productAdminFee:0,
                     productMerchantFee:0,
-                    totalTrxAmount:0,
+                    transactionTotalAmount:0,
                     pageInq:false,
                 });
                 const payment=()=>{
@@ -123,7 +123,7 @@
                             formInquiry.value.productPrice=response.data.result.productPrice;
                             formInquiry.value.productAdminFee=response.data.result.productAdminFee;
                             formInquiry.value.productMerchantFee=response.data.result.productMerchantFee;
-                            formInquiry.value.totalTrxAmount=response.data.result.totalTrxAmount;
+                            formInquiry.value.transactionTotalAmount=response.data.result.transactionTotalAmount;
                             formInquiry.value.sn=response.data.result.billInfo.sn;
                             form.value.pagePayment=true;
                             switch (response.data.statusCode) {
@@ -175,7 +175,7 @@
                             formInquiry.value.productPrice=response.data.result.productPrice;
                             formInquiry.value.productAdminFee=response.data.result.productAdminFee;
                             formInquiry.value.productMerchantFee=response.data.result.productMerchantFee;
-                            formInquiry.value.totalTrxAmount=response.data.result.totalTrxAmount;
+                            formInquiry.value.transactionTotalAmount=response.data.result.transactionTotalAmount;
                             // mainData.value=response.data.data;
                             form.value.pageInq=true;
                             form.value.btnInq=true;
