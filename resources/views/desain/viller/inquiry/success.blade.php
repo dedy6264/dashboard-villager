@@ -38,27 +38,40 @@
                     <h5 class="mt-3 mb-1 fw-semibold">Pembelian Pulsa</h5>
                     <div class="text-muted small">Isi nomor HP dan pilih nominal pulsa</div>
                 </div>
-                <form>
+                <form @submit.prevent="btnhandle">
                     <div class="mb-3">
                         <label for="nomorHp" class="form-label small">Nomor HP</label>
-                        <input type="tel" class="form-control" id="nomorHp" placeholder="08xxxxxxxxxx" maxlength="13"
-                            required>
+                        <input type="tel" class="form-control" id="nomorHp" placeholder="08xxxxxxxxxx" maxlength="13" required />
                     </div>
                     <div class="mb-3">
                         <label for="nominalPulsa" class="form-label small">Nominal Pulsa</label>
                         <select class="form-select" id="nominalPulsa" required>
-                            <option value="" selected disabled>Pilih nominal</option>
-                            <option value="10000">Rp 10.000</option>
-                            <option value="20000">Rp 20.000</option>
-                            <option value="25000">Rp 25.000</option>
-                            <option value="50000">Rp 50.000</option>
-                            <option value="100000">Rp 100.000</option>
+                        <option value="" selected disabled>Pilih nominal</option>
+                        <option value="10000">Rp 10.000</option>
+                        <option value="20000">Rp 20.000</option>
+                        <option value="25000">Rp 25.000</option>
+                        <option value="50000">Rp 50.000</option>
+                        <option value="100000">Rp 100.000</option>
                         </select>
                     </div>
-                    <button type="button" class="mt-2 w-100 btn btn-primary" @click="btnhandle()">
+                    <button type="submit" class="mt-2 w-100 btn btn-primary">
                         <i class="bi bi-search"></i> Inquiry
                     </button>
                 </form>
+            </div>
+        </div>
+
+        <!-- Modal Loading -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background: transparent; box-shadow: none; border: none;">
+                    <div class="d-flex flex-column align-items-center justify-content-center"
+                        style="min-height: 200px;">
+                        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+                        <span class="mt-3 text-white fw-semibold">Memproses...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -69,8 +82,15 @@
 
         createApp({
             setup() {
-                const btnhandle = () => {//problem
-                    setTimeout(() => { window.location.href = "{{ route('viller.inquirysuccess') }}"; }, 1000);
+                 const btnhandle = () => {
+                    const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+                    loadingModal.show();
+
+                    // Simulasi proses inquiry
+                    setTimeout(() => {
+                    // loadingModal.hide();
+                    window.location.href = "{{ route('viller.inquirysuccess') }}";
+                    }, 2000);
                 };
                 // onMounted(() => {
                 //     checkUser();

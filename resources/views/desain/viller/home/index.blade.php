@@ -148,7 +148,7 @@
         createApp({
             setup(){
                 const handlePulsa=()=>{//problem
-                        setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
+                        setTimeout(() => { window.location.href = "{{ route('viller.pulsa') }}"; }, 1000);
                 };
                 // onMounted(() => {
                 //     checkUser();

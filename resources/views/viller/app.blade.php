@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html lang="""id">
-
-
-</html>
-
+<html lang="id">
 <head>
-    <meta charset="""UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Web Mobile</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -35,4 +31,4 @@
     @yield('customScript')
 </body>
 
-</htm>
+</html>

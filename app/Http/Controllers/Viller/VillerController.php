@@ -277,6 +277,329 @@ class VillerController extends Controller
     public function history(){
         return view('viller.history.index');
     }
+    public function getproductbyreference(){
+         try {
+            $token=request()->bearerToken();
+            $payload=[
+                "filter"=>[
+                "productReferenceId"=> request()->productReferenceId ?? "",
+                ],
+            ];
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/product/get',$payload)->json();
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    // dd($userData);
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function getprefix(){
+         try {
+            $token=request()->bearerToken();
+            $payload=[
+                "subscriberId"=> request()->subscriberId ?? "",
+            ];
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/helper/getReference',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    // dd($userData);
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function pulsa(){
+        return view('viller.product.pulsa');
+    }
+    public function payment(){
+        // dd(request()->all());
+         try {
+            $token=request()->bearerToken();
+            $payload=[
+                    "referenceNumber"=>request()->referenceNumber ?? "",
+                    "accountPin"=>request()->accountPin ?? "",
+            ];
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/payment',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // payBerhasil
+                    $userData = $response['result'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+                case '02':
+                    // pay failed
+                    $userData = $response['result'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+                case '03':
+                    // pay pending
+                    $userData = $response['result'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function inquiry(){
+         try {
+            $token=request()->bearerToken();
+            $payload=[
+                "productCode"=>request()->productCode,
+                "additionalField"=>[
+                    "periode"=>request()->periode ?? 0,
+                    "subscriberNumber"=>request()->subscriberNumber ?? "",
+                    "subscriberName"=>request()->subscriberName ?? "",
+                    "amount"=> request()->amount ?? 0,
+                ]
+            ];
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/inquiry',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '04':
+                    // inqBerhasil
+                    $userData = $response['result'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+                case '03':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function advice(){
+         try {
+            $token=request()->bearerToken();
+            $payload=[
+                "paymentMethodId"=>"",
+                "paymentMethodName"=>"",
+                "referenceNumber"=> request()->referenceNumber,
+                "accountNumber"=>"",
+                "accounrPin"=>"",
+            ];
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/advice',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+                case '02':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+                case '03':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
     public function create()
     {
         //

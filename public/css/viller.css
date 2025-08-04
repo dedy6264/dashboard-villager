@@ -45,7 +45,6 @@ body {
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
 }
 
-
 /* akun */
 .profile-card,
 .setting-card {
@@ -54,7 +53,6 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     margin-bottom: 1.5rem;
 }
-
 
 .setting-item {
     transition: background 0.2s;
@@ -87,6 +85,78 @@ body {
 .btn-light:hover {
     background-color: #f8f9fa;
     transform: scale(1.02);
+}
+
+.btn-trx {
+    background: #6d96f4;
+    border-radius: 1.2rem;
+    padding: 1rem;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-trx:hover {
+    background-color: #4d70d1;
+    transform: scale(1.02);
+}
+
+.card-form {
+    background: linear-gradient(90deg, #4f8cff 60%, #6dd5ed 100%);
+    color: #fff;
+    border-radius: 1.2rem;
+}
+
+.produk-card {
+    border-radius: 1rem;
+    transition: box-shadow 0.2s;
+}
+
+.produk-card.selected {
+    border: 2px solid #4f8cff;
+    box-shadow: 0 0 0 2px #4f8cff33;
+}
+
+.produk-radio {
+    display: none;
+}
+
+.produk-label {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.telkomsel-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.produk-card.selected {
+    border: 2px solid #0d6efd;
+    background: #eaf1ff;
+}
+
+.inquiry-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem 2rem;
+    margin-top: 3rem;
+}
+
+.success-icon {
+    background: linear-gradient(45deg, #4fd1c5 0%, #38a169 100%);
+    color: #fff;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto;
+    font-size: 2.5rem;
 }
 
 /* ------------ */

@@ -171,7 +171,7 @@
                 const token=ref("");
                 const lastTrx=ref({});
                 const handlePulsa=()=>{
-                        setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
+                        setTimeout(() => { window.location.href = "{{ route('viller.pulsa') }}"; }, 1000);
                 };
                 const getUser=()=>{
                     //validasi apakah user sudah login

@@ -2,45 +2,85 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inquiry Pulsa - MyPayApp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
         body {
             background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
             min-height: 100vh;
         }
 
+        .inquiry-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
         .inquiry-card {
             background: #fff;
-            border-radius: 1.2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border-radius: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
             padding: 2rem 1.5rem;
-            margin-top: 2rem;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inquiry-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .submit-button {
+            margin-top: 1rem;
+        }
+
+        @media (min-height: 700px) {
+            .inquiry-wrapper {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+
+            .inquiry-card {
+                padding: 2.5rem;
+            }
+        }
+    </style>
+    <style>
+        .modal-backdrop.show {
+            opacity: 0.3 !important;
         }
     </style>
 </head>
 
 <body>
-    <div class="container pb-5">
-        <!-- Inquiry Pulsa -->
-        <div class="mx-auto inquiry-card" style="max-width: 420px;">
+    <div class="inquiry-wrapper">
+        <div class="inquiry-card">
             <div class="mb-4 text-center">
-                <div class="p-3 bg-primary bg-opacity-10 rounded-circle d-inline-block">
-                    <i class="bi bi-phone-fill fs-2 text-primary"></i>
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle"
+                    style="width: 48px; height: 48px;">
+                    <i class="bi bi-phone-fill fs-4 text-primary"></i>
                 </div>
-                <h5 class="mt-3 mb-1 fw-semibold">Pembelian Pulsa</h5>
-                <div class="text-muted small">Isi nomor HP dan pilih nominal pulsa</div>
+                <h6 class="mt-3 mb-1 fw-semibold">Pembelian Pulsa</h6>
+                <p class="mb-0 text-muted small">Masukkan nomor HP dan pilih nominal pulsa</p>
             </div>
-            <form>
-                <div class="mb-3">
+
+
+            <form class="inquiry-form">
+                <div>
                     <label for="nomorHp" class="form-label small">Nomor HP</label>
                     <input type="tel" class="form-control" id="nomorHp" placeholder="08xxxxxxxxxx" maxlength="13"
-                        required>
+                        required />
                 </div>
-                <div class="mb-3">
+                <div>
                     <label for="nominalPulsa" class="form-label small">Nominal Pulsa</label>
                     <select class="form-select" id="nominalPulsa" required>
                         <option value="" selected disabled>Pilih nominal</option>
@@ -51,14 +91,39 @@
                         <option value="100000">Rp 100.000</option>
                     </select>
                 </div>
-                <button type="submit" class="mt-2 w-100 btn btn-primary">
+
+                <button type="submit" class="btn btn-primary w-100 submit-button">
                     <i class="bi bi-search"></i> Inquiry
                 </button>
             </form>
         </div>
+
+        <!-- Modal Loading -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background: transparent; box-shadow: none; border: none;">
+                    <div class="d-flex flex-column align-items-center justify-content-center"
+                        style="min-height: 200px;">
+                        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+                        <span class="mt-3 text-white fw-semibold">Memproses...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const form = document.querySelector('.inquiry-form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            loadingModal.show();
+            // Simulasi loading, ganti dengan proses asli
+            setTimeout(() => loadingModal.hide(), 2000);
+        });
+    </script>
 </body>
 
 </html>

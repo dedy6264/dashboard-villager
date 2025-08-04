@@ -93,8 +93,8 @@
                                 <td class="text-end fw-semibold">@{{formatCurrency(dataTrx.productPrice)}}</td>
                             </tr>
                             <tr>
-                                <td>Biaya Admin</td>
-                                <td class="text-end fw-semibold">Rp 1.500</td>
+                                <td v-if="dataTrx.productAdminFee">Biaya Admin</td>
+                                <td class="text-end fw-semibold" v-if="dataTrx.productAdminFee">@{{formatCurrency(dataTrx.productAdminFee)}}</td>
                             </tr>
                             <tr>
                                 <td>Total Bayar</td>
@@ -137,13 +137,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{url('js/scripts.js')}}"></script>
     <script>
-        window.userData = @json($userData);
+        window.userData = @json($userData ?? []);
         const{createApp, ref,onMounted,nextTick }=Vue;
 
         createApp({
             setup(){
+                 let initialData = window.userData;
+
+                if (!initialData || Object.keys(initialData).length === 0) {
+                    try {
+                        const stored = sessionStorage.getItem('paymentData');
+                        console.log("DATA::", initialData);
+                        initialData = stored ? JSON.parse(stored) : {};
+                    } catch (e) {
+                        initialData = {};
+                    }
+                }
+                const dataTrx = ref(initialData);
                 const name=ref("");
-                const dataTrx=ref(window.userData || {});
                 const handlePulsa=()=>{
                         setTimeout(() => { window.location.href = "{{ route('viller.inquiry') }}"; }, 1000);
                 };
