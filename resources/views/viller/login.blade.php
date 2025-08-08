@@ -10,13 +10,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+         :root{
+            --bg:linear-gradient(to bottom right, #ff6e7f, #bfe9ff);
+        }
         body {
             background: linear-gradient(135deg, #f0f4ff 0%, #e2eafc 100%);
+            /* background: var(--bg); */
             min-height: 100vh;
         }
-
+        
         .card-login {
-            background: linear-gradient(90deg, #4f8cff 60%, #6dd5ed 100%);
+            background: var(--bg);
+            /* background: linear-gradient(90deg, #4f8cff 60%, #6dd5ed 100%); */
             color: #fff;
             border-radius: 1.2rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -100,6 +105,9 @@
                 </div>
                 <div class="text-center">
                     <a href="#" class="text-white text-decoration-underline small">Lupa password?</a>
+                </div>
+                <div class="text-center">
+                    <a href="{{ route('viller.onboarding') }}" class="text-white text-decoration-underline small ">Register</a>
                 </div>
             </form>
         </div>

@@ -8,7 +8,134 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 class VillerController extends Controller
 {
-    
+     public function signup(){
+        // dd(request()->all());
+        $payload=[
+            "filter"=>[
+            "username"=>request()->username,
+            "name"=>request()->name,
+            "phone"=>request()->phone,
+            "identityNumber"=>request()->identityNumber,
+            "password"=>request()->password,
+            "identityType"=>"ktp",
+            ]
+        ];
+         try {
+            $response = Http::withBasicAuth('joe', 'secret')
+            ->post(ENV('HOST_VILLAGER').'/user-app/add',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                if ($response['message']=="invalid or expired jwt"){
+                    $data=[
+                        // 'token'=>$response['result']['token'],
+                        'endpoint'=>"login",
+                        'command'=>"destroy",
+                        'desc'=>'Invalid token',
+                    ];
+                    return response()->json(['error' => $data], 401);
+                }
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result'] ?? null;
+                    // $suggestData=[
+                    //     'cmd'=>'set',
+                    //     'token'=>$response['result']['token'],
+                    //     // 'endpoint'=>"home",
+                    // ];
+                    // dd($userData);
+                    return view('viller.onboarding.inputotp',compact('userData'));
+                    // return response()->json([
+                    //     'success' => true,
+                    //     'message' => $response['statusMessage'],
+                    //     'data' => $userData
+                    // ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default://validation
+                    // Kode lain yang tidak dikenali (error umum)
+                    return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+     public function verificationotp(){
+        dd(request()->all());
+        $payload=[
+            "phone"=>request()->phone,
+            "otp"=>request()->otp,
+        ];
+         try {
+            $response = Http::withBasicAuth('joe', 'secret')
+            ->post(ENV('HOST_VILLAGER').'/user-app/verivicationotp',$payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                if ($response['message']=="invalid or expired jwt"){
+                    $data=[
+                        // 'token'=>$response['result']['token'],
+                        'endpoint'=>"login",
+                        'command'=>"destroy",
+                        'desc'=>'Invalid token',
+                    ];
+                    return response()->json(['error' => $data], 401);
+                }
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $phone = request()->phone;
+                    return view('viller.onboarding.setpin',compact('phone'));
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default://validation
+                    // Kode lain yang tidak dikenali (error umum)
+                    return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
     public function signin(){
         try {
             $payload = [

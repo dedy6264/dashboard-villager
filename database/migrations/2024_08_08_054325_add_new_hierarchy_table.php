@@ -61,7 +61,7 @@ class AddNewHierarchyTable extends Migration
 
             $table->unsignedInteger('product_type_id');
             $table->foreign('product_type_id')->references('id')->on('product_types');
-            $table->string('product_type_name')->unique();
+            $table->string('product_type_name');
 
             $table->unsignedInteger('product_reference_id')->nullable() ;
             $table->string('product_reference_code')->nullable();
@@ -177,13 +177,13 @@ class AddNewHierarchyTable extends Migration
         });
          Schema::create('user_apps', function (Blueprint $table) {
             $table->id();
-            $table->string("username");
+            $table->string("username")->unique();
             $table->string("password");
             $table->string("name");
             $table->string("identity_type")->default('NIK') ;
-            $table->string("identity_number")->nullable();
-            $table->string("phone")->nullable();
-            $table->string("email");
+            $table->string("identity_number")->nullable()->unique();
+            $table->string("phone")->nullable()->unique();
+            $table->string("email")->unique();
             $table->string("gender")->nullable();
             $table->string("province")->nullable();
             $table->string("city")->nullable();
@@ -193,6 +193,17 @@ class AddNewHierarchyTable extends Migration
             $table->string("status")->default('active');
             $table->timestamps();
              $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+        });
+        Schema::create('otps', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger("user_app_id");
+            $table->string("username");
+            $table->string("phone");
+            $table->foreign('user_app_id')->references('id')->on('user_apps');
+            $table->string("expired_duration");
+            $table->timestamps();
+            $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
         });
         Schema::create('saving_transactions', function (Blueprint $table) {
@@ -214,6 +225,7 @@ class AddNewHierarchyTable extends Migration
     public function down()
     {
         Schema::dropIfExists('saving_transactions');
+        Schema::dropIfExists('otps');
         Schema::dropIfExists('user_apps');
         Schema::dropIfExists('accounts');
         Schema::dropIfExists('saving_segments');

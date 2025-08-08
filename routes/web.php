@@ -183,13 +183,21 @@ Route::post('/viller/payment',[VillerController::class,'payment'])->name('viller
 Route::get('/viller/pulsa',[VillerController::class,'pulsa'])->name('viller.pulsa');
 Route::post('/viller/getprefix',[VillerController::class,'getprefix'])->name('viller.getprefix');
 Route::post('/viller/getproductbyreference',[VillerController::class,'getproductbyreference'])->name('viller.getproductbyreference');
-
 Route::get('/viller/successpaymentpage',function(){
     return view('viller/history/payment');
 })->name('viller.successpaymentpage');
 Route::get('/viller/account',function(){
     return view('viller/account/index');
 })->name('viller.account');
+Route::get('/viller/onboarding',function(){
+    return view('viller/onboarding/index');
+})->name('viller.onboarding');
+Route::get('/viller/otp',function(){
+    return view('viller/onboarding/otp');
+})->name('viller.otp');
+Route::post('/viller/signup',[VillerController::class,'signup'])->name('viller.signup');
+Route::post('/viller/verificationotp',[VillerController::class,'verificationotp'])->name('viller.verificationotp');
+
 // Route::get('/viller/history',function(){
 //     return view('desain/viller/history/index');
 // })->name('viller.history');
