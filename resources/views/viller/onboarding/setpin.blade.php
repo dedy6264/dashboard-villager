@@ -91,7 +91,7 @@
 
         <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$phone}}</p>
 
-        <form id="otpForm" action="{{ route('viller.verificationotp') }}" method="POST">
+        <form id="otpForm" action="{{ route('viller.setpin') }}" method="POST">
             @csrf
             <div class="mb-4 row otp-input-group gx-2">
                 <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
@@ -112,13 +112,13 @@
 
     <!-- Bootstrap JS + Autofocus OTP -->
     <script>
-    window.userData = @json($userData ?? []);
-    // console.log("USER DATA:", window.userData);
+    window.phone = @json($phone ?? []);
+    // console.log("USER DATA:", window.phone);
 
     document.addEventListener('DOMContentLoaded', () => {
         const otpInputs = document.querySelectorAll('.otp-input-group input');
 
-        let initialData = window.userData;
+        let initialData = window.phone;
         if (!initialData || Object.keys(initialData).length === 0) {
             // console.log("GA ADA: ", initialData);
         }

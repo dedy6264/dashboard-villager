@@ -8,7 +8,57 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 class VillerController extends Controller
 {
-     public function signup(){
+    public function signin(){
+        try {
+            $payload = [
+                'username' => request()->input('username'),
+                'password' => request()->input('password'),
+            ];
+            $response = Http::post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
+            // dd($response);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    $suggestData=[
+                        'cmd'=>'set',
+                        'token'=>$response['result']['token'],
+                        // 'data' => $userData
+                        // 'endpoint'=>"home",
+                    ];
+                    return view('viller.loading',compact('suggestData'));
+                    // return response()->json([
+                    //     'success' => true,
+                    //     'message' => $response['statusMessage'],
+                    //     'data' => $userData
+                    // ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return back()->withErrors(['error' => 'Password atau username salah']);
+                }
+        } catch (\Exception $e) {
+            // dd("ERRORNY",$e);
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat memproses permintaan.']);
+        }
+    }
+    public function signup(){
         // dd(request()->all());
         $payload=[
             "filter"=>[
@@ -81,8 +131,8 @@ class VillerController extends Controller
             return response()->json(['error' => $data], 401);
         }
     }
-     public function verificationotp(){
-        dd(request()->all());
+    public function verificationotp(){
+        // dd(request()->all());
         $payload=[
             "phone"=>request()->phone,
             "otp"=>request()->otp,
@@ -112,8 +162,16 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                     // Berhasil
-                    $phone = request()->phone;
+                    $phone = [
+                        "phone"=>request()->phone,
+                    ];
+                    // dd($phone);
                     return view('viller.onboarding.setpin',compact('phone'));
+                case '82':
+                    // Berhasil
+                    // $cifId = request()->cifId;
+                    // return view('viller.onboarding.setpin',compact('cifId'));
+                    return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
                 case '401':
                     // Unauthorized / JWT invalid
                     return response()->json([
@@ -136,17 +194,28 @@ class VillerController extends Controller
             return response()->json(['error' => $data], 401);
         }
     }
-    public function signin(){
-        try {
-            $payload = [
-                'username' => request()->input('username'),
-                'password' => request()->input('password'),
-            ];
-            $response = Http::post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
+    public function setpin(){
+        // dd("setpin::",request()->all());
+        $payload=[
+            "phone"=>request()->phone,
+            "pin"=>request()->otp,
+        ];
+         try {
+            $response = Http::withBasicAuth('joe', 'secret')
+            ->post(ENV('HOST_VILLAGER').'/account/setpin',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
+                if ($response['message']=="invalid or expired jwt"){
+                    $data=[
+                        // 'token'=>$response['result']['token'],
+                        'endpoint'=>"login",
+                        'command'=>"destroy",
+                        'desc'=>'Invalid token',
+                    ];
+                    return response()->json(['error' => $data], 401);
+                }
                 return response()->json([
                     'error' => 'Response format invalid.',
                     'raw' => $response
@@ -155,20 +224,9 @@ class VillerController extends Controller
 
             switch ($response['statusCode']) {
                 case '00':
-                    // Berhasil
-                    $userData = $response['result']['data'] ?? null;
-                    $suggestData=[
-                        'cmd'=>'set',
-                        'token'=>$response['result']['token'],
-                        // 'data' => $userData
-                        // 'endpoint'=>"home",
-                    ];
-                    return view('viller.loading',compact('suggestData'));
-                    // return response()->json([
-                    //     'success' => true,
-                    //     'message' => $response['statusMessage'],
-                    //     'data' => $userData
-                    // ]);
+                   return redirect()
+            ->route('viller.login')
+            ->with('success', 'Registrasi berhasil, silahkan login!');
 
                 case '401':
                     // Unauthorized / JWT invalid
@@ -177,15 +235,26 @@ class VillerController extends Controller
                         'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
                     ], 401);
 
-                default:
+                default://validation
                     // Kode lain yang tidak dikenali (error umum)
-                    return back()->withErrors(['error' => 'Password atau username salah']);
+                    return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
                 }
         } catch (\Exception $e) {
-            // dd("ERRORNY",$e);
-            return back()->withErrors(['error' => 'Terjadi kesalahan saat memproses permintaan.']);
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
         }
     }
+
+
+
+
+
     public function index(){
         return view('viller.home.index');
     }

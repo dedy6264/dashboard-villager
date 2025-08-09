@@ -197,6 +197,7 @@ Route::get('/viller/otp',function(){
 })->name('viller.otp');
 Route::post('/viller/signup',[VillerController::class,'signup'])->name('viller.signup');
 Route::post('/viller/verificationotp',[VillerController::class,'verificationotp'])->name('viller.verificationotp');
+Route::post('/viller/setpin',[VillerController::class,'setpin'])->name('viller.setpin');
 
 // Route::get('/viller/history',function(){
 //     return view('desain/viller/history/index');
