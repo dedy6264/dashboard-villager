@@ -88,6 +88,24 @@
             border-color: #ff6e7f;
             box-shadow: 0 0 0 2px rgba(255, 110, 127, 0.2);
         }
+        .input-wrapper select {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none; /* Safari */
+            -moz-appearance: none; /* Firefox */
+            background-color: #fff;
+        }
+
+        .input-wrapper select:focus {
+            border-color: #ff6e7f;
+            box-shadow: 0 0 0 2px rgba(255, 110, 127, 0.2);
+        }
 
         .input-wrapper i {
             position: absolute;
@@ -175,6 +193,26 @@
                     <i class="bi bi-passport-fill"></i>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="identityNumber" placeholder="abc@mail.com..." required />
+                    <i class="bi bi-passport-fill"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <div class="input-wrapper">
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Pilih gender...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <i class="bi bi-gender-ambiguous"></i>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="dob">Tanggal Lahir</label>
@@ -184,7 +222,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="pin">PIN (6 Digit)</label>
                 <div class="input-wrapper">
                     <input type="password" id="pin"  maxlength="6" pattern="\d{6}" required />
@@ -198,7 +236,7 @@
                     <input type="password" id="confirmPin" maxlength="6" pattern="\d{6}" required />
                     <i class="bi bi-eye-slash toggle-password" onclick="togglePassword('confirmPin', this)"></i>
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-wrapper">
@@ -234,13 +272,6 @@
 
         document.getElementById('registerForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const pin = document.getElementById('pin').value;
-            const confirmPin = document.getElementById('confirmPin').value;
-
-            if (pin !== confirmPin) {
-                alert('PIN tidak cocok!');
-                return;
-            }
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 

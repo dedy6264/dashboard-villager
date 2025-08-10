@@ -10,7 +10,10 @@
                     </div>
                     <div class="col-5 text-end">
                         <div class="small">Saldo</div>
-                        <div class="fw-bold fs-6">Rp 1.250.000</div>
+                        <div class="fw-bold fs-6">@{{formatCurrency(balance)}}</div>
+                        <template  v-if="balance==0">
+                        <a href="#" class="small"><span class="text-white badge bg-success">Topup Saldo</span></a>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -175,6 +178,7 @@
         createApp({
             setup(){
                 const name=ref("");
+                const balance=ref(0);
                 const token=ref("");
                 const lastTrx=ref({});
                 const handlePulsa=()=>{
@@ -194,6 +198,7 @@
                     .then(response => {
                         getTrx();
                         name.value=response.data.data.name;
+                        balance.value=response.data.data.balance;
                         sessionStorage.removeItem("userData");
                         sessionStorage.setItem('userData', JSON.stringify(response.data.data));
                     })
@@ -248,6 +253,7 @@
                     getUser,
                     handlePulsa,
                     name,
+                    balance,
                 };
             }
         }).mount("#app");

@@ -68,24 +68,19 @@ class VillerController extends Controller
             "identityNumber"=>request()->identityNumber,
             "password"=>request()->password,
             "identityType"=>"ktp",
+            "email"=>request()->email,
+            "gender"=>request()->gender,
+            "province"=>"",
+            "city"=>"",
+            "address"=>"",
             ]
         ];
          try {
             $response = Http::withBasicAuth('joe', 'secret')
             ->post(ENV('HOST_VILLAGER').'/user-app/add',$payload)->json();
-            // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
-                if ($response['message']=="invalid or expired jwt"){
-                    $data=[
-                        // 'token'=>$response['result']['token'],
-                        'endpoint'=>"login",
-                        'command'=>"destroy",
-                        'desc'=>'Invalid token',
-                    ];
-                    return response()->json(['error' => $data], 401);
-                }
                 return response()->json([
                     'error' => 'Response format invalid.',
                     'raw' => $response
@@ -95,27 +90,8 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                     // Berhasil
-                    $userData = $response['result'] ?? null;
-                    // $suggestData=[
-                    //     'cmd'=>'set',
-                    //     'token'=>$response['result']['token'],
-                    //     // 'endpoint'=>"home",
-                    // ];
-                    // dd($userData);
+                    $userData = $response['result'] ?? null;//data yg dibutuhkan 
                     return view('viller.onboarding.inputotp',compact('userData'));
-                    // return response()->json([
-                    //     'success' => true,
-                    //     'message' => $response['statusMessage'],
-                    //     'data' => $userData
-                    // ]);
-
-                case '401':
-                    // Unauthorized / JWT invalid
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
-                    ], 401);
-
                 default://validation
                     // Kode lain yang tidak dikenali (error umum)
                     return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
@@ -134,7 +110,7 @@ class VillerController extends Controller
     public function verificationotp(){
         // dd(request()->all());
         $payload=[
-            "phone"=>request()->phone,
+            "cifID"=>(int)request()->cifID,
             "otp"=>request()->otp,
         ];
          try {
@@ -144,15 +120,6 @@ class VillerController extends Controller
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
-                if ($response['message']=="invalid or expired jwt"){
-                    $data=[
-                        // 'token'=>$response['result']['token'],
-                        'endpoint'=>"login",
-                        'command'=>"destroy",
-                        'desc'=>'Invalid token',
-                    ];
-                    return response()->json(['error' => $data], 401);
-                }
                 return response()->json([
                     'error' => 'Response format invalid.',
                     'raw' => $response
@@ -162,11 +129,9 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                     // Berhasil
-                    $phone = [
-                        "phone"=>request()->phone,
-                    ];
-                    // dd($phone);
-                    return view('viller.onboarding.setpin',compact('phone'));
+                    return redirect()
+                    ->route('viller.login')
+                    ->with('success', 'Registrasi berhasil, silahkan login!');
                 case '82':
                     // Berhasil
                     // $cifId = request()->cifId;
@@ -225,8 +190,8 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                    return redirect()
-            ->route('viller.login')
-            ->with('success', 'Registrasi berhasil, silahkan login!');
+                    ->route('viller.login')
+                    ->with('success', 'Registrasi berhasil, silahkan login!');
 
                 case '401':
                     // Unauthorized / JWT invalid

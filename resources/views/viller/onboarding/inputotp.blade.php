@@ -89,7 +89,7 @@
             <h4 class="mb-0">Verifikasi OTP</h4>
         </div>
 
-        <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$phone}}</p>
+        <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$cifID}}</p>
 
         <form id="otpForm" action="{{ route('viller.verificationotp') }}" method="POST">
             @csrf
@@ -117,12 +117,16 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const otpInputs = document.querySelectorAll('.otp-input-group input');
-
         let initialData = window.userData;
         if (!initialData || Object.keys(initialData).length === 0) {
-            // console.log("GA ADA: ", initialData);
+            try {
+                const stored = sessionStorage.getItem('userData');
+                // console.log("DATA::", initialData);
+                initialData = stored ? JSON.parse(stored) : {};
+            } catch (e) {
+                initialData = {};
+            }
         }
-
         otpInputs.forEach((input, idx) => {
             input.addEventListener('input', () => {
                 if (input.value.length === 1 && idx < otpInputs.length - 1) {
@@ -152,15 +156,17 @@
                 }
                 otpInput.value = otp;
 
-                let phone ;
-                if (!phone) {
-                    phone = document.createElement("input");
-                    phone.type = "hidden";
-                    phone.name = "phone";
-                    this.appendChild(phone);
+                let cifID ;
+                if (!cifID) {
+                    cifID = document.createElement("input");
+                    cifID.type = "hidden";
+                    cifID.name = "cifID";
+                    this.appendChild(cifID);
                 }
-                phone.value = initialData.phone;
-
+                cifID.value = initialData.cifID;
+                //simpan di sessioinstorage
+                sessionStorage.removeItem("userData");
+                sessionStorage.setItem('userData', JSON.stringify(initialData));
                 this.submit();
             } else {
                 alert("Harap masukkan 6 digit OTP.");
