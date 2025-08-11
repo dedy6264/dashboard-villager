@@ -10,10 +10,16 @@
                     </div>
                     <div class="col-5 text-end">
                         <div class="small">Saldo</div>
-                        <div class="fw-bold fs-6">@{{formatCurrency(balance)}}</div>
-                        <template  v-if="balance==0">
-                        <a href="#" class="small"><span class="text-white badge bg-success">Topup Saldo</span></a>
+                        <template v-if="isSetPin">
+                            <div class="fw-bold fs-6">@{{formatCurrency(balance)}}</div>
+                            <template  v-if="balance==0">
+                                <a href="#" class="small"><span class="text-white badge bg-success">Topup Saldo</span></a>
+                            </template>
                         </template>
+                        <template v-else>
+                            <a href="{{ route('viller.inquirysaving') }}" class="small"><span class="text-white badge bg-primary">Aktivasi Saving</span></a>
+                        </template>
+
                     </div>
                 </div>
             </div>
@@ -179,8 +185,10 @@
             setup(){
                 const name=ref("");
                 const balance=ref(0);
+                const cifId=ref(0);
                 const token=ref("");
                 const lastTrx=ref({});
+                const isSetPin=ref(true);
                 const handlePulsa=()=>{
                         setTimeout(() => { window.location.href = "{{ route('viller.pulsa') }}"; }, 1000);
                 };
@@ -199,6 +207,7 @@
                         getTrx();
                         name.value=response.data.data.name;
                         balance.value=response.data.data.balance;
+                        cifId.value=response.data.data.cifId;
                         sessionStorage.removeItem("userData");
                         sessionStorage.setItem('userData', JSON.stringify(response.data.data));
                     })
@@ -227,6 +236,32 @@
                         console.error(" getTrx Error fetching data:", error);
                     });
                 };
+                const getSaving=()=>{
+                    token.value=JSON.parse(localStorage.getItem("user")).token;
+                    axios.post("{{route('viller.getsaving')}}",{
+                        "cifId": cifId.value,
+                    },{
+                        headers: {
+                            Authorization: `Bearer ${token.value}`,
+                        }
+                    })
+                    .then(response => {
+                        console.log(response.data);
+                        console.log(isSetPin.value);
+                        if(response.data.data==null){
+                            isSetPin.value=false;
+                            return
+                        }
+
+                        balance.value=response.data.data.balance;
+                        console.log(response.data.data.balance);
+                        console.log(balance.value);
+
+                    })
+                    .catch(error => {
+                        console.error(" getTrx Error fetching data:", error);
+                    });
+                };
                 const formatCurrency=(value)=> {
                   if (!value) return 'Rp 0';
                   return new Intl.NumberFormat('id-ID', {
@@ -242,9 +277,12 @@
                 };
                 onMounted(() => {
                     getUser();
+                    getSaving();
                 }) // Memanggil fungsi getuser saat komponen dimuat);
 
                 return{
+                    getSaving,
+                    isSetPin,
                     token,
                     formatDate,
                     formatCurrency,

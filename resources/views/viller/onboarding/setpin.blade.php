@@ -91,36 +91,46 @@
 
         <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$phone}}</p>
 
-        <form id="otpForm" action="{{ route('viller.setpin') }}" method="POST">
+        <form id="pinForm" action="{{ route('viller.confirmaccount') }}" method="POST">
             @csrf
             <div class="mb-4 row otp-input-group gx-2">
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
-                <div class="col-2"><input type="text" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
+                <div class="col-2"><input type="password" class="text-center form-control" maxlength="1" required /></div>
             </div>
 
-            <button type="submit" class="btn btn-primary-custom w-100">Verifikasi</button>
+            <button type="submit" class="btn btn-primary-custom w-100">Simpan</button>
         </form>
 
-        <div class="mt-3 text-center resend-text">
+        {{-- <div class="mt-3 text-center resend-text">
             Tidak menerima kode? <a href="#">Kirim ulang</a>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Bootstrap JS + Autofocus OTP -->
     <script>
-    window.phone = @json($phone ?? []);
-    // console.log("USER DATA:", window.phone);
-
     document.addEventListener('DOMContentLoaded', () => {
         const otpInputs = document.querySelectorAll('.otp-input-group input');
 
-        let initialData = window.phone;
-        if (!initialData || Object.keys(initialData).length === 0) {
-            // console.log("GA ADA: ", initialData);
+       let initialData 
+       let tokenData 
+        try {
+            const stored = sessionStorage.getItem('userData');
+            // console.log("DATA::", initialData);
+            initialData = stored ? JSON.parse(stored) : {};
+        } catch (e) {
+            initialData = {};
+        }
+        try {
+            const stored = localStorage.getItem('user');
+            tokenData = stored ? JSON.parse(stored) : {};
+            // console.log("DATA::", tokenData.token);
+        } catch (e) {
+            setTimeout(() => { window.location.href = "{{ route('viller.home') }}"; }, 1);
+            // tokenData = {};
         }
 
         otpInputs.forEach((input, idx) => {
@@ -137,33 +147,41 @@
             });
         });
 
-        document.getElementById('otpForm').addEventListener('submit', function (e) {
+        document.getElementById('pinForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            const otp = Array.from(otpInputs).map(input => input.value).join('');
-            if (otp.length === 6) {
-                alert("OTP: " + otp);
+            const pin = Array.from(otpInputs).map(input => input.value).join('');
+            if (pin.length === 6) {
+                // alert("OTP: " + otp);
 
-                let otpInput = document.querySelector('input[name="otp"]');
-                if (!otpInput) {
-                    otpInput = document.createElement("input");
-                    otpInput.type = "hidden";
-                    otpInput.name = "otp";
-                    this.appendChild(otpInput);
+                let pinInput = document.querySelector('input[name="pin"]');
+                if (!pinInput) {
+                    pinInput = document.createElement("input");
+                    pinInput.type = "hidden";
+                    pinInput.name = "pin";
+                    this.appendChild(pinInput);
                 }
-                otpInput.value = otp;
+                pinInput.value = pin;
 
-                let phone ;
-                if (!phone) {
-                    phone = document.createElement("input");
-                    phone.type = "hidden";
-                    phone.name = "phone";
-                    this.appendChild(phone);
+                let cifId ;
+                if (!cifId) {
+                    cifId = document.createElement("input");
+                    cifId.type = "hidden";
+                    cifId.name = "cifId";
+                    this.appendChild(cifId);
                 }
-                phone.value = initialData.phone;
+                cifId.value = initialData.cifId;
+                let token ;
+                if (!token) {
+                    token = document.createElement("input");
+                    token.type = "hidden";
+                    token.name = "token";
+                    this.appendChild(token);
+                }
+                token.value = tokenData.token;
 
                 this.submit();
             } else {
-                alert("Harap masukkan 6 digit OTP.");
+                alert("Harap masukkan 6 digit PIN.");
             }
         });
     });

@@ -89,7 +89,7 @@
             <h4 class="mb-0">Verifikasi OTP</h4>
         </div>
 
-        <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$cifID}}</p>
+        <p class="mb-4 text-muted small">Masukkan 6 digit kode OTP yang telah kami kirim ke nomor Anda.@{{$cifId}}</p>
 
         <form id="otpForm" action="{{ route('viller.verificationotp') }}" method="POST">
             @csrf
@@ -124,7 +124,8 @@
                 // console.log("DATA::", initialData);
                 initialData = stored ? JSON.parse(stored) : {};
             } catch (e) {
-                initialData = {};
+                setTimeout(() => { window.location.href = "{{ route('viller.login') }}"; }, 1);
+                // initialData = {};
             }
         }
         otpInputs.forEach((input, idx) => {
@@ -156,14 +157,14 @@
                 }
                 otpInput.value = otp;
 
-                let cifID ;
-                if (!cifID) {
-                    cifID = document.createElement("input");
-                    cifID.type = "hidden";
-                    cifID.name = "cifID";
-                    this.appendChild(cifID);
+                let cifId ;
+                if (!cifId) {
+                    cifId = document.createElement("input");
+                    cifId.type = "hidden";
+                    cifId.name = "cifId";
+                    this.appendChild(cifId);
                 }
-                cifID.value = initialData.cifID;
+                cifId.value = initialData.cifId;
                 //simpan di sessioinstorage
                 sessionStorage.removeItem("userData");
                 sessionStorage.setItem('userData', JSON.stringify(initialData));

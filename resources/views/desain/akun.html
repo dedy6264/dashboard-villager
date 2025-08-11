@@ -25,7 +25,90 @@
             height: 40px;
         }
 
-        .profile-card,
+        /* Profile Card ala Kartu Debit */
+        .profile-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 420px;
+            height: 220px;
+            padding: 1.5rem;
+            font-family: 'Arial', sans-serif;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .profile-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.08);
+            transform: rotate(25deg);
+        }
+
+        .bank-logo {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        /* Foto user menggantikan chip */
+        .card-chip {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .card-chip img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-number {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-valid {
+            font-size: 0.7rem;
+            opacity: 0.85;
+        }
+
+        .valid-date {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .card-name {
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-logo {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 60px;
+        }
+
         .setting-card {
             background: #fff;
             border-radius: 1.2rem;
@@ -57,19 +140,24 @@
     </div>
 
     <div class="container pb-5">
-        <!-- Profile Card -->
-        <div class="p-4 mb-4 profile-card d-flex align-items-center">
-            <img src="https://img.icons8.com/color/96/000000/user-male-circle--v2.png" alt="User"
-                class="rounded-circle me-3" style="width:64px;height:64px;">
-            <div>
-                <div class="mb-1 fw-bold fs-5">Andi Pratama</div>
-                <div class="mb-1 text-muted small">Level: <span class="fw-semibold text-primary">Premium</span></div>
-                <div class="text-muted small"><i class="bi bi-envelope"></i> andi.pratama@email.com</div>
+
+        <!-- Profile Card ala Debit -->
+        <div class="profile-card">
+            <div class="bank-logo">MyPayApp Bank</div>
+            <div class="card-chip">
+                <img src="https://img.icons8.com/color/96/000000/user-male-circle--v2.png" alt="User Photo">
             </div>
+            <div class="card-number">1234 5678 9012 3456</div>
+            <div class="d-flex align-items-center">
+                <span class="card-valid">VALID<br>THRU</span>
+                <span class="valid-date">12/28</span>
+            </div>
+            <div class="card-name">Andi Pratama</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="card-logo" alt="Card Logo">
         </div>
 
         <!-- Biodata Card -->
-        <div class="p-3 mb-4 setting-card">
+        <div class="p-3 setting-card">
             <div class="mb-2 fw-semibold text-primary"><i class="bi bi-person-lines-fill me-2"></i>Biodata</div>
             <div class="mb-2 row">
                 <div class="col-5 text-muted small">Nama Lengkap</div>
@@ -132,13 +220,11 @@
     <!-- Bottom Navbar -->
     <nav class="px-0 bg-white navbar navbar-light fixed-bottom">
         <div class="container d-flex justify-content-around">
-            <a href="file:///Users/dedykusworo/mine/dashboard-villager/resources/views/desain/home.html"
-                class="text-center text-decoration-none text-secondary">
+            <a href="home.html" class="text-center text-decoration-none text-secondary">
                 <i class="bi bi-house-door-fill fs-4"></i>
                 <div class="small">Home</div>
             </a>
-            <a href="file:///Users/dedykusworo/mine/dashboard-villager/resources/views/desain/history.html"
-                class="text-center text-decoration-none text-secondary">
+            <a href="history.html" class="text-center text-decoration-none text-secondary">
                 <i class="bi bi-clock-history fs-4"></i>
                 <div class="small">History</div>
             </a>

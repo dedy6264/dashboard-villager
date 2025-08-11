@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit / Top Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #e2eafc 0%, #f9f9f9 100%);
+            min-height: 100vh;
+        }
+
+        .topup-card {
+            max-width: 420px;
+            margin: 48px auto;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px rgba(67, 233, 123, 0.08), 0 1.5px 8px rgba(13, 110, 253, 0.06);
+            background: #fff;
+            padding: 36px 32px 28px 32px;
+        }
+
+        .suggest-denom .btn {
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .suggest-denom .btn:hover,
+        .suggest-denom .btn:focus {
+            background: #e2eafc;
+            color: #0d6efd;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08);
+        }
+
+        .btn-success {
+            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(67, 233, 123, 0.12);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-success:hover,
+        .btn-success:focus {
+            background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+            box-shadow: 0 4px 16px rgba(67, 233, 123, 0.18);
+        }
+
+        .rekening-info {
+            animation: fadeIn 0.7s;
+            border-left: 4px solid #43e97b;
+            position: relative;
+            background: #f6fff9;
+            padding: 18px 18px 18px 48px;
+            margin-top: 24px;
+            border-radius: 8px;
+        }
+
+        .rekening-info::before {
+            content: "\f555";
+            font-family: "Bootstrap-icons";
+            position: absolute;
+            left: 12px;
+            top: 18px;
+            font-size: 1.5rem;
+            color: #43e97b;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .custom-input {
+            border-radius: 8px;
+            border: 1.5px solid #e2eafc;
+            font-size: 1.1rem;
+        }
+
+        .custom-input:focus {
+            border-color: #43e97b;
+            box-shadow: 0 0 0 2px #43e97b33;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="shadow topup-card">
+        <h3 class="mb-3 fw-bold text-success"><i class="bi bi-wallet2 me-2"></i>Deposit</h3>
+        <form>
+            <div class="mb-3">
+                <label for="nominal" class="form-label">Nominal Deposit</label>
+                <div class="flex-wrap gap-2 mb-2 suggest-denom d-flex">
+                    <button type="button" class="btn btn-outline-primary" onclick="setNominal(50000)">Rp 50.000</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="setNominal(100000)">Rp
+                        100.000</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="setNominal(200000)">Rp
+                        200.000</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="setNominal(500000)">Rp
+                        500.000</button>
+                </div>
+                <input type="number" min="10000" step="1000" class="form-control custom-input" id="nominal"
+                    placeholder="Masukkan nominal lain (min. 10.000)" required>
+            </div>
+            <button type="button" class="mt-2 btn btn-success w-100" onclick="showRekening()">Request Kode
+                Bayar</button>
+        </form>
+        <div id="rekeningSection" class="mt-4 rekening-info d-none">
+            <div class="mb-1"><strong>Rekening Tujuan:</strong></div>
+            <div>Bank BCA: <span class="fw-bold">1234567890</span></div>
+            <div>a.n. PT Villager Indonesia</div>
+            <div class="mt-2"><span class="badge bg-success">Kode Bayar: <span id="kodeBayar">-</span></span></div>
+        </div>
+    </div>
+    <script>
+        function setNominal(nom) {
+            document.getElementById('nominal').value = nom;
+        }
+        function showRekening() {
+            const nominal = document.getElementById('nominal').value;
+            if (!nominal || nominal < 10000) {
+                alert('Masukkan nominal minimal Rp 10.000');
+                return;
+            }
+            // Simulasi kode bayar
+            document.getElementById('kodeBayar').innerText = 'VLG' + Math.floor(Math.random() * 90000 + 10000);
+            document.getElementById('rekeningSection').classList.remove('d-none');
+        }
+    </script>
+</body>
+
+</html>

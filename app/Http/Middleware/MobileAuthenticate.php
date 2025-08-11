@@ -19,7 +19,8 @@ class MobileAuthenticate extends Middleware
             //     'endpoint'=>"",
             // ];
             // return view('mobile.layouts.loading',compact('mainData'));
-            return route('mobile.login');
+            // return route('mobile.login');
+            return route('viller.login');
         }
     }
 }

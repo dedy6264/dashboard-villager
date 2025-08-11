@@ -90,8 +90,9 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                     // Berhasil
+                    $endTime = now()->addMinutes(5)->timestamp * 1000; // dalam milidetik
                     $userData = $response['result'] ?? null;//data yg dibutuhkan 
-                    return view('viller.onboarding.inputotp',compact('userData'));
+                    return view('viller.onboarding.inputotp',compact('userData','endTime'));
                 default://validation
                     // Kode lain yang tidak dikenali (error umum)
                     return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
@@ -110,7 +111,7 @@ class VillerController extends Controller
     public function verificationotp(){
         // dd(request()->all());
         $payload=[
-            "cifID"=>(int)request()->cifID,
+            "cifId"=>(int)request()->cifId,
             "otp"=>request()->otp,
         ];
          try {
@@ -159,15 +160,57 @@ class VillerController extends Controller
             return response()->json(['error' => $data], 401);
         }
     }
-    public function setpin(){
-        // dd("setpin::",request()->all());
+     public function resendotp($cifId){
         $payload=[
-            "phone"=>request()->phone,
-            "pin"=>request()->otp,
+             "cifId"=>(int)$cifId,
         ];
          try {
             $response = Http::withBasicAuth('joe', 'secret')
-            ->post(ENV('HOST_VILLAGER').'/account/setpin',$payload)->json();
+            ->post(ENV('HOST_VILLAGER').'/user-app/resendotp',$payload)->json();
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $endTime = now()->addMinutes(5)->timestamp * 1000; // dalam milidetik
+                    $userData = $response['result'] ?? null;//data yg dibutuhkan 
+                    return view('viller.onboarding.inputotp',compact('userData','endTime'));
+                default://validation
+                    // Kode lain yang tidak dikenali (error umum)
+                    return back()->withErrors(['error' => $response['statusMessage'] ?? 'Terjadi kesalahan.']);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function confirmaccount(){
+        // dd("setpin::",request()->pin);
+        $payload=[
+            "filter"=>[
+                "accountNumber"=>"",
+                "accountPin"=>request()->pin,
+                "balance"=>0,
+                "savingSegmentId"=>1,
+            ],
+        ];
+        try {
+             $token=request()->token;
+            $response = Http::withToken($token)
+            ->post(ENV('HOST_VILLAGER').'/user/addaccount',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -190,7 +233,7 @@ class VillerController extends Controller
             switch ($response['statusCode']) {
                 case '00':
                    return redirect()
-                    ->route('viller.login')
+                    ->route('viller.home')
                     ->with('success', 'Registrasi berhasil, silahkan login!');
 
                 case '401':
@@ -376,6 +419,75 @@ class VillerController extends Controller
             $token=request()->bearerToken();
             $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/user/getuser')->json();
             // dd($response['message']);
+            // Validasi struktur response
+            if (!isset($response['statusCode'])) {
+                // Struktur tidak sesuai harapan
+                if ($response['message']=="invalid or expired jwt"){
+                    $data=[
+                        // 'token'=>$response['result']['token'],
+                        'endpoint'=>"login",
+                        'command'=>"destroy",
+                        'desc'=>'Invalid token',
+                    ];
+                    return response()->json(['error' => $data], 401);
+                }
+                return response()->json([
+                    'error' => 'Response format invalid.',
+                    'raw' => $response
+                ], 500);
+            }
+
+            switch ($response['statusCode']) {
+                case '00':
+                    // Berhasil
+                    $userData = $response['result']['data'] ?? null;
+                    // $suggestData=[
+                    //     'cmd'=>'set',
+                    //     'token'=>$response['result']['token'],
+                    //     // 'endpoint'=>"home",
+                    // ];
+                    // return view('viller.loading',compact('suggestData'));
+                    return response()->json([
+                        'success' => true,
+                        'message' => $response['statusMessage'],
+                        'data' => $userData
+                    ]);
+
+                case '401':
+                    // Unauthorized / JWT invalid
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Unauthorized. Token tidak valid atau sudah kedaluwarsa.'
+                    ], 401);
+
+                default:
+                    // Kode lain yang tidak dikenali (error umum)
+                    return response()->json([
+                        'success' => false,
+                        'message' => $response['statusMessage'] ?? 'Terjadi kesalahan.',
+                        'detail' => $response['statusDesc'] ?? 'Tidak ada keterangan tambahan.'
+                    ], 400);
+                }
+        } catch (\Exception $e) {
+            dd("ERRORNY",$e);
+            $data=[
+                // 'token'=>$response['result']['token'],
+                'endpoint'=>"login",
+                'command'=>"destroy",
+                'desc'=>'Invalid token',
+            ];
+            return response()->json(['error' => $data], 401);
+        }
+    }
+    public function getsaving(){
+         try {
+            $token=request()->bearerToken();
+            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/user/getaccount',[
+                "filter"=>[
+                    "id"=>0,
+                ],
+            ])->json();
+            // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
