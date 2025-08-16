@@ -204,4 +204,5 @@ Route::get('/viller/loading',function(){
 })->name('viller.loading');
 
 require __DIR__.'/viller.php';
+require __DIR__.'/makariosdashboard.php';
 require __DIR__.'/auth.php';

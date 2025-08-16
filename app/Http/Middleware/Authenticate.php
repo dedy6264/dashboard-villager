@@ -15,8 +15,8 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('viller.login');
-            // return route('login');
+            // return route('viller.login');
+            return route('login');
         }
     }
 }
