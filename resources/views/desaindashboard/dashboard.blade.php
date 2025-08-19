@@ -18,8 +18,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../creative-tim/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../creative-tim/assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ url('/creative-tim/assets/img/apple-icon.png')}}">
+  <link rel="icon" type="image/png" href="{{ url('/creative-tim/assets/img/favicon.png')}}">
   <title>
     Soft UI Dashboard 3 by Creative Tim
   </title>
@@ -31,7 +31,7 @@
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
-  <link id="pagestyle" href="../creative-tim/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <link id="pagestyle" href="{{ url('/creative-tim/assets/css/soft-ui-dashboard.css?v=1.1.0') }}" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -45,7 +45,7 @@
         aria-hidden="true" id="iconSidenav"></i>
       <a class="m-0 navbar-brand" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html "
         target="_blank">
-        <img src="../creative-tim/assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="{{ url('/creative-tim/assets/img/logo-ct-dark.png')}}" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Soft UI Dashboard 3</span>
       </a>
     </div>
@@ -53,7 +53,7 @@
     <div class="w-auto collapse navbar-collapse " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="../pages/dashboard.html">
+          <a class="nav-link active" href="{{ url('/pages/dashboard.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/tables.html">
+          <a class="nav-link " href="{{ url('/pages/tables.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/billing.html">
+          <a class="nav-link " href="{{ url('/pages/billing.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/virtual-reality.html">
+          <a class="nav-link " href="{{ url('/pages/virtual-reality.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/rtl.html">
+          <a class="nav-link " href="{{ url('/pages/rtl.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +192,7 @@
           <h6 class="text-xs ps-4 ms-2 text-uppercase font-weight-bolder opacity-6">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/profile.html">
+          <a class="nav-link " href="{{ url('/pages/profile.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +221,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/sign-in.html">
+          <a class="nav-link " href="{{ url('/pages/sign-in.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +247,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/sign-up.html">
+          <a class="nav-link " href="{{ url('/pages/sign-up.html')}}">
             <div
               class="text-center bg-white shadow icon icon-shape icon-sm border-radius-md me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +283,7 @@
     <div class="mx-3 sidenav-footer ">
       <div class="shadow-none card card-background card-background-mask-secondary" id="sidenavCard">
         <div class="full-background"
-          style="background-image: url('../creative-tim/assets/img/curved-images/white-curved.jpg')"></div>
+          style="background-image: url('/creative-tim/assets/img/curved-images/white-curved.jpg')"></div>
         <div class="p-3 card-body text-start w-100">
           <div
             class="mb-3 text-center bg-white shadow icon icon-shape icon-sm d-flex align-items-center justify-content-center border-radius-md">
@@ -355,7 +355,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="py-1 d-flex">
                       <div class="my-auto">
-                        <img src="../creative-tim/assets/img/team-2.jpg" class="avatar avatar-sm me-3 ">
+                        <img src="{{ url('/creative-tim/assets/img/team-2.jpg')}}" class="avatar avatar-sm me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-1 text-sm font-weight-normal">
@@ -373,7 +373,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="py-1 d-flex">
                       <div class="my-auto">
-                        <img src="../creative-tim/assets/img/small-logos/logo-spotify.svg"
+                        <img src="{{ url('/creative-tim/assets/img/small-logos/logo-spotify.svg')}}"
                           class="avatar avatar-sm bg-gradient-dark me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
@@ -675,7 +675,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-xd.svg')}}" class="avatar avatar-sm me-3"
                               alt="xd">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -687,19 +687,19 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="../creative-tim/assets/img/team-1.jpg" alt="team1">
+                            <img src="{{ url('/creative-tim/assets/img/team-1.jpg')}}" alt="team1">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="../creative-tim/assets/img/team-2.jpg" alt="team2">
+                            <img src="{{ url('/creative-tim/assets/img/team-2.jpg')}}" alt="team2">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="../creative-tim/assets/img/team-3.jpg" alt="team3">
+                            <img src="{{ url('/creative-tim/assets/img/team-3.jpg')}}" alt="team3">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="team4">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="team4">
                           </a>
                         </div>
                       </td>
@@ -724,7 +724,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-atlassian.svg"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-atlassian.svg')}}"
                               class="avatar avatar-sm me-3" alt="atlassian">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -736,11 +736,11 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="../creative-tim/assets/img/team-2.jpg" alt="team5">
+                            <img src="{{ url('/creative-tim/assets/img/team-2.jpg')}}" alt="team5">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="team6">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="team6">
                           </a>
                         </div>
                       </td>
@@ -765,7 +765,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-slack.svg"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-slack.svg')}}"
                               class="avatar avatar-sm me-3" alt="team7">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -777,11 +777,11 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="../creative-tim/assets/img/team-3.jpg" alt="team8">
+                            <img src="{{ url('/creative-tim/assets/img/team-3.jpg')}}" alt="team8">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="../creative-tim/assets/img/team-1.jpg" alt="team9">
+                            <img src="{{ url('/creative-tim/assets/img/team-1.jpg')}}" alt="team9">
                           </a>
                         </div>
                       </td>
@@ -806,7 +806,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-spotify.svg"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-spotify.svg')}}"
                               class="avatar avatar-sm me-3" alt="spotify">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -818,19 +818,19 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="user1">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="user1">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Romina Hadid">
-                            <img src="../creative-tim/assets/img/team-3.jpg" alt="user2">
+                            <img src="{{ url('/creative-tim/assets/img/team-3.jpg')}}" alt="user2">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Alexander Smith">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="user3">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="user3">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="../creative-tim/assets/img/team-1.jpg" alt="user4">
+                            <img src="{{ url('/creative-tim/assets/img/team-1.jpg')}}" alt="user4">
                           </a>
                         </div>
                       </td>
@@ -855,7 +855,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-jira.svg"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-jira.svg')}}"
                               class="avatar avatar-sm me-3" alt="jira">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -867,7 +867,7 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="user5">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="user5">
                           </a>
                         </div>
                       </td>
@@ -892,7 +892,7 @@
                       <td>
                         <div class="px-2 py-1 d-flex">
                           <div>
-                            <img src="../creative-tim/assets/img/small-logos/logo-invision.svg"
+                            <img src="{{ url('/creative-tim/assets/img/small-logos/logo-invision.svg')}}"
                               class="avatar avatar-sm me-3" alt="invision">
                           </div>
                           <div class="d-flex flex-column justify-content-center">
@@ -904,11 +904,11 @@
                         <div class="mt-2 avatar-group">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Ryan Tompson">
-                            <img src="../creative-tim/assets/img/team-1.jpg" alt="user6">
+                            <img src="{{ url('/creative-tim/assets/img/team-1.jpg')}}" alt="user6">
                           </a>
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" title="Jessica Doe">
-                            <img src="../creative-tim/assets/img/team-4.jpg" alt="user7">
+                            <img src="{{ url('/creative-tim/assets/img/team-4.jpg')}}" alt="user7">
                           </a>
                         </div>
                       </td>
@@ -1024,11 +1024,11 @@
                 </div>
                 <div class="mt-5 text-center col-lg-5 ms-auto mt-lg-0">
                   <div class="bg-primary border-radius-lg h-100">
-                    <img src="../creative-tim/assets/img/shapes/waves-white.svg"
+                    <img src="{{ url('/creative-tim/assets/img/shapes/waves-white.svg')}}"
                       class="top-0 position-absolute h-100 w-50 d-lg-block d-none" alt="waves">
                     <div class="position-relative d-flex align-items-center justify-content-center h-100">
                       <img class="pt-4 w-100 position-relative z-index-2"
-                        src="../creative-tim/assets/img/illustrations/rocket-white.png" alt="rocket">
+                        src="{{ url('/creative-tim/assets/img/illustrations/rocket-white.png')}}" alt="rocket">
                     </div>
                   </div>
                 </div>
@@ -1039,7 +1039,7 @@
         <div class="col-lg-5">
           <div class="p-3 card h-100">
             <div class="overflow-hidden bg-cover position-relative border-radius-lg h-100"
-              style="background-image: url('../creative-tim/assets/img/ivancik.jpg');">
+              style="background-image: url('/creative-tim/assets/img/ivancik.jpg');">
               <span class="mask bg-gradient-dark"></span>
               <div class="p-3 card-body position-relative z-index-1 d-flex flex-column h-100">
                 <h5 class="pt-2 mb-4 text-white font-weight-bolder">Work with the rockets</h5>
@@ -1334,11 +1334,11 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="../creative-tim/assets/js/core/popper.min.js"></script>
-  <script src="../creative-tim/assets/js/core/bootstrap.min.js"></script>
-  <script src="../creative-tim/assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../creative-tim/assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../creative-tim/assets/js/plugins/chartjs.min.js"></script>
+  <script src="{{ url('/creative-tim/assets/js/core/popper.min.js')}}"></script>
+  <script src="{{ url('/creative-tim/assets/js/core/bootstrap.min.js')}}"></script>
+  <script src="{{ url('/creative-tim/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+  <script src="{{ url('/creative-tim/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+  <script src="{{ url('/creative-tim/assets/js/plugins/chartjs.min.js')}}"></script>
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -1521,7 +1521,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../creative-tim/assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+  <script src="{{ url('/creative-tim/assets/js/soft-ui-dashboard.min.js?v=1.1.0')}}"></script>
 </body>
 
 </html>
