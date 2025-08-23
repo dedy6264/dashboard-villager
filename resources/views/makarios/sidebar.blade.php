@@ -86,15 +86,15 @@
                     </nav>
                 </div>
                  {{-- Accounts --}}
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseManagement" aria-expanded="false" aria-controls="collapseManagement">
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount" aria-expanded="false" aria-controls="collapseAccount">
                     <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                     Account
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseManagement" data-bs-parent="#sidenavAccordion">
+                <div class="collapse" id="collapseAccount" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ route('makarios.account') }}">Accounts</a>
-                        <a class="nav-link" href="{{ route('makarios.savingaccount') }}">Saving Account</a>
+                        <a class="nav-link" href="{{ route('makarios.accountsaving') }}">Saving Account</a>
                     </nav>
                 </div>
                 <!-- Addons -->

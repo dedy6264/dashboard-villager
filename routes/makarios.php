@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Makarios\MakariosController;
 use App\Http\Controllers\Makarios\ProductController;
+use App\Http\Controllers\Makarios\SavingController;
 
     Route::get('/makarios/client',[MakariosController::class,'client'])->name('makarios.client');
     Route::post('/makarios/getdataclient',[MakariosController::class,'getdataclient'])->name('makarios.getdataclient');
@@ -72,4 +73,6 @@ use App\Http\Controllers\Makarios\ProductController;
     Route::post('/makarios/getdatagroupjson',[MakariosController::class,'getdatagroupjson'])->name('makarios.getdatagroupjson');
     Route::post('/makarios/getdatamerchantjson',[MakariosController::class,'getdatamerchantjson'])->name('makarios.getdatamerchantjson');
 
+    Route::get('/makarios/account',[SavingController::class,'account'])->name('makarios.account');
+    Route::get('/makarios/accountsaving',[SavingController::class,'accountsaving'])->name('makarios.accountsaving');
     

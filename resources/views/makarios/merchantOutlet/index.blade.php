@@ -193,7 +193,7 @@
                     group_id:form.value.group_id,
                 })
                 .then(response => {
-                    groups.value=response.data.data;
+                    merchants.value=response.data.data;
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
@@ -291,7 +291,6 @@
                 });
             };
             const refreshData=()=>{
-                clients.value=[];
                 groups.value=[];
                 merchants.value=[];
                 $('#dataTbl').DataTable().destroy();
