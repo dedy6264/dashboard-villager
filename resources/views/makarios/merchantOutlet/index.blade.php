@@ -23,7 +23,7 @@
                             <th>Action</th>
                             <th>Merchant Outlet Name</th>
                             <th>Merchant Name</th>
-                            <th>Group Name</th>
+                            <th>Merchant Name</th>
                             <th>Client Name</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -65,20 +65,65 @@
                 <form @submit.prevent="editMode ? updateData() : createData()" >
                     <div class="modal-body">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Name</label>
-                          <input type="text"  class="form-control" v-model="form.name" aria-describedby="emailHelp" placeholder="Nama.." autofocus>
+                          <label for="exampleInputEmail1">Merchant Outlet Name</label>
+                          <input type="text"  class="form-control" v-model="form.merchant_outlet_name" aria-describedby="emailHelp" placeholder="Nama.." autofocus>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Email</label>
-                          <input type="email"  class="form-control" v-model="form.email" aria-describedby="emailHelp" placeholder="Email.." autofocus>
+                          <label for="exampleInputEmail1">Username</label>
+                          <input type="text"  class="form-control" v-model="form.username" aria-describedby="emailHelp" placeholder="Nama.." autofocus>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Password</label>
-                          <input type="password"  class="form-control" v-model="form.password" aria-describedby="emailHelp" placeholder="Password.." autofocus>
+                          <input type="password"  class="form-control" v-model="form.password" aria-describedby="emailHelp" placeholder="Nama.." autofocus>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Client </label>
+                            <select class="form-control" v-model="form.client_id" @change="updateClientName">
+                                <option disabled value="0">Pilih Client</option>
+                                <option v-for="item in clients" :key="item.id" :value="item.id">
+                                    @{{ item.client_name }}
+                                </option>
+                            </select>
+
+                            <input type="text" name="client_name" id="client_name"
+                                class="form-control" hidden
+                                v-model="form.client_name">
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Group </label>
+                            <select class="form-control" v-model="form.group_id" @change="updateGroupName">
+                                <option disabled value="0">Pilih Group</option>
+                                <option v-for="item in groups" :key="item.id" :value="item.id">
+                                    @{{ item.group_name }}
+                                </option>
+                            </select>
+
+                            <input type="text" name="group_name" id="group_name"
+                                class="form-control" hidden
+                                v-model="form.group_name">
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Merchant </label>
+                            <select class="form-control" v-model="form.merchant_id" @change="updateMerchantName">
+                                <option disabled value="0">Pilih Merchant</option>
+                                <option v-for="item in merchants" :key="item.id" :value="item.id">
+                                    @{{ item.merchant_name }}
+                                </option>
+                            </select>
+
+                            <input type="text" name="merchant_name" id="merchant_name"
+                                class="form-control" hidden
+                                v-model="form.merchant_name">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -104,15 +149,72 @@
             const mainData=ref();
             const form=ref({
                 id:0,
-                name:"",
-                email:"",
+                client_id:0,
+                client_name:"",
+                group_id:0,
+                group_name:"",
+                merchant_id:0,
+                merchant_name:"",
+                saving_account_id:0,
+                saving_account_name:"",
+                merchant_outlet_name:"",
+                username:"",
                 password:"",
             })
             const editMode=ref(false);
+            const clients=ref(@json($clients));
+            let groups=ref({});
+            let merchants=ref({});
+            const updateClientName=()=>{
+                const selected = clients.value.find(t => t.id === form.value.client_id);
+                form.value.client_name = selected ? selected.client_name : '';
+                axios.post('{{route('makarios.getdatagroupjson')}}',{
+                    client_id:form.value.client_id,
+                })
+                .then(response => {
+                    groups.value=response.data.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    if (error.response) {
+                        this.errorMessage = error.response.data.message;
+                        this.successMessage = '';  // Reset success jika ada
+                    }
+                });
+            }
+            const updateMerchantName=()=>{
+                const selected = merchants.value.find(t => t.id === form.value.merchant_id);
+                form.value.merchant_name = selected ? selected.merchant_name : '';
+            }
+            const updateGroupName=()=>{
+                const selected = groups.value.find(t => t.id === form.value.group_id);
+                form.value.group_name = selected ? selected.group_name : '';
+                axios.post('{{route('makarios.getdatamerchantjson')}}',{
+                    group_id:form.value.group_id,
+                })
+                .then(response => {
+                    groups.value=response.data.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    if (error.response) {
+                        this.errorMessage = error.response.data.message;
+                        this.successMessage = '';  // Reset success jika ada
+                    }
+                });
+            }
             const createModal=()=>{
-                form.value.password='';
-                form.value.name='';
-                form.value.email='';
+                form.value.client_id=0,
+                form.value.client_name="",
+                form.value.group_id=0,
+                form.value.group_name="",
+                form.value.merchant_id=0,
+                form.value.merchant_name="",
+                form.value.saving_account_id=0,
+                form.value.saving_account_name="",
+                form.value.merchant_outlet_name="",
+                form.value.username="",
+                form.value.password="",
                 form.value.id=0;
                 $('#dataModal').modal('show')
             }
@@ -121,16 +223,33 @@
                     form.value.id=id;
                     mainData.value.forEach((data) => {
                         if(data.id==id){
-                            form.value.name=data.name;
-                            form.value.email=data.email;
+                            form.value.client_id=data.client_id;
+                            form.value.client_name=data.client_name;
+                            form.value.group_id=data.group_id;
+                            form.value.group_name=data.group_name;
+                            form.value.merchant_id=data.merchant_id;
+                            form.value.merchant_name=data.merchant_name;
+                            form.value.saving_account_id=data.saving_account_id;
+                            form.value.saving_account_name=data.saving_account_name;
+                            form.value.merchant_outlet_name=data.merchant_outlet_name;
+                            form.value.username=data.username;
+                            form.value.password=data.password;
                         }
                     });
                     $('#dataModal').modal('show')
             }
             const createData=()=>{
-                axios.post('{{route('users.store')}}', {
-                    name: form.value.name,
-                    email: form.value.email,
+                axios.post('{{route('makarios.adddatamerchantoutlet')}}', {
+                    client_id:form.value.client_id,
+                    client_name:form.value.client_name,
+                    group_id:form.value.group_id,
+                    group_name:form.value.group_name,
+                    merchant_id:form.value.merchant_id,
+                    merchant_name:form.value.merchant_name,
+                    saving_account_id:form.value.saving_account_id,
+                    saving_account_name:form.value.saving_account_name,
+                    merchant_outlet_name:form.value.merchant_outlet_name,
+                    username:form.value.username,
                     password: form.value.password,
                 })
                 .then(response => {
@@ -145,10 +264,18 @@
                 });
             };
             const updateData=()=>{
-                axios.post('{{route('users.update')}}',{
-                    password:form.value.password,
-                    email:form.value.email,
-                    name:form.value.name,
+                axios.post('{{route('makarios.updatedatamerchantoutlet')}}',{
+                     client_id:form.value.client_id,
+                    client_name:form.value.client_name,
+                    group_id:form.value.group_id,
+                    group_name:form.value.group_name,
+                    merchant_id:form.value.merchant_id,
+                    merchant_name:form.value.merchant_name,
+                    saving_account_id:form.value.saving_account_id,
+                    saving_account_name:form.value.saving_account_name,
+                    merchant_outlet_name:form.value.merchant_outlet_name,
+                    username:form.value.username,
+                    password: form.value.password,
                     id:form.value.id,
                 })
                 .then(response => {
@@ -164,6 +291,9 @@
                 });
             };
             const refreshData=()=>{
+                clients.value=[];
+                groups.value=[];
+                merchants.value=[];
                 $('#dataTbl').DataTable().destroy();
                 axios.post('{{route('makarios.getdatamerchantoutlet')}}')
                 .then(response => {
@@ -185,7 +315,7 @@
                 });
             }
             const deleteData=(id)=>{
-                axios.get(`{{route('users.destroy','')}}/${id}`)
+                axios.get(`{{route('makarios.deletedatamerchantoutlet','')}}/${id}`)
                 .then(response => {
                     refreshData();
                 })
@@ -202,6 +332,12 @@
                 });
 
             return{
+                clients,
+                groups,
+                merchants,
+                updateClientName,
+                updateMerchantName,
+                updateGroupName,
                 deleteData,
                 updateModal,
                 updateData,
