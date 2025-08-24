@@ -74,5 +74,5 @@ use App\Http\Controllers\Makarios\SavingController;
     Route::post('/makarios/getdatamerchantjson',[MakariosController::class,'getdatamerchantjson'])->name('makarios.getdatamerchantjson');
 
     Route::get('/makarios/account',[SavingController::class,'account'])->name('makarios.account');
-    Route::get('/makarios/accountsaving',[SavingController::class,'accountsaving'])->name('makarios.accountsaving');
+    Route::get('/makarios/savingaccount',[SavingController::class,'savingaccount'])->name('makarios.savingaccount');
     

@@ -25,6 +25,8 @@
                             <th>Merchant Name</th>
                             <th>Merchant Name</th>
                             <th>Client Name</th>
+                            <th>Saving Account Name</th>
+                            <th>Username</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                         </tr>
@@ -45,6 +47,8 @@
                             <td v-text="item.merchant_name"></td>
                             <td v-text="item.group_name"></td>
                             <td v-text="item.client_name"></td>
+                            <td v-text="item.saving_account_name"></td>
+                            <td v-text="item.username"></td>
                             <td v-text="item.created_at"></td>
                             <td v-text="item.updated_at"></td>
                         </tr>
@@ -126,6 +130,21 @@
                                 v-model="form.merchant_name">
                         </div>
                     </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Saving Account </label>
+                            <select class="form-control" v-model="form.saving_account_id" @change="updateSavingAccount">
+                                <option disabled value="0">Pilih Saving Account</option>
+                                <option v-for="item in savings" :key="item.id" :value="item.id">
+                                    @{{ item.account_name }} | @{{ item.account_number }}
+                                </option>
+                            </select>
+
+                            <input type="text" name="saving_account_name" id="saving_account_name"
+                                class="form-control" hidden
+                                v-model="form.saving_account_name">
+                        </div>
+                    </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" >Save</button>
@@ -163,6 +182,7 @@
             })
             const editMode=ref(false);
             const clients=ref(@json($clients));
+            const savings=ref(@json($savings));
             let groups=ref({});
             let merchants=ref({});
             const updateClientName=()=>{
@@ -185,6 +205,10 @@
             const updateMerchantName=()=>{
                 const selected = merchants.value.find(t => t.id === form.value.merchant_id);
                 form.value.merchant_name = selected ? selected.merchant_name : '';
+            }
+            const updateSavingAccount=()=>{
+                const selected = savings.value.find(t => t.id === form.value.saving_account_id);
+                form.value.saving_account_name = selected ? selected.account_name : '';
             }
             const updateGroupName=()=>{
                 const selected = groups.value.find(t => t.id === form.value.group_id);
@@ -221,8 +245,35 @@
             const updateModal=(id)=>{
                     editMode.value=true;
                     form.value.id=id;
+
                     mainData.value.forEach((data) => {
                         if(data.id==id){
+                            axios.post('{{route('makarios.getdatagroupjson')}}',{
+                                client_id:data.client_id,
+                            })
+                            .then(response => {
+                                groups.value=response.data.data;
+                            })
+                            .catch(error => {
+                                console.error("Error fetching data:", error);
+                                if (error.response) {
+                                    this.errorMessage = error.response.data.message;
+                                    this.successMessage = '';  // Reset success jika ada
+                                }
+                            });
+                            axios.post('{{route('makarios.getdatamerchantjson')}}',{
+                                group_id:data.group_id,
+                            })
+                            .then(response => {
+                                merchants.value=response.data.data;
+                            })
+                            .catch(error => {
+                                console.error("Error fetching data:", error);
+                                if (error.response) {
+                                    this.errorMessage = error.response.data.message;
+                                    this.successMessage = '';  // Reset success jika ada
+                                }
+                            });
                             form.value.client_id=data.client_id;
                             form.value.client_name=data.client_name;
                             form.value.group_id=data.group_id;
@@ -239,6 +290,7 @@
                     $('#dataModal').modal('show')
             }
             const createData=()=>{
+                console.log(form.value);
                 axios.post('{{route('makarios.adddatamerchantoutlet')}}', {
                     client_id:form.value.client_id,
                     client_name:form.value.client_name,
@@ -291,6 +343,7 @@
                 });
             };
             const refreshData=()=>{
+                console.log(savings);
                 groups.value=[];
                 merchants.value=[];
                 $('#dataTbl').DataTable().destroy();
@@ -301,7 +354,8 @@
                     nextTick( () => {
                         $('#dataTbl').DataTable({
                         responsive: true,
-                        autoWidth: false
+                        autoWidth: false,
+                         scrollX: true,
                         });
                     });
                 })
@@ -331,6 +385,8 @@
                 });
 
             return{
+                savings,
+                updateSavingAccount,
                 clients,
                 groups,
                 merchants,

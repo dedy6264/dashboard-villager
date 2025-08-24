@@ -94,7 +94,7 @@
                 <div class="collapse" id="collapseAccount" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{ route('makarios.account') }}">Accounts</a>
-                        <a class="nav-link" href="{{ route('makarios.accountsaving') }}">Saving Account</a>
+                        <a class="nav-link" href="{{ route('makarios.savingaccount') }}">Saving Account</a>
                     </nav>
                 </div>
                 <!-- Addons -->

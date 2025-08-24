@@ -7,16 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\ProductController;
 use App\Services\SegmentService;
+use App\Services\SavingService;
 
 
 class MakariosController extends Controller
 {
     protected $segmentService;
+    protected $savingService;
 
     // otomatis Laravel resolve dependency
-    public function __construct(SegmentService $segmentService)
+    public function __construct(SegmentService $segmentService,SavingService $savingService)
     {
         $this->segmentService = $segmentService;
+        $this->savingService = $savingService;
     }
 
     public function index()
@@ -731,17 +734,21 @@ class MakariosController extends Controller
         }
         return view('makarios.dashboard.index');
     }
-    public function merchantOutlet()
-    {
+    public function merchantOutlet(){
         $dataClient=$this->getdataclient();
         $clientJsonString = $dataClient->getContent();
         // ubah jadi array PHP
         $clientJson = json_decode($clientJsonString, true);
         $clients=$clientJson['data'];
-        return view('makarios.merchantOutlet.index',compact('clients'));
+
+        $dataSaving = $this->savingService->getSavingAccount();
+        $savingJsonString = $dataSaving->getContent();
+        $savingJson = json_decode($savingJsonString, true);
+        $savings=$savingJson['data'];
+        // dd($savings)
+        return view('makarios.merchantOutlet.index',compact('clients','savings'));
     }
-    public function getdatamerchantoutlet()
-    {
+    public function getdatamerchantoutlet(){
          try {
             $payload=[
                 "start"=>(int)request()->start,
@@ -803,11 +810,21 @@ class MakariosController extends Controller
         }
         return view('makarios.dashboard.index');
     }
-     public function adddatamerchantoutlet(){
+    public function adddatamerchantoutlet(){
         // dd(request()->all());
          try {
             $payload=[
-                    "merchant_outlet_name"=>request()->merchant_outlet_name,
+                "client_id"=>(int)request()->client_id,
+                "client_name"=>request()->client_name,
+                "group_id"=>(int)request()->group_id,
+                "group_name"=>request()->group_name,
+                "merchant_id"=>(int)request()->merchant_id,
+                "merchant_name"=>request()->merchant_name,
+                "saving_account_id"=>(int)request()->saving_account_id,
+                "saving_account_name"=>request()->saving_account_name,
+                "username"=>request()->username,
+                "password"=>request()->password,
+                "merchant_outlet_name"=>request()->merchant_outlet_name,
             ];
             $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addMerchantOutlet',$payload)->json();
             if (!isset($response['responseCode'])) {
@@ -858,7 +875,17 @@ class MakariosController extends Controller
         // dd(request()->all());
          try {
             $payload=[
-                "id"=>request()->id,
+                "id"=>(int)request()->id,
+                "client_id"=>(int)request()->client_id,
+                "client_name"=>request()->client_name,
+                "group_id"=>(int)request()->group_id,
+                "group_name"=>request()->group_name,
+                "merchant_id"=>(int)request()->merchant_id,
+                "merchant_name"=>request()->merchant_name,
+                "saving_account_id"=>(int)request()->saving_account_id,
+                "saving_account_name"=>request()->saving_account_name,
+                "username"=>request()->username,
+                "password"=>request()->password,
                 "merchant_outlet_name"=>request()->merchant_outlet_name,
             ];
             $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateMerchantOutlet',$payload)->json();
