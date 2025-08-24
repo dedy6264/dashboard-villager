@@ -74,5 +74,14 @@ use App\Http\Controllers\Makarios\SavingController;
     Route::post('/makarios/getdatamerchantjson',[MakariosController::class,'getdatamerchantjson'])->name('makarios.getdatamerchantjson');
 
     Route::get('/makarios/account',[SavingController::class,'account'])->name('makarios.account');
+    Route::post('/makarios/getdataaccount',[SavingController::class,'getdataaccount'])->name('makarios.getdataaccount');
+    Route::post('/makarios/adddataaccount',[SavingController::class,'adddataaccount'])->name('makarios.adddataaccount');   
+    Route::post('/makarios/updatedataaccount',[SavingController::class,'updatedataaccount'])->name('makarios.updatedataaccount');
+    Route::get('/makarios/deletedataaccount/{id}',[SavingController::class,'deletedataaccount'])->name('makarios.deletedataaccount');
+   
     Route::get('/makarios/savingaccount',[SavingController::class,'savingaccount'])->name('makarios.savingaccount');
+    Route::post('/makarios/getdatasavingaccount',[SavingController::class,'getdatasavingaccount'])->name('makarios.getdatasavingaccount');
+    Route::post('/makarios/adddatasavingaccount',[SavingController::class,'adddatasavingaccount'])->name('makarios.adddatasavingaccount');   
+    Route::post('/makarios/updatedatasavingaccount',[SavingController::class,'updatedatasavingaccount'])->name('makarios.updatedatasavingaccount');
+    Route::get('/makarios/deletedatasavingaccount/{id}',[SavingController::class,'deletedatasavingaccount'])->name('makarios.deletedatasavingaccount');
     
