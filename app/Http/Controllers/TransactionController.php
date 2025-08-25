@@ -4,25 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Services\HostService;
 class TransactionController extends Controller
 {
-
+ protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function index()
     {
         // $filter=["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw,];
         // $payload=["id"=>0,"clientName"=>"","filter"=>$filter,];
-        // $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/client/gets', $payload)->json();
+        // $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/client/gets', $payload)->json();
         // if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {return response()->json(['error' => 'Invalid API response format or data type'], 500);}
         // $clients = $response['result']['data'];
         // $filter=["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw,];
         // $payload=[    "id"=>0,    "clientName"=>"",    "filter"=>$filter,];
-        // $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/gets', $payload)->json();
+        // $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/group/gets', $payload)->json();
         // if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {return response()->json(['error' => 'Invalid API response format or data type'], 500);}
         // $groups = $response['result']['data'];
         // $filter=["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw,];
         // $payload=["id"=>0,"clientName"=>"","filter"=>$filter];
-        // $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchant/gets', $payload)->json();
+        // $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchant/gets', $payload)->json();
         // if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {return response()->json(['error' => 'Invalid API response format or data type'], 500);}
         // $merchants = $response['result']['data'];
         return view('dashboard.transaction.index');
@@ -31,6 +34,7 @@ class TransactionController extends Controller
 
     public function getAll()
     {
+        
         $filter=[
             "start"=>(int)request()->start,
             "length"=>(int)request()->length,
@@ -41,7 +45,7 @@ class TransactionController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/trx/getTrx', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);

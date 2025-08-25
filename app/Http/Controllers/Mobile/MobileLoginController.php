@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Services\HostService;
 class MobileLoginController extends Controller
 {
-
+ protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function index()
     {
         return view('mobile.login');
@@ -16,13 +19,14 @@ class MobileLoginController extends Controller
 
     public function mobileLogin()
     {
+        
         try {
                 $payload=[
                     "username"=>request()->username,
                     "password"=>request()->password,
                 ];
                 // $response = Http::withBasicAuth('joe','secret')->post('https://google.com'.'/login/', $payload)->json();
-                $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
+                $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/login/', $payload)->json();
                 if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
                     // return response()->json(['error' => 'Invalid API response format or data type'], 500);
                     $suggestData=[

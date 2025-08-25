@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
+use App\Services\HostService;
 
 class MobileHistoryController extends Controller
 {
+    protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function index()
     {
         return view('mobile.layouts.history.index');
     }
     public function getTrx(Request $request){
+        
         if (request()->bearerToken()) {
             $token=$request->bearerToken();
         }else{
@@ -24,7 +30,7 @@ class MobileHistoryController extends Controller
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrx', $payload)->json();
+        $response = Http::withToken($token)->post( $this->hostService->GetUrl('v').'/trx/getTrx', $payload)->json();
         // if($response['statusCode']!=="00"){
             //     return redirect()->back()->with('warning', 'wrong username or password!');
             // }
@@ -40,6 +46,7 @@ class MobileHistoryController extends Controller
 
     }
     public function getTrxs(Request $request){
+        
         $filter=[
             "length"=>$request->size,
         ];
@@ -47,7 +54,7 @@ class MobileHistoryController extends Controller
             "filter"=>$filter,
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/trx/getTrxs', $payload)->json();
+        $response = Http::withToken(request()->bearerToken())->post( $this->hostService->GetUrl('v').'/trx/getTrxs', $payload)->json();
         // if($response['statusCode']!=="00"){
         //     return redirect()->back()->with('warning', 'wrong username or password!');
         // }
@@ -69,10 +76,11 @@ class MobileHistoryController extends Controller
         dd($convertedDate->greaterThan($dateNow));
     }
     public function advice(Request $request){
+        
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken(request()->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/advice', $payload)->json();
+        $response = Http::withToken(request()->bearerToken())->post( $this->hostService->GetUrl('v').'/biller/advice', $payload)->json();
         // if($response['statusCode']!=="00"){
         //     return redirect()->back()->with('warning', 'wrong username or password!');
         // }

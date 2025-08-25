@@ -5,26 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\MerchantOutlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Services\HostService;
 class MerchantOutletController extends Controller
 {
-
+  protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function index()
     {
+        
         $payload=["id"=>0,"clientName"=>"","filter"=>["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw]];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/client/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/client/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
         $clients = $response['result']['data'];
         $payload=["id"=>0,"clientName"=>"","filter"=>["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw]];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/group/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/group/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
         $groups = $response['result']['data'];
         $payload=["id"=>0,"clientName"=>"","filter"=>["start"=>(int)request()->start,"length"=>(int)request()->length,"draw"=>(int)request()->draw]];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchant/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchant/gets', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
@@ -34,6 +38,7 @@ class MerchantOutletController extends Controller
     }
     public function getAll()
     {
+        
         // dd(request()->all());
         $filter=[
             "start"=>(int)request()->start,
@@ -48,7 +53,7 @@ class MerchantOutletController extends Controller
             "merchantOutletName"=>request()->merchant_outlet_name,
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchantOutlet/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchantOutlet/gets', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -58,6 +63,7 @@ class MerchantOutletController extends Controller
     }
     public function store(Request $request)
     {
+        
         // dd($request->all());
         $payload=[
             "clientName"=>$request->client_name,
@@ -71,7 +77,7 @@ class MerchantOutletController extends Controller
             "merchantOutletUsername"=>$request->merchant_outlet_username,
             "merchantOutletPassword"=>$request->merchant_outlet_password,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchantOutlet/add', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchantOutlet/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
@@ -80,6 +86,7 @@ class MerchantOutletController extends Controller
     }
     public function update(Request $request)
     {
+        
         $payload=[
             "id"=>(int)$request->id,
             "clientName"=>$request->client_name,
@@ -92,7 +99,7 @@ class MerchantOutletController extends Controller
             "merchantOutletUsername"=>$request->merchant_outlet_username,
             "merchantOutletPassword"=>$request->merchant_outlet_password,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchantOutlet/update', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchantOutlet/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -102,10 +109,11 @@ class MerchantOutletController extends Controller
     }
     public function destroy($id)
     {
+        
         $payload=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(env('HOST_VILLAGER').'/merchantOutlet/drop', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/merchantOutlet/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

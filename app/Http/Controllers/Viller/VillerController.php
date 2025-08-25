@@ -6,15 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+
+use App\Services\HostService;
 class VillerController extends Controller
 {
+     protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function signin(){
         try {
             $payload = [
                 'username' => request()->input('username'),
                 'password' => request()->input('password'),
             ];
-            $response = Http::post(ENV('HOST_VILLAGER').'/login/', $payload)->json();
+            $response = Http::post($this->hostService->GetUrl('v').'/login/', $payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -77,7 +83,7 @@ class VillerController extends Controller
         ];
          try {
             $response = Http::withBasicAuth('joe', 'secret')
-            ->post(ENV('HOST_VILLAGER').'/user-app/add',$payload)->json();
+            ->post($this->hostService->GetUrl('v').'/user-app/add',$payload)->json();
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
@@ -116,7 +122,7 @@ class VillerController extends Controller
         ];
          try {
             $response = Http::withBasicAuth('joe', 'secret')
-            ->post(ENV('HOST_VILLAGER').'/user-app/verivicationotp',$payload)->json();
+            ->post($this->hostService->GetUrl('v').'/user-app/verivicationotp',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -166,7 +172,7 @@ class VillerController extends Controller
         ];
          try {
             $response = Http::withBasicAuth('joe', 'secret')
-            ->post(ENV('HOST_VILLAGER').'/user-app/resendotp',$payload)->json();
+            ->post($this->hostService->GetUrl('v').'/user-app/resendotp',$payload)->json();
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
@@ -210,7 +216,7 @@ class VillerController extends Controller
         try {
              $token=request()->token;
             $response = Http::withToken($token)
-            ->post(ENV('HOST_VILLAGER').'/user/addaccount',$payload)->json();
+            ->post($this->hostService->GetUrl('v').'/user/addaccount',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -284,7 +290,7 @@ class VillerController extends Controller
                     "id"=>(int)request()->id,
                 ],
             ];
-            $response = Http::withToken(request()->bearerToken)->post(ENV('HOST_VILLAGER').'/trx/getTrx',$payload)->json();
+            $response = Http::withToken(request()->bearerToken)->post($this->hostService->GetUrl('v').'/trx/getTrx',$payload)->json();
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
@@ -364,9 +370,9 @@ class VillerController extends Controller
                 ],
             ];
             if(request()->statusCode==""){
-                $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getHistory',$payload)->json();
+                $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/trx/getHistory',$payload)->json();
             }else{
-                $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/trx/getTrxs',$payload)->json();
+                $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/trx/getTrxs',$payload)->json();
             }
             // dd($response);
             // Validasi struktur response
@@ -417,7 +423,7 @@ class VillerController extends Controller
     public function getuser(){
          try {
             $token=request()->bearerToken();
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/user/getuser')->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/user/getuser')->json();
             // dd($response['message']);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -482,7 +488,7 @@ class VillerController extends Controller
     public function getsaving(){
          try {
             $token=request()->bearerToken();
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/user/getaccount',[
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/user/getaccount',[
                 "filter"=>[
                     "id"=>0,
                 ],
@@ -559,7 +565,7 @@ class VillerController extends Controller
                 "productReferenceId"=> request()->productReferenceId ?? "",
                 ],
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/product/get',$payload)->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/product/get',$payload)->json();
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
                 // Struktur tidak sesuai harapan
@@ -612,7 +618,7 @@ class VillerController extends Controller
             $payload=[
                 "subscriberId"=> request()->subscriberId ?? "",
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/helper/getReference',$payload)->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/helper/getReference',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -671,7 +677,7 @@ class VillerController extends Controller
                     "referenceNumber"=>request()->referenceNumber ?? "",
                     "accountPin"=>request()->accountPin ?? "",
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/payment',$payload)->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/biller/payment',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -762,7 +768,7 @@ class VillerController extends Controller
                     "amount"=> request()->amount ?? 0,
                 ]
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/inquiry',$payload)->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/biller/inquiry',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {
@@ -827,7 +833,7 @@ class VillerController extends Controller
                 "accountNumber"=>"",
                 "accounrPin"=>"",
             ];
-            $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/advice',$payload)->json();
+            $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/biller/advice',$payload)->json();
             // dd($response);
             // Validasi struktur response
             if (!isset($response['statusCode'])) {

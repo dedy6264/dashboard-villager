@@ -8,18 +8,21 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\ProductController;
 use App\Services\SegmentService;
 use App\Services\SavingService;
+use App\Services\HostService;
 
 
 class MakariosController extends Controller
 {
     protected $segmentService;
     protected $savingService;
+    protected $hostService;
 
     // otomatis Laravel resolve dependency
-    public function __construct(SegmentService $segmentService,SavingService $savingService)
+    public function __construct(SegmentService $segmentService,SavingService $savingService,HostService $hostService)
     {
         $this->segmentService = $segmentService;
         $this->savingService = $savingService;
+        $this->hostService = $hostService;
     }
 
     public function index()
@@ -28,9 +31,11 @@ class MakariosController extends Controller
     }
     public function client()
     {
+        // dd( $this->hostService->GetUrl('m'));
         return view('makarios.client.index');
     }
     public function getdataclient(){
+       
          try {
            $payload=[
                 "start"=>(int)request()->start,
@@ -46,7 +51,7 @@ class MakariosController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getClient',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getClient',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -93,12 +98,13 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function adddataclient(){
+       
         // dd(request()->all());
          try {
             $payload=[
                     "client_name"=>request()->client_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addClient',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addClient',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -144,13 +150,14 @@ class MakariosController extends Controller
         }
     }
     public function updatedataclient(){
+       
         // dd(request()->all());
          try {
             $payload=[
                 "id"=>request()->id,
                 "client_name"=>request()->client_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateClient',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateClient',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -196,12 +203,13 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function deletedataclient($id){
+       
 
          try {
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteClient',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteClient',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -263,6 +271,7 @@ class MakariosController extends Controller
     }
      public function getdatagroup()
     {
+       
          try {
              $payload=[
                 "start"=>(int)request()->start,
@@ -278,7 +287,7 @@ class MakariosController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getGroup',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getGroup',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -325,6 +334,7 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function adddatagroup(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -332,7 +342,7 @@ class MakariosController extends Controller
                     "client_name"=>request()->client_name,
                     "group_name"=>request()->group_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addGroup',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addGroup',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -378,6 +388,7 @@ class MakariosController extends Controller
         }
     }
     public function updatedatagroup(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -386,7 +397,7 @@ class MakariosController extends Controller
                 "client_name"=>request()->client_name,
                 "group_name"=>request()->group_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateGroup',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateGroup',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -432,12 +443,13 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function deletedatagroup($id){
+       
 
          try {
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteGroup',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteGroup',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -500,6 +512,7 @@ class MakariosController extends Controller
         return view('makarios.merchant.index',compact('clients','segments'));
     }
     public function getdatamerchant(){
+       
          try {
            $payload=[
                 "start"=>(int)request()->start,
@@ -515,7 +528,7 @@ class MakariosController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getMerchant',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getMerchant',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -562,6 +575,7 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
      public function adddatamerchant(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -577,7 +591,7 @@ class MakariosController extends Controller
                     "last_name"=>request()->last_name,
                     "merchant_name"=>request()->merchant_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addMerchant',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addMerchant',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -623,6 +637,7 @@ class MakariosController extends Controller
         }
     }
     public function updatedatamerchant(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -639,7 +654,7 @@ class MakariosController extends Controller
                     "last_name"=>request()->last_name,
                     "merchant_name"=>request()->merchant_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateMerchant',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateMerchant',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -685,11 +700,12 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function deletedatamerchant($id){
+       
          try {
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteMerchant',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteMerchant',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -749,6 +765,7 @@ class MakariosController extends Controller
         return view('makarios.merchantOutlet.index',compact('clients','savings'));
     }
     public function getdatamerchantoutlet(){
+       
          try {
             $payload=[
                 "start"=>(int)request()->start,
@@ -764,7 +781,7 @@ class MakariosController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getMerchantOutlet',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getMerchantOutlet',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -811,6 +828,7 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function adddatamerchantoutlet(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -826,7 +844,7 @@ class MakariosController extends Controller
                 "password"=>request()->password,
                 "merchant_outlet_name"=>request()->merchant_outlet_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addMerchantOutlet',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addMerchantOutlet',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -872,6 +890,7 @@ class MakariosController extends Controller
         }
     }
     public function updatedatamerchantoutlet(){
+       
         // dd(request()->all());
          try {
             $payload=[
@@ -888,7 +907,7 @@ class MakariosController extends Controller
                 "password"=>request()->password,
                 "merchant_outlet_name"=>request()->merchant_outlet_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateMerchantOutlet',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateMerchantOutlet',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -934,12 +953,13 @@ class MakariosController extends Controller
         return view('makarios.dashboard.index');
     }
     public function deletedatamerchantoutlet($id){
+       
 
          try {
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteMerchantOutlet',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteMerchantOutlet',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -989,6 +1009,7 @@ class MakariosController extends Controller
 
 
     public function getdatamerchantjson(){
+       
           try {
              $payload=[
                "start"=>0,
@@ -1000,7 +1021,7 @@ class MakariosController extends Controller
                     "group_id"=>(int)request()->group_id,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getMerchant',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getMerchant',$payload)->json();
             // dd($response);
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
@@ -1047,6 +1068,7 @@ class MakariosController extends Controller
         }
     }
     public function getdatagroupjson(){
+       
           try {
              $payload=[
                "start"=>0,
@@ -1058,7 +1080,7 @@ class MakariosController extends Controller
                     "client_id"=>(int)request()->client_id,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getGroup',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getGroup',$payload)->json();
             // dd($response);
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){

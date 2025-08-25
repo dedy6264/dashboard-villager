@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Makarios;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Services\HostService;
 class SavingController extends Controller
 {
+    protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function account(){
         return view('makarios.account.index');
     }
@@ -27,7 +31,7 @@ class SavingController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -79,7 +83,7 @@ class SavingController extends Controller
             $payload=[
                 "account_name"=>request()->account_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -132,7 +136,7 @@ class SavingController extends Controller
                 "id"=>request()->id,
                 "account_name"=>request()->account_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -183,7 +187,7 @@ class SavingController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -253,7 +257,7 @@ class SavingController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getSavingAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getSavingAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -306,7 +310,7 @@ class SavingController extends Controller
                 "account_id"=>request()->account_id,
                 "account_name"=>request()->account_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addSavingAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addSavingAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -360,7 +364,7 @@ class SavingController extends Controller
                 "account_id"=>request()->account_id,
                 "account_name"=>request()->account_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateSavingAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateSavingAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -411,7 +415,7 @@ class SavingController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteSavingAccount',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteSavingAccount',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[

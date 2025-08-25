@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Makarios;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Services\HostService;
+  
 class ProductController extends Controller
 {
+     protected $hostService;
+     public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function producttype(){
+        // dd($this->getUrl('v'));
         return view('makarios.productType.index');
     }
     public function getdataproducttype(){
@@ -27,7 +33,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductType',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductType',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -79,7 +85,7 @@ class ProductController extends Controller
             $payload=[
                     "product_type_name"=>request()->product_type_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProductType',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProductType',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -132,7 +138,7 @@ class ProductController extends Controller
                 "id"=>request()->id,
                 "product_type_name"=>request()->product_type_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProductType',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProductType',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -183,7 +189,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProductType',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProductType',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -248,7 +254,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductCategory',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductCategory',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -300,7 +306,7 @@ class ProductController extends Controller
             $payload=[
                     "product_category_name"=>request()->product_category_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProductCategory',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProductCategory',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -353,7 +359,7 @@ class ProductController extends Controller
                 "id"=>request()->id,
                 "product_category_name"=>request()->product_category_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProductCategory',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProductCategory',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -404,7 +410,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProductCategory',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProductCategory',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -481,7 +487,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProduct',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProduct',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -539,7 +545,7 @@ class ProductController extends Controller
                 "product_name"=>request()->product_name,
                 "product_code"=>request()->product_code,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProduct',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProduct',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -598,7 +604,7 @@ class ProductController extends Controller
                 "product_name"=>request()->product_name,
                 "product_code"=>request()->product_code,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProduct',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProduct',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -649,7 +655,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProduct',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProduct',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -714,7 +720,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -765,7 +771,7 @@ class ProductController extends Controller
             $payload=[
                 "provider_name"=>request()->provider_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -818,7 +824,7 @@ class ProductController extends Controller
                 "id"=>request()->id,
                 "provider_name"=>request()->provider_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -869,7 +875,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -939,7 +945,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -998,7 +1004,7 @@ class ProductController extends Controller
                 "product_provider_admin_fee"=>(double)request()->product_provider_admin_fee,
                 "product_provider_merchant_fee"=>(double)request()->product_provider_merchant_fee,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProductProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProductProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1058,7 +1064,7 @@ class ProductController extends Controller
                 "product_provider_admin_fee"=>(double)request()->product_provider_admin_fee,
                 "product_provider_merchant_fee"=>(double)request()->product_provider_merchant_fee,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProductProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProductProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1109,7 +1115,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProductProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProductProvider',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1174,7 +1180,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1226,7 +1232,7 @@ class ProductController extends Controller
             $payload=[
                 "segment_name"=>request()->segment_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1279,7 +1285,7 @@ class ProductController extends Controller
                 "id"=>request()->id,
                 "segment_name"=>request()->segment_name,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1330,7 +1336,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1411,7 +1417,7 @@ class ProductController extends Controller
                     "provider_id"=>(int)request()->provider_id,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductProvider',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductProvider',$payload)->json();
             // dd($response);
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
@@ -1473,7 +1479,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1548,7 +1554,7 @@ class ProductController extends Controller
                 "product_merchant_fee"=>(double)request()->product_merchant_fee,
                 "product_availability"=>request()->product_availability,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/addProductSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/addProductSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1624,7 +1630,7 @@ class ProductController extends Controller
                 "product_merchant_fee"=>(double)request()->product_merchant_fee,
                 "product_availability"=>request()->product_availability,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/updateProductSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/updateProductSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1675,7 +1681,7 @@ class ProductController extends Controller
             $payload=[
                 "id"=>(int)$id,
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/deleteProductSegment',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/deleteProductSegment',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -1740,7 +1746,7 @@ class ProductController extends Controller
                     "id"=>0,
                 ],
             ];
-            $response = Http::withBasicAuth('mocha','michi')->post(ENV('HOST_MAKARIOS').'/api/getProductReference',$payload)->json();
+            $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getProductReference',$payload)->json();
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[

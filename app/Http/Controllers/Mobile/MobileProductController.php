@@ -6,8 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+use App\Services\HostService;
 class MobileProductController extends Controller
 {
+     protected $hostService;
+    public function __construct(HostService $hostService){
+        $this->hostService = $hostService;
+    }
     public function pulsaPrabayar()
     {
         return view("mobile.layouts.products.pulsa.index");
@@ -32,7 +37,7 @@ class MobileProductController extends Controller
         $payload=[
             "productReferenceCode"=>$productReferenceCode,
         ];
-        // $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/product/gets', $payload)->json();
+        // $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/product/gets', $payload)->json();
         $response =[
             "responseCode"=> "00",
             "responseMessage"=> "SUCCESS",
@@ -179,10 +184,11 @@ class MobileProductController extends Controller
         return $response;
     }
     public function getReferenceCode(){
+        
         $payload=[
             "subscriberId"=>request()->customerId,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post(ENV('HOST_VILLAGER').'/helper/getReference', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/helper/getReference', $payload)->json();
         if($response['statusCode']!=="00"){
             return redirect()->back()->with('warning', 'wrong username or password!');
         }
@@ -193,6 +199,7 @@ class MobileProductController extends Controller
     }
     public function inquiry(Request $request)
     {
+        
         // dd($request->bearerToken());
        switch ($request->productCode) {
         case 'BPJSKS':
@@ -212,7 +219,7 @@ class MobileProductController extends Controller
             "productCode"=>$request->productCode,
             "additionalField"=>$additionalField,
         ];
-        $response = Http::withToken($request->bearerToken())->post(ENV('HOST_VILLAGER').'/biller/inquiry', $payload)->json();
+        $response = Http::withToken($request->bearerToken())->post($this->hostService->GetUrl('v').'/biller/inquiry', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             if($response['message']==="invalid or expired jwt"){
                 // $mainData=[
@@ -287,6 +294,7 @@ class MobileProductController extends Controller
 
     public function payment(Request $request)
     {
+        
         if (request()->bearerToken()) {
             $token=$request->bearerToken();
         }else{
@@ -295,7 +303,7 @@ class MobileProductController extends Controller
         $payload=[
             "referenceNumber"=>$request->referenceNumber,
         ];
-        $response = Http::withToken($token)->post(ENV('HOST_VILLAGER').'/biller/payment', $payload)->json();
+        $response = Http::withToken($token)->post($this->hostService->GetUrl('v').'/biller/payment', $payload)->json();
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             if(isset($response['message'])){
                 if($response['message']==="invalid or expired jwt" || $response['message']==="missing or malformed jwt"){
