@@ -52,6 +52,7 @@ class MakariosController extends Controller
                 ],
             ];
             $response = Http::withBasicAuth('mocha','michi')->post( $this->hostService->GetUrl('m').'/api/getClient',$payload)->json();
+            // dump($response);
             if (!isset($response['responseCode'])) {
                 if ($response['message']=="invalid or expired jwt"){
                     $data=[
@@ -73,8 +74,8 @@ class MakariosController extends Controller
                     $userData = $response['result'] ?? null;
                      return response()->json([
                         'draw' => intval(request()->input('draw')), // ambil dari request
-                        'recordsTotal' => $userData['records_total'],
-                        'recordsFiltered' => $userData['records_filtered'],
+                        'recordsTotal' => $userData['records_total']?? 0,
+                        'recordsFiltered' => $userData['records_filtered']  ?? 0,
                         'data' => $userData['data']
                     ]);
                 default:

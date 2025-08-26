@@ -14,7 +14,7 @@ class HostService
             $hostMakarios=env('HOST_MAKARIOS_DEV');
         }else{
             $hostViller=env('HOST_VILLAGER_PROD');
-            $hostMakarios=env('HOST_MAKARIOS_DEV');
+            $hostMakarios=env('HOST_MAKARIOS_PROD');
         }  
         if ($cc=="v"){
             return $hostViller;
