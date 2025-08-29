@@ -144,7 +144,8 @@
                     nextTick( () => {
                         $('#dataTbl').DataTable({
                         responsive: true,
-                        autoWidth: false
+                        autoWidth: false,
+                        scrollX: true,
                         });
                     });
                 })

@@ -1,0 +1,477 @@
+:root {
+    --pink: #f14e95;
+    --bg: #0a0a0a;
+    --shadow: 0 2px 2px rgb(0, 0, 0, 0.5);
+}
+
+body {
+    font-size: 1.2rem;
+    font-family: "Funnel Display", sans-serif;
+    min-height: 100vh;
+}
+
+.head::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../inv/img/agus1.webp);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(0px);
+}
+
+.head {
+    position: relative;
+    min-height: 100vh;
+    /* background-color: var(--bg); */
+}
+
+.heading {
+    position: absolute;
+    top: 200px;
+}
+
+
+
+.countdown {
+    position: absolute;
+    bottom: 20px;
+    /* jarak dari bawah layar */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../inv/img/feature.jpg);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(5px);
+}
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    justify-content: space-between
+        /* background-color: var(--bg); */
+}
+
+.hero h1,
+.hero h4,
+.hero h5,
+.hero p {
+    text-shadow: var(--shadow);
+}
+
+.hero h1 {
+    font-family: "Lavishly Yours", cursive;
+    font-size: 4rem;
+}
+
+.hero h4 {
+    font-size: 2rem;
+}
+
+.hero h5 {
+    font-size: 1rem;
+    font-family: "Meow Script", cursive;
+}
+
+.hero p {
+    font-size: 1.4rem;
+}
+
+.hero a {
+    color: white;
+    background-color: var(--bg);
+}
+
+.hero a:hover {
+    background-color: var(--pink);
+    color: white;
+}
+
+.custom-navbar {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(3px);
+}
+
+.nav-item .nav-link {
+    text-align: center;
+}
+
+.sticky-top {
+    overflow: hidden;
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .offcanvas-title {
+    font-family: "Meow Script", cursive;
+    font-size: 3.2rem;
+    font-align: justify;
+}
+
+.custom-navbar .offcanvas {
+    height: 100vh;
+}
+
+.home {
+    background-image: url(../inv/img/flowers-7910753_1280.png);
+    opacity: 0.8;
+    background-size: cover;
+    background-position: center;
+    margin-top: -6rem;
+    padding-top: 8rem;
+    padding-bottom: 15rem;
+}
+
+.home h2,
+.story h2,
+.gallery h2 {
+    font-family: "Lavishly Yours", cursive;
+    font-size: 2rem;
+    text-align: center;
+    color: #ff009d;
+    text-shadow: #ffff;
+}
+
+.home h3 {
+    font-family: "Lavishly Yours", cursive;
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.home .couple {
+    margin-top: 200px;
+}
+
+.home .couple h3 {
+    font-family: "Lavishly Yours", cursive;
+    font-size: 2rem;
+    color: var(--pink);
+}
+
+.home .couple img {
+    max-width: 100%;
+}
+
+.info {
+    padding-top: 8rem;
+    padding-bottom: 13rem;
+    background-color: var(--bg);
+    color: white;
+    /* padding: 2rem; */
+}
+
+.info h2 {
+    font-family: "Lavishly Yours", cursive;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--pink);
+}
+
+.info .alamat {
+    font-size: 1.2rem;
+    /* text-align: center; */
+}
+
+.info .description {
+    font-size: 1.2rem;
+    /* text-align: center; */
+}
+
+.info .card {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    margin: 1rem;
+}
+
+.info .card-header {
+    border-bottom: 1px solid #999;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.info .card-body {
+    font-size: 1.2rem;
+}
+
+.info .card-footer {
+    border-top: 1px solid #999;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.story {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+.story span {
+    text-transform: uppercase;
+    color: #666;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.story p {
+    font-size: 1rem;
+    font-weight: 1.6;
+    color: #333;
+}
+
+.timeline {
+    list-style-type: none;
+    position: relative;
+    padding: 2rem 0;
+    margin-top: 1rem;
+}
+
+.timeline::before {
+    content: '';
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    width: 1px;
+    background-color: #ccc;
+    left: 50%;
+
+}
+
+.timeline li {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.timeline li::before,
+.timeline li::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.timeline li::after {
+    clear: both;
+}
+
+.timeline li .timeline-image {
+    width: 160px;
+    height: 160px;
+    background-color: #ccc;
+    position: absolute;
+    left: 50%;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.timeline li .timeline-panel {
+    width: 40%;
+    float: left;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 2rem;
+    position: relative;
+    border-radius: 8px;
+
+}
+
+.timeline li .timeline-panel::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 80px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    right: -10px;
+    transform: rotate(45deg);
+    /* z-index: -1; */
+
+}
+
+.timeline li.timeline-inverted .timeline-panel {
+    width: 40%;
+    float: right;
+    border: 1px solid #ccc;
+    padding: 2rem;
+    position: relative;
+    border-radius: 8px;
+
+}
+
+.timeline li.timeline-inverted .timeline-panel::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 80px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-top: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    left: -10px;
+    transform: rotate(45deg);
+    /* z-index: -1; */
+
+}
+
+.gallery {
+    background-color: var(--bg);
+    padding-top: 8rem;
+    padding-bottom: 13rem;
+}
+
+footer {
+    background-color: var(--pink);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+/* media query */
+/* tablet */
+
+@media(max-width: 768px) {
+
+    html {
+        font-size: 60%;
+    }
+
+    .offcanvas.offcanvas-start {
+        width: 200px;
+    }
+
+    .timeline::before {
+        left: 60px;
+    }
+
+    .timeline li .timeline-image {
+        left: 15px;
+        margin-left: 45px;
+        top: 16px;
+    }
+
+    .timeline li .timeline-panel {
+        width: calc(100% - 200px);
+        float: right;
+    }
+
+    .timeline li.timeline-inverted .timeline-panel {
+        width: calc(100% - 200px);
+        float: right;
+    }
+
+    .timeline li .timeline-panel::before {
+
+        background-color: white;
+        border-top: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid #000;
+        border-left: 1px solid #000;
+        left: -10px;
+        transform: rotate(45deg);
+    }
+
+}
+
+/* mobile */
+
+@media(max-width: 576px) {
+
+    html {
+        font-size: 50%;
+    }
+
+    .offcanvas.offcanvas-start {
+        width: 200px;
+    }
+
+    .timeline::before {
+        left: 60px;
+    }
+
+    .timeline li .timeline-image {
+        left: 15px;
+        margin-left: 45px;
+        top: 16px;
+        width: 100px;
+        /* atur lebar */
+        height: 100px;
+        /* atur tinggi */
+    }
+
+    .timeline li .timeline-panel {
+        width: calc(100% - 150px);
+        float: right;
+    }
+
+    .timeline li.timeline-inverted .timeline-panel {
+        width: calc(100% - 150px);
+        float: right;
+    }
+
+    .timeline li .timeline-panel::before {
+
+        background-color: white;
+        border-top: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid #000;
+        border-left: 1px solid #000;
+        left: -10px;
+        transform: rotate(45deg);
+    }
+}
+
+/* laptop */
+
+@media(max-width: 1024px) {
+
+    /* .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero h4 {
+        font-size: 1.5rem;
+    }
+
+    .hero h5 {
+        font-size: 0.8rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    } */
+    html {
+        font-size: 75%;
+    }
+
+
+}

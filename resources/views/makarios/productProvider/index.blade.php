@@ -216,6 +216,7 @@
                     autoWidth: false,
                     processing: true,
                     serverSide: true,
+                        scrollX: true,
                     ajax: {
                         url: '{{route('makarios.getdataproductprovider')}}',
                         type: 'POST',

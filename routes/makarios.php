@@ -2,6 +2,7 @@
 use App\Http\Controllers\Makarios\MakariosController;
 use App\Http\Controllers\Makarios\ProductController;
 use App\Http\Controllers\Makarios\SavingController;
+use App\Http\Controllers\Makarios\TransactionController;
 
     Route::get('/makarios/client',[MakariosController::class,'client'])->name('makarios.client');
     Route::post('/makarios/getdataclient',[MakariosController::class,'getdataclient'])->name('makarios.getdataclient');
@@ -85,3 +86,5 @@ use App\Http\Controllers\Makarios\SavingController;
     Route::post('/makarios/updatedatasavingaccount',[SavingController::class,'updatedatasavingaccount'])->name('makarios.updatedatasavingaccount');
     Route::get('/makarios/deletedatasavingaccount/{id}',[SavingController::class,'deletedatasavingaccount'])->name('makarios.deletedatasavingaccount');
     
+    Route::get('/makarios/historytransaction',[TransactionController::class,'historytransaction'])->name('makarios.historytransaction');
+    Route::post('/makarios/getdatatransaction',[TransactionController::class,'getdatatransaction'])->name('makarios.getdatatransaction');

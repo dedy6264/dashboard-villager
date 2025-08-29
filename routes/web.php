@@ -193,6 +193,9 @@ Route::get('/viller/inquiry/success',function(){
 Route::get('/viller/paymentsuccess',function(){
     return view('desain/viller/payment/success');
 })->name('viller.paymentsuccess');
+Route::get('/invitation',function(){
+    return view('invitation.index');
+});
 
 
 
