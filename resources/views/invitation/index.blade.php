@@ -417,7 +417,6 @@
         #story .timeline::before {
             left: 80px;
         }
-
         #story .timeline li .timeline-image {
             width: 200px;
             height: 200px;
@@ -425,20 +424,16 @@
             margin-left: 45px;
             top: 16px;
         }
-
         #story .timeline li .timeline-panel {
             width: calc(100% - 200px);
             float: right;
         }
-
         #story .timeline li.timeline-inverted .timeline-panel {
             width: calc(100% - 200px);
             float: right;
             margin-right: 50px;
         }
-
         #story .timeline li .timeline-panel::before {
-
             background-color: white;
             border-top: 1px solid transparent;
             border-right: 1px solid transparent;
@@ -516,7 +511,6 @@
       </button>
     </div>
   </section>
-
   <!-- HEAD -->
   <section id="head" class="text-center bg-light fade-section">
     {{-- <div class="fade-content"> --}}
@@ -530,7 +524,6 @@
         </div>
     {{-- </div> --}}
   </section>
-
   <!-- INFO -->
   <section id="info" class="fade-section">
     <div class="container profile-card ">
@@ -564,7 +557,6 @@
             </div>
     </div>
   </section>
-
   <!-- GALLERY -->
   <section id="gallery" class=" fade-section">
     <div class="mb-5 text-center fade-content">
@@ -596,7 +588,6 @@
         </div>
     {{-- </div> --}}
   </section>
-
   <!-- LOCATION -->
   <section id="location" class="fade-section">
     <div class="container text-center fade-content">
