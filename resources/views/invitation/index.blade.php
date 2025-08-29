@@ -44,39 +44,32 @@
       text-align: center;
       transition: transform 1s ease, opacity 1s ease;
     }
-
     #cover::after {
       content: "";
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
     }
-
     #cover .content {
       position: relative;
       z-index: 2;
     }
-
     #cover.hidden {
       transform: translateY(-100%);
       opacity: 0;
       pointer-events: none;
     }
-
     #cover h1,
     #cover h4 {
-        text-shadow: var(--shadow);
+      text-shadow: var(--shadow);
     }
-
     #cover h1 {/*headline*/
-        font-family: "Lavishly Yours", cursive;
-        font-size: 4rem;
+      font-family: "Lavishly Yours", cursive;
+      font-size: 4rem;
     }
-
     #cover h4 {/*judul*/
-        font-size: 2rem;
+      font-size: 2rem;
     }
-
     #cover a {
         color: white;
         background-color: var(--bg);
@@ -85,6 +78,7 @@
         background-color: var(--pink);
         color: white;
     }
+    
     /* General Section Style */
     section {
       min-height: 100vh;
@@ -97,60 +91,59 @@
 
     /*HEAD*/
     #head { 
-    /* background: #2b7ed0;  */
-        /* position: relative; */
-        min-height: 100vh;          /* selalu penuh 1 layar */
-        width: 100%;      
-        display: flex;
-        justify-content: space-between; /* atur atas & bawah */
-        padding: 80px 20px; /* beri jarak biar tidak mepet layar */
-        align-items: center;
-        /* justify-content: center; */
-        text-align: center;
-        color: white;
-        background: url('../inv/img/gpt1.png')  center / cover no-repeat;
-        background-attachment: fixed; /* 🎯 ini yang bikin statik */
-        background-position: center;
+      /* background: #2b7ed0;  */
+      /* position: relative; */
+      min-height: 100vh;          /* selalu penuh 1 layar */
+      width: 100%;      
+      display: flex;
+      justify-content: space-between; /* atur atas & bawah */
+      padding: 80px 20px; /* beri jarak biar tidak mepet layar */
+      align-items: center;
+      /* justify-content: center; */
+      text-align: center;
+      color: white;
+      background: url('../inv/img/gpt1.png')  center / cover no-repeat;
+      background-attachment: fixed; /* 🎯 ini yang bikin statik */
+      background-position: center;
     }
     #head h1 {
-        font-family: "Lavishly Yours", cursive;
-        font-size: 4rem;
+      font-family: "Lavishly Yours", cursive;
+      font-size: 4rem;
     }
     #head .head-top {
       margin-top: 10vh; /* geser sedikit dari atas */
     }
-
     #head .head-bottom {
       margin-bottom: 10vh; /* geser sedikit dari bawah */
     }
 
     /*INFO*/
     #info { 
-        /* background: #000000; */
-        position: relative;
-        min-height: 100vh;          /* selalu penuh 1 layar */
-        width: 100%;      
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: white;
-        background: url('../inv/img/tushar-ranjan-GqpGd6NtUoI-unsplash.jpg')  center / cover no-repeat;
-        background-attachment: fixed; /* 🎯 ini yang bikin statik */
-        background-position: center;
-        opacity: 0.8;
+      /* background: #000000; */
+      position: relative;
+      min-height: 100vh;          /* selalu penuh 1 layar */
+      width: 100%;      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      background: url('../inv/img/tushar-ranjan-GqpGd6NtUoI-unsplash.jpg')  center / cover no-repeat;
+      background-attachment: fixed; /* 🎯 ini yang bikin statik */
+      background-position: center;
+      opacity: 0.8;
     }
     #info .couple {
-        margin-top: 20px !important;
-        margin-bottom: 20px !important;
+      margin-top: 20px !important;
+      margin-bottom: 20px !important;
     }
     #info .couple h3 {
-        font-family: "Lavishly Yours", cursive;
-        font-size: 2rem;
-        color: var(--pink);
+      font-family: "Lavishly Yours", cursive;
+      font-size: 2rem;
+      color: var(--pink);
     }
     #info .couple img {
-        max-width: 100%;
+      max-width: 100%;
     }
 
     /*GALLERY*/
@@ -162,8 +155,8 @@
       border-radius: 20px;
     }
     #gallery h2 {
-        font-size: 3rem;
-        font-family: "Lavishly Yours", cursive;
+      font-size: 3rem;
+      font-family: "Lavishly Yours", cursive;
     }
     #gallery .gallery-item {
       position: relative;
@@ -172,14 +165,12 @@
       cursor: pointer;
       margin-bottom: 15px; /* biar ada jarak antar row */
     }
-
     #gallery .gallery-item img {
       width: 100%;
-    /*height: 250px;       /* atur tinggi seragam */
+      /*height: 250px;       /* atur tinggi seragam */
       object-fit: cover;   /* crop rapi */
       transition: transform .4s ease;
     }
-
     #gallery .gallery-item:hover img {
       transform: scale(1.2);
       filter: brightness(0.8);
@@ -196,28 +187,161 @@
       transform: translateY(100%);
       transition: transform .3s ease;
     }
-
     #gallery .gallery-item:hover .overlay {
       transform: translateY(0);
     }
 
+    /* Location */
     #location { 
-        position: relative;
-        min-height: 100vh;          /* selalu penuh 1 layar */
-        width: 100%;      
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: white;
-        background: url('../inv/img/gpt.png')  center / cover no-repeat;
-        background-attachment: fixed; /* 🎯 ini yang bikin statik */
-        background-position: center;
-     }
-    #location h2 {
-        font-size: 3rem;
-        font-family: "Lavishly Yours", cursive;
+      position: relative;
+      min-height: 100vh;          /* selalu penuh 1 layar */
+      width: 100%;      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      background: url('../inv/img/gpt.png')  center / cover no-repeat;
+      background-attachment: fixed; /* 🎯 ini yang bikin statik */
+      background-position: center;
     }
+    #location h2 {
+      font-size: 3rem;
+      font-family: "Lavishly Yours", cursive;
+    }
+      
+    /* Story */
+    #story { 
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+      position: relative;
+      /* min-height: 100vh;          selalu penuh 1 layar */
+      width: 100%;      
+      /* display: flex; */
+      /* align-items: center; */
+      /* justify-content: center; */
+      /* text-align: center; */
+      color: white;
+      background: rgba(0,0,0,0.5);
+      /* background: url('../inv/img/gpt.png')  center / cover no-repeat; */
+      /* background-attachment: fixed; 🎯 ini yang bikin statik */
+      /* background-position: center; */
+    }
+    #story h2 {
+      font-size: 3rem;
+      font-family: "Lavishly Yours", cursive;
+      color: var(--pink)
+    }
+    #story h3 {
+      font-family: "Lavishly Yours", cursive;
+      color: var(--pink)
+    }
+    #story span {
+      text-transform: uppercase;
+      color: #666;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    #story p {
+      font-size: 1rem;
+      font-weight: 1.6;
+      color: #333;
+    }
+    #story .timeline {
+      list-style-type: none;
+      position: relative;
+      padding: 1rem 0;
+      margin-top: 2rem;
+    }
+    #story .timeline::before {
+      content: '';
+      top: 0;
+      bottom: 0;
+      position: absolute;
+      width: 1px;
+      height: 390px;
+      background-color: #ccc;
+      left: 50%;
+    }
+    #story .timeline li {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    #story .timeline li::before,
+    #story .timeline li::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+    #story .timeline li::after {
+      clear: both;
+    }
+    #story .timeline li .timeline-image {
+      width: 250px;
+      height: 250px;
+      background-color: #ccc;
+      position: absolute;
+      left: 50%;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #story .timeline li .timeline-panel {
+      width: 40%;
+      float: left;
+      border: 1px solid #ccc;
+      background-color: white;
+      padding: 1rem;
+      position: relative;
+      border-radius: 8px;
+      margin-left: -50px
+    }
+    #story .timeline li .timeline-panel::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 80px;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid transparent;
+      border-left: 1px solid transparent;
+      right: -10px;
+      transform: rotate(45deg);
+      /* z-index: -1; */
+    }
+    #story .timeline li.timeline-inverted .timeline-panel {
+      width: 40%;
+      float: right;
+      border: 1px solid #ccc;
+      padding: 2rem;
+      position: relative;
+      border-radius: 8px;
+      margin-right: -50px
+    }
+    #story .timeline li.timeline-inverted .timeline-panel::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 80px;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-top: 1px solid transparent;
+      border-right: 1px solid transparent;
+      /* border-bottom: 1px solid #000;
+      border-left: 1px solid #000; */
+      left: -10px;
+      transform: rotate(45deg);
+      /* z-index: -1; */
+    }
+
     /* Fade-in base */
     .fade-content {
       opacity: 0;
@@ -290,6 +414,39 @@
             object-fit: cover;
             border-radius: 12px;
         }
+        #story .timeline::before {
+            left: 80px;
+        }
+
+        #story .timeline li .timeline-image {
+            width: 200px;
+            height: 200px;
+            left: 30px;
+            margin-left: 45px;
+            top: 16px;
+        }
+
+        #story .timeline li .timeline-panel {
+            width: calc(100% - 200px);
+            float: right;
+        }
+
+        #story .timeline li.timeline-inverted .timeline-panel {
+            width: calc(100% - 200px);
+            float: right;
+            margin-right: 50px;
+        }
+
+        #story .timeline li .timeline-panel::before {
+
+            background-color: white;
+            border-top: 1px solid transparent;
+            border-right: 1px solid transparent;
+            /* border-bottom: 1px solid #000;
+            border-left: 1px solid #000; */
+            left: -10px;
+            transform: rotate(45deg);
+        }
     }
     @media(max-width: 576px) {
         .profile-card {
@@ -307,6 +464,40 @@
             height: 100%;            /* isi penuh sesuai col */
             object-fit: cover;
             border-radius: 12px;
+        }
+         #story .timeline::before {
+            left: 60px;
+        }
+
+        #story .timeline li .timeline-image {
+            left: 15px;
+            margin-left: 45px;
+            top: 16px;
+            width: 100px;
+            /* atur lebar */
+            height: 100px;
+            /* atur tinggi */
+        }
+
+        #story .timeline li .timeline-panel {
+            width: calc(100% - 150px);
+            float: right;
+        }
+
+        #story .timeline li.timeline-inverted .timeline-panel {
+            width: calc(100% - 150px);
+            float: right;
+        }
+
+        #story .timeline li .timeline-panel::before {
+
+            background-color: white;
+            border-top: 1px solid transparent;
+            border-right: 1px solid transparent;
+            border-bottom: 1px solid #000;
+            border-left: 1px solid #000;
+            left: -10px;
+            transform: rotate(45deg);
         }
     }
   </style>
@@ -376,7 +567,7 @@
 
   <!-- GALLERY -->
   <section id="gallery" class=" fade-section">
-    <div class=" text-center mb-5 fade-content">
+    <div class="mb-5 text-center fade-content">
       <h2 class="fw-bold">Captured Intimacy</h2>
       <p class="text-muted">Setiap bingkai menyimpan kisah penuh kehangatan dan kedekatan</p>
     </div>
@@ -447,35 +638,66 @@
     <div class="fade-content">
       <h2 class="mb-4">Our Journey</h2>
     </div>
-    <div class="row g-4 justify-content-center">
-      <div class="col-md-4 fade-content">
-        <div class="border-0 shadow card">
-          <img src="https://picsum.photos/400/250?random=1" class="card-img-top" alt="story">
-          <div class="card-body">
-            <h5 class="card-title">First Meet</h5>
-            <p class="card-text">We met for the first time in 2019, and it was a wonderful beginning.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 fade-content">
-        <div class="border-0 shadow card">
-          <img src="https://picsum.photos/400/250?random=2" class="card-img-top" alt="story">
-          <div class="card-body">
-            <h5 class="card-title">Engagement</h5>
-            <p class="card-text">On 2024, we decided to take the next step with love and blessing.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 fade-content">
-        <div class="border-0 shadow card">
-          <img src="https://picsum.photos/400/250?random=3" class="card-img-top" alt="story">
-          <div class="card-body">
-            <h5 class="card-title">Wedding Day</h5>
-            <p class="card-text">Now, in 2025, we invite you to witness the happiest day of our life.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="row">
+                <div class="col">
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h3>First meet</h3>
+                                    <span>1 June 2000</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Kami dipertemukan didalam komunitas Gereja</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="timeline">
+                        <li class="timeline-inverted">
+                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h3>Second meet</h3>
+                                    <span>1 June 2000</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Karena komunikasi yang baik dan memahami satu dengan yang lainnya, kamipun memutuskan untuk saling berkomitmen.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h3>Other meet</h3>
+                                    <span>1 June 2000</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Kami sepakat untuk kejenjang yang lebih serius, yakni mempertemukan kedua ortu kami dalam suasana pertunangan</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="timeline">
+                        <li class="timeline-inverted">
+                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h3>Second meet</h3>
+                                    <span>1 June 2000</span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Kami pun saling menerima dan memulai janji suci untuk menjadi pasangan, teman hidup dalam segala hal dan situasi selamanya.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
   </section>
 
   <!-- Gift -->
