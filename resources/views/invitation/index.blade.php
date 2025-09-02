@@ -215,7 +215,8 @@
       padding-top: 8rem;
       padding-bottom: 8rem;
       position: relative;
-      /* min-height: 100vh;          selalu penuh 1 layar */
+      min-height: 100vh;          selalu penuh 1 layar
+      /* max-height: 90vh;          selalu penuh 1 layar */
       width: 100%;      
       /* display: flex; */
       /* align-items: center; */
@@ -223,16 +224,12 @@
       /* text-align: center; */
       color: white;
       background: rgba(0,0,0,0.5);
-      /* background: url('../inv/img/gpt.png')  center / cover no-repeat; */
-      /* background-attachment: fixed; 🎯 ini yang bikin statik */
+      background: url('../inv/img/gpt.png')  center / cover no-repeat;
+      background-attachment: fixed; 🎯 ini yang bikin statik
       /* background-position: center; */
     }
     #story h2 {
       font-size: 3rem;
-      font-family: "Lavishly Yours", cursive;
-      color: var(--pink)
-    }
-    #story h3 {
       font-family: "Lavishly Yours", cursive;
       color: var(--pink)
     }
@@ -245,103 +242,242 @@
       margin-bottom: 1rem;
     }
     #story p {
-      font-size: 1rem;
+      font-size: 0.7rem;
       font-weight: 1.6;
       color: #333;
     }
+    
     #story .timeline {
-      list-style-type: none;
-      position: relative;
-      padding: 1rem 0;
-      margin-top: 2rem;
-    }
-    #story .timeline::before {
-      content: '';
-      top: 0;
-      bottom: 0;
-      position: absolute;
-      width: 1px;
-      height: 390px;
-      background-color: #ccc;
-      left: 50%;
-    }
-    #story .timeline li {
-      position: relative;
-      margin-bottom: 2rem;
-    }
-    #story .timeline li::before,
-    #story .timeline li::after {
-      content: '';
-      display: table;
-      clear: both;
-    }
-    #story .timeline li::after {
-      clear: both;
-    }
-    #story .timeline li .timeline-image {
-      width: 250px;
-      height: 250px;
-      background-color: #ccc;
-      position: absolute;
-      left: 50%;
-      border-radius: 50%;
-      transform: translateX(-50%);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    #story .timeline li .timeline-panel {
-      width: 40%;
-      float: left;
-      border: 1px solid #ccc;
-      background-color: white;
-      padding: 1rem;
-      position: relative;
-      border-radius: 8px;
-      margin-left: -50px
-    }
-    #story .timeline li .timeline-panel::before {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 80px;
-      width: 20px;
-      height: 20px;
-      background-color: white;
-      border-top: 1px solid #ccc;
-      border-right: 1px solid #ccc;
-      border-bottom: 1px solid transparent;
-      border-left: 1px solid transparent;
-      right: -10px;
-      transform: rotate(45deg);
-      /* z-index: -1; */
-    }
-    #story .timeline li.timeline-inverted .timeline-panel {
-      width: 40%;
-      float: right;
-      border: 1px solid #ccc;
-      padding: 2rem;
-      position: relative;
-      border-radius: 8px;
-      margin-right: -50px
-    }
-    #story .timeline li.timeline-inverted .timeline-panel::before {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 80px;
-      width: 20px;
-      height: 20px;
-      background-color: white;
-      border-top: 1px solid transparent;
-      border-right: 1px solid transparent;
-      /* border-bottom: 1px solid #000;
-      border-left: 1px solid #000; */
-      left: -10px;
-      transform: rotate(45deg);
-      /* z-index: -1; */
+        list-style-type: none;
+        position: relative;
+        padding: 2rem 0;
+        /* margin-top: 1rem; */
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
+    #story .timeline::before {
+        content: '';
+        top: -10px;
+        bottom: -10px;
+        position: absolute;
+        width: 1px;
+        background-color: #ccc;
+        left: 50%;
+
+    }
+
+    #story .timeline li {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    #story .timeline li::before,
+    #story .timeline li::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    #story .timeline li::after {
+        clear: both;
+    }
+
+    #story .timeline li .timeline-image {
+        width: 160px;
+        height: 160px;
+        background-color: #ccc;
+        position: absolute;
+        left: 50%;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #story .timeline li .timeline-panel {
+        width: 35%;
+        float: left;
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 2rem;
+        position: relative;
+        border-radius: 8px;
+
+    }
+
+    #story .timeline li .timeline-panel::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 80px;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-top: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid transparent;
+        border-left: 1px solid transparent;
+        right: -10px;
+        transform: rotate(45deg);
+        /* z-index: -1; */
+
+    }
+
+    #story .timeline li.timeline-inverted .timeline-panel {
+        width: 35%;
+        float: right;
+        border: 1px solid #ccc;
+        padding: 2rem;
+        position: relative;
+        border-radius: 8px;
+
+    }
+
+    #story .timeline li.timeline-inverted .timeline-panel::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 80px;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-top: 1px solid transparent;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        left: -10px;
+        transform: rotate(45deg);
+        /* z-index: -1; */
+
+    }
+    @media(max-width: 1024px) {
+      .profile-card {
+          background: rgba(255, 255, 255, 0.2); /* transparan */
+          backdrop-filter: blur(10px);          /* efek blur */
+              -webkit-backdrop-filter: blur(10px); 
+          border-radius: 12px;
+          padding: 2rem;
+          max-width: 100vh;
+          margin: auto;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card img {
+          width: 100%;
+          height: 100%;            /* isi penuh sesuai col */
+          object-fit: cover;
+          border-radius: 12px;
+      }
+      #gallery {
+          max-width: 900px;
+      }
+      #story .timeline li .timeline-panel {
+        width: 35%;
+        float: left;
+        border: 1px solid #ccc;
+        background-color: white;
+        padding: 1rem;
+        position: relative;
+        border-radius: 8px;
+      }
+      #story .timeline li.timeline-inverted .timeline-panel {
+        width: 35%;
+        float: right;
+        border: 1px solid #ccc;
+        padding: 1rem;
+        position: relative;
+        border-radius: 8px;
+
+      }
+    }
+    @media(max-width: 768px) {
+      .profile-card {
+          background: rgba(255, 255, 255, 0.2); /* transparan */
+          backdrop-filter: blur(10px);          /* efek blur */
+              -webkit-backdrop-filter: blur(10px);  /* safari */
+          border-radius: 12px;
+          padding: 2rem;
+          max-width: 700px;
+          margin: auto;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card img {
+          width: 100%;
+          height: 100%;            /* isi penuh sesuai col */
+          object-fit: cover;
+          border-radius: 12px;
+      }
+      #story .timeline::before {
+          left: 60px;
+      }
+
+      #story .timeline li .timeline-image {
+          left: 10px;
+          margin-left: 45px;
+          /* top: 16px; */
+      }
+
+      #story .timeline li .timeline-panel {
+          width: calc(100% - 180px);
+          float: right;
+      }
+      #story .timeline li .timeline-panel::before {
+          background-color: white;
+          border-top: 1px solid transparent;
+          border-right: 1px solid transparent;
+          border-bottom: 1px solid #ccc;
+          border-left: 1px solid #ccc;
+          left: -10px;
+          transform: rotate(45deg);
+      }
+      #story .timeline li.timeline-inverted .timeline-panel {
+          width: calc(100% - 200px);
+          float: right;
+      }
+    }
+    @media(max-width: 576px) {
+      .profile-card {
+          background: rgba(255, 255, 255, 0.2); /* transparan */
+          backdrop-filter: blur(10px);          /* efek blur */
+            -webkit-backdrop-filter: blur(10px);  /* safari */
+          border-radius: 12px;
+          padding: 2rem;
+          max-width: 400px;
+          margin: auto;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card img {
+          width: 100%;
+          height: 100%;            /* isi penuh sesuai col */
+          object-fit: cover;
+          border-radius: 12px;
+      }
+      #story .timeline li .timeline-image {
+          left: 10px;
+          margin-left: 45px;
+          /* top: 16px; */
+          border-radius: 30px;
+          width: 120px;
+          height: 120px;
+      }
+      #story .timeline::before {
+        content: '';
+        top: -10px;
+        bottom: -10px;
+      }
+      #story .timeline li .timeline-panel {
+          width: calc(100% - 130px);
+          float: right;
+          padding:10px;
+      }
+      #story .timeline li.timeline-inverted .timeline-panel {
+          width: calc(100% - 130px);
+          float: right;
+          padding: 10px;
+      }
+    }
+   
     /* Fade-in base */
     .fade-content {
       opacity: 0;
@@ -372,129 +508,6 @@
     .fade-content:nth-child(15) { transition-delay: 0.2s; }
     .fade-content:nth-child(16) { transition-delay: 0.2s; }
     .fade-content:nth-child(17) { transition-delay: 0.2s; }
-
-    
-    
-   
-    @media(max-width: 1024px) {
-        .profile-card {
-            background: rgba(255, 255, 255, 0.2); /* transparan */
-            backdrop-filter: blur(10px);          /* efek blur */
-                -webkit-backdrop-filter: blur(10px); 
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 100vh;
-            margin: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-card img {
-            width: 100%;
-            height: 100%;            /* isi penuh sesuai col */
-            object-fit: cover;
-            border-radius: 12px;
-        }
-        #gallery {
-            max-width: 900px;
-        }
-    }
-    @media(max-width: 768px) {
-        .profile-card {
-            background: rgba(255, 255, 255, 0.2); /* transparan */
-            backdrop-filter: blur(10px);          /* efek blur */
-                -webkit-backdrop-filter: blur(10px);  /* safari */
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 700px;
-            margin: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-card img {
-            width: 100%;
-            height: 100%;            /* isi penuh sesuai col */
-            object-fit: cover;
-            border-radius: 12px;
-        }
-        #story .timeline::before {
-            left: 80px;
-        }
-        #story .timeline li .timeline-image {
-            width: 200px;
-            height: 200px;
-            left: 30px;
-            margin-left: 45px;
-            top: 16px;
-        }
-        #story .timeline li .timeline-panel {
-            width: calc(100% - 200px);
-            float: right;
-        }
-        #story .timeline li.timeline-inverted .timeline-panel {
-            width: calc(100% - 200px);
-            float: right;
-            margin-right: 50px;
-        }
-        #story .timeline li .timeline-panel::before {
-            background-color: white;
-            border-top: 1px solid transparent;
-            border-right: 1px solid transparent;
-            /* border-bottom: 1px solid #000;
-            border-left: 1px solid #000; */
-            left: -10px;
-            transform: rotate(45deg);
-        }
-    }
-    @media(max-width: 576px) {
-        .profile-card {
-            background: rgba(255, 255, 255, 0.2); /* transparan */
-            backdrop-filter: blur(10px);          /* efek blur */
-              -webkit-backdrop-filter: blur(10px);  /* safari */
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 400px;
-            margin: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-card img {
-            width: 100%;
-            height: 100%;            /* isi penuh sesuai col */
-            object-fit: cover;
-            border-radius: 12px;
-        }
-         #story .timeline::before {
-            left: 60px;
-        }
-
-        #story .timeline li .timeline-image {
-            left: 15px;
-            margin-left: 45px;
-            top: 16px;
-            width: 100px;
-            /* atur lebar */
-            height: 100px;
-            /* atur tinggi */
-        }
-
-        #story .timeline li .timeline-panel {
-            width: calc(100% - 150px);
-            float: right;
-        }
-
-        #story .timeline li.timeline-inverted .timeline-panel {
-            width: calc(100% - 150px);
-            float: right;
-        }
-
-        #story .timeline li .timeline-panel::before {
-
-            background-color: white;
-            border-top: 1px solid transparent;
-            border-right: 1px solid transparent;
-            border-bottom: 1px solid #000;
-            border-left: 1px solid #000;
-            left: -10px;
-            transform: rotate(45deg);
-        }
-    }
   </style>
 </head>
 
@@ -511,6 +524,7 @@
       </button>
     </div>
   </section>
+
   <!-- HEAD -->
   <section id="head" class="text-center bg-light fade-section">
     {{-- <div class="fade-content"> --}}
@@ -524,6 +538,7 @@
         </div>
     {{-- </div> --}}
   </section>
+
   <!-- INFO -->
   <section id="info" class="fade-section">
     <div class="container profile-card ">
@@ -557,6 +572,7 @@
             </div>
     </div>
   </section>
+
   <!-- GALLERY -->
   <section id="gallery" class=" fade-section">
     <div class="mb-5 text-center fade-content">
@@ -588,6 +604,7 @@
         </div>
     {{-- </div> --}}
   </section>
+  
   <!-- LOCATION -->
   <section id="location" class="fade-section">
     <div class="container text-center fade-content">
@@ -625,70 +642,68 @@
   </section>
 
   <!-- Story -->
-  <section id="story" class="fade-section">
-    <div class="fade-content">
-      <h2 class="mb-4">Our Journey</h2>
+  <section id="story" class="py-5 story">
+    <div class="container">
+      <h2 class="mb-5 text-center" style="color:#e83e8c;">Our Journey</h2>
     </div>
-    <div class="row">
-                <div class="col">
-                    <ul class="timeline">
-                        <li>
-                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>First meet</h3>
-                                    <span>1 June 2000</span>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>Kami dipertemukan didalam komunitas Gereja</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="timeline">
-                        <li class="timeline-inverted">
-                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Second meet</h3>
-                                    <span>1 June 2000</span>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>Karena komunikasi yang baik dan memahami satu dengan yang lainnya, kamipun memutuskan untuk saling berkomitmen.</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="timeline">
-                        <li>
-                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Other meet</h3>
-                                    <span>1 June 2000</span>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>Kami sepakat untuk kejenjang yang lebih serius, yakni mempertemukan kedua ortu kami dalam suasana pertunangan</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="timeline">
-                        <li class="timeline-inverted">
-                            <div class="timeline-image" style="background-image: url('/inv/img/gpt.png');"></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Second meet</h3>
-                                    <span>1 June 2000</span>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>Kami pun saling menerima dan memulai janji suci untuk menjadi pasangan, teman hidup dalam segala hal dan situasi selamanya.</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="container">
+      {{-- <div class="col"> --}}
+        <ul class="timeline">
+          <li>
+            <div class="timeline-image" style="background-image: url('inv/img/gpt2.png') ;"></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                {{-- <h3>First Meeting</h3> --}}
+                <span class="date">January 2020</span>
+              </div>
+              <div class="timeline-body">
+                <p>We met at a mutual friend's party and instantly connected over our shared love for adventure.</p>
+              </div>
+          </li>
+        </ul>
+        <ul class="timeline">
+          <li class="timeline-inverted">
+              <div class="timeline-image" style="background-image: url('inv/img/cowok.png');"></div>
+              <div class="timeline-panel">
+                  <div class="timeline-heading">
+                      {{-- <h3>First meet</h3> --}}
+                      <span>1 June 2000</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>We met at a mutual friend's party and instantly connected over our shared love for adventure.</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+        <ul class="timeline">
+          <li>
+            <div class="timeline-image" style="background-image: url('inv/img/cowok.png');"></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                {{-- <h3>First Meeting</h3> --}}
+                <span class="date">January 2020</span>
+              </div>
+              <div class="timeline-body">
+                <p>We met at a mutual friend's party and instantly connected over our shared love for adventure.</p>
+              </div>
+          </li>
+        </ul>
+         <ul class="timeline">
+          <li class="timeline-inverted">
+              <div class="timeline-image" style="background-image: url('inv/img/cowok.png');"></div>
+              <div class="timeline-panel">
+                  <div class="timeline-heading">
+                      {{-- <h3>First meet</h3> --}}
+                      <span>1 June 2000</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>We met at a mutual friend's party and instantly connected over our shared love for adventure.</p>
+                  </div>
+              </div>
+          </li>
+        </ul>
+      {{-- </div> --}}
+    </div>
   </section>
 
   <!-- Gift -->
