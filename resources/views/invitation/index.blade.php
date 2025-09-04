@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agus & Joy Intimate Wedding</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="{{url('simplycountdown/dist/themes/dark.css')}}" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
     :root {
     --pink: #f14e95;
@@ -339,7 +340,7 @@
         content: '';
         display: inline-block;
         position: absolute;
-        top: 80px;
+        top: 20px;
         width: 20px;
         height: 20px;
         background-color: white;
@@ -351,6 +352,108 @@
         transform: rotate(45deg);
         /* z-index: -1; */
 
+    }
+
+    /* Reservasi */
+    #reservation {
+      display: flex;
+      justify-content: center;
+      padding: 50px 20px;
+      background: #f5f5f5;
+    }
+
+    #reservation .invitation-card {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      max-width: 800px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1c1c1c, #2e2e2e); /* elegan gelap */
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    #reservation .card-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px dashed rgba(255,255,255,0.2);
+      padding: 50px;
+      padding-right: 70px
+    }
+
+    #reservation .card-left img {
+      width: 250px;
+      height: 250px;
+      margin-bottom: 15px;
+    }
+
+    #reservation .card-left .code {
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: #ddd;
+    }
+
+    #reservation .card-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 20px;
+    }
+
+    #reservation .invite-header {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #ffd700; /* aksen emas elegan */
+    }
+
+    #reservation .invite-detail {
+      margin: 5px 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Gift */
+    #gift .btn-pink {
+      background-color: #e83e8c;
+      color: #fff;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    #gift .btn-pink:hover {
+      background-color: #d63384;
+      color: #fff;
+    }
+    #gift .btn-outline-pink {
+      border: 2px solid #e83e8c;
+      color: #e83e8c;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    #gift .btn-outline-pink:hover {
+      background-color: #e83e8c;
+      color: #fff;
+    }
+
+    /* Animasi list pesan */
+      #gift .messageList .card {
+      border-left: 5px solid #e83e8c;
+    }
+
+    /* Efek animasi fade-in */
+    #gift .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     @media(max-width: 1024px) {
       .profile-card {
@@ -432,7 +535,7 @@
           transform: rotate(45deg);
       }
       #story .timeline li.timeline-inverted .timeline-panel {
-          width: calc(100% - 200px);
+          width: calc(100% - 180px);
           float: right;
       }
     }
@@ -536,6 +639,7 @@
         <div class="head-bottom fade-content">
             <p class="fs-4 ">With the blessing of God, we joyfully invite you to our wedding celebration</p>
         </div>
+        <div class="mt-4 countdown simply-countdown-dark fade-content"></div>
     {{-- </div> --}}
   </section>
 
@@ -631,12 +735,30 @@
     <div class="fade-content">
       <h2 class="mb-4">Your Invitation</h2>
     </div>
-    <div class="p-4 shadow fade-content card" style="max-width: 450px;">
+    {{-- <div class="p-4 shadow fade-content card" style="max-width: 450px;">
       <div class="text-center">
         <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=INV123456" alt="Invitation QR" class="mb-3">
         <h5 class="fw-bold">John Doe</h5>
         <p class="text-muted">You are invited to celebrate our wedding</p>
         <p><strong>15 November 2025</strong><br>Jakarta Convention Center</p>
+      </div>
+    </div> --}}
+    <div class="invitation-card">
+    <!-- Bagian kiri: Barcode -->
+      <div class="card-left">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=RESV123456" 
+            alt="Reservation Barcode" />
+        <p class="code">Kode: RESV123456</p>
+      </div>
+
+    <!-- Bagian kanan: Informasi Undangan -->
+      <div class="card-right">
+        <h2 class="invite-header">Undangan Spesial</h2>
+        <h2 class="invite-detail"><strong>Kepada</strong><br> John & Jane Wedding</h2>
+        <h2 class="invite-header">Wedding Matrimony</h2>
+        <p class="invite-detail"><i class="bi bi-calendar-check fs-4"></i> Sabtu, 20 September 2025</p>
+        <p class="invite-detail"><i class="bi bi-clock fs-4"></i> 19:00 WIB</p>
+        <p class="invite-detail"><i class="bi bi-geo-alt fs-4"></i> Hotel Grand Ballroom, Jakarta</p>
       </div>
     </div>
   </section>
@@ -646,7 +768,7 @@
     <div class="container">
       <h2 class="mb-5 text-center" style="color:#e83e8c;">Our Journey</h2>
     </div>
-    <div class="container">
+    <div class="container profile-card">
       {{-- <div class="col"> --}}
         <ul class="timeline">
           <li>
@@ -708,19 +830,64 @@
 
   <!-- Gift -->
   <section id="gift" class="fade-section">
-    <div class="fade-content">
-      <h2 class="mb-4">Wedding Gift</h2>
-    </div>
-    <div class="p-4 shadow fade-content card" style="max-width: 500px;">
-      <div class="text-center">
-        <p class="mb-3">Your presence is the best gift for us.<br>But if you wish to send us a gift, you may send it via:</p>
-        <div class="mb-3">
-          <h5 class="mb-1 fw-bold">Bank Transfer</h5>
-          <p class="mb-0">BCA - 1234567890<br>a.n Agus & Joy</p>
+    <div class="container">
+      <h2 class="mb-4 text-center" style="color:#e83e8c;">Wedding Gift</h2>
+      <p class="mb-5 text-center">Doa restu Anda sudah merupakan hadiah terbaik bagi kami. Namun jika ingin memberikan tanda kasih, dapat melalui rekening berikut:</p>
+
+      <!-- Card Gift -->
+      <div class="mb-5 text-center border-0 shadow-lg card" style="border-radius:20px;">
+        <div class="card-body">
+          <h5 class="mb-3 fw-bold">Transfer Hadiah</h5>
+          <p><strong>BCA</strong><br>123-456-789<br>a.n. Nama Mempelai</p>
+          <button class="btn btn-outline-pink copy-btn" data-account="123456789">
+            Salin Nomor Rekening
+          </button>
         </div>
-        <div>
-          <h5 class="mb-1 fw-bold">Digital Wallet</h5>
-          <p class="mb-0">OVO / GoPay / Dana: 081234567890</p>
+      </div>
+
+      <!-- Card Informasi -->
+      <div class="mb-5 text-center border-0 shadow-lg card" style="border-radius:20px;">
+        <div class="p-4 card-body">
+          <h5 class="mb-3 fw-bold">Tanpa Mengurangi Rasa Hormat</h5>
+          <p class="mb-0" style="font-size:1.1rem; line-height:1.7;">
+            Kami dengan tulus memohon agar tidak memberikan sumbangan dalam bentuk apapun.  
+            Kehadiran Anda dalam hari bahagia kami sudah lebih dari cukup,  
+            dan kami hanya ingin berbagi kebahagiaan bersama orang-orang yang kami cintai. 💕
+          </p>
+        </div>
+      </div>
+
+      <!-- Card Form -->
+      <div class="mb-4 border-0 shadow card" style="border-radius:20px;">
+        <div class="card-body">
+          <h5 class="mb-3 text-center fw-bold">Kirim Pesan & Doa</h5>
+          <form id="giftForm">
+            <div class="mb-3">
+              <input type="text" class="form-control" name="nama" placeholder="Nama Anda" required>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" name="pesan" rows="3" placeholder="Tulis pesan & doa..." required></textarea>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-pink">Kirim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- List Pesan -->
+      <div class="mt-4 messages">
+        <h5 class="mb-4 text-center">Pesan & Doa</h5>
+        <div id="" class="gap-3 messageList d-flex flex-column">
+          <!-- Contoh Pesan -->
+          <div class="p-3 border-0 shadow-sm card">
+            <strong>Andi:</strong>
+            <p class="mb-0">Selamat menempuh hidup baru, semoga bahagia selalu!</p>
+          </div>
+          <div class="p-3 border-0 shadow-sm card">
+            <strong>Bella:</strong>
+            <p class="mb-0">Doa terbaik untuk kalian berdua 💕</p>
+          </div>
         </div>
       </div>
     </div>
@@ -732,7 +899,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
+  <script>//cover open
     const cover = document.getElementById('cover');
     const openBtn = document.getElementById('openBtn');
 
@@ -765,7 +932,59 @@
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.5/dist/index.bundle.min.js"></script>
-  
+  <script src="{{url('simplycountdown/dist/simplyCountdown.umd.js')}}"></script>
+  <script>//countdown
+        simplyCountdown(".countdown", {
+            year: 2025,
+            month: 12,
+            day: 25,
+            hours: 9,
+            words: {
+                days: {
+                    lambda: (root, count) => (count === 1 ? "Hari" : "Hari"),
+                    root: "Hari",
+                },
+                hours: {
+                    lambda: (root, count) => (count === 1 ? "Jam" : "Jam"),
+                    root: "Jam",
+                },
+                minutes: {
+                    lambda: (root, count) => (count === 1 ? "Menit" : "Menit"),
+                    root: "Menit",
+                },
+                seconds: {
+                    lambda: (root, count) => (count === 1 ? "Detik" : "Detik"),
+                    root: "Detik",
+                },
+            },
+        });
+  </script>
+  <script>// Copy rekening
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+          navigator.clipboard.writeText(this.dataset.account);
+          this.innerText = "Disalin!";
+          setTimeout(() => this.innerText = "Salin Nomor Rekening", 2000);
+        });
+      });
+
+      // Simulasi simpan pesan (local, tanpa backend)
+      const form = document.getElementById("giftForm");
+      const messageList = document.getElementById("messageList");
+
+      form.addEventListener("submit", function(e){
+        e.preventDefault();
+        const nama = this.nama.value.trim();
+        const pesan = this.pesan.value.trim();
+        if(nama && pesan){
+          const card = document.createElement("div");
+          card.className = "card border-0 shadow-sm p-3 fade-in";
+          card.innerHTML = `<strong>${nama}:</strong><p class="mb-0">${pesan}</p>`;
+          messageList.prepend(card); // tambahkan di atas
+          this.reset();
+        }
+      });
+    </script>
 </body>
 
 </html>
