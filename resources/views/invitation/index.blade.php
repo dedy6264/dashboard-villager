@@ -209,8 +209,34 @@
     #location h2 {
       font-size: 3rem;
       font-family: "Lavishly Yours", cursive;
+
+        
+      /* font-weight: bold;
+      margin-bottom: 10px;
+      color: #1c1c1c; */
     }
-      
+
+    /* Responsive map */
+    #location .map-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;   /* biar map ga terlalu lebar di desktop */
+      margin: 0 auto;
+      padding-bottom: 56.25%; /* rasio 16:9 */
+      height: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    #location .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
     /* Story */
     #story { 
       padding-top: 8rem;
@@ -373,6 +399,8 @@
       background: linear-gradient(135deg, #1c1c1c, #2e2e2e); /* elegan gelap */
       color: #fff;
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      position: relative; /* penting supaya pseudo bisa nempel */
+      overflow: hidden; /* supaya coakan rapi */
     }
 
     #reservation .card-left {
@@ -538,6 +566,61 @@
           width: calc(100% - 180px);
           float: right;
       }
+      #reservation .invitation-card {
+        grid-template-columns: 1fr; /* dari 2 kolom jadi 1 */
+        padding: 20px;
+      }
+
+      /* Coakan kiri */
+      #reservation .invitation-card::before {
+        content: "";
+        position: absolute;
+        top: 49%;
+        left: -15px; /* keluar sedikit dari card */
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background: #ccc; /* sama dengan background section */
+        border-radius: 50%;
+      }
+
+      /* Coakan kanan */
+      #reservation .invitation-card::after {
+        content: "";
+        position: absolute;
+        top: 49%;
+        right: -15px; /* keluar sedikit dari card */
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background: #ccc;
+        border-radius: 50%;
+      }
+      #reservation .card-left {
+        border-right: none;       /* hilangkan garis pemisah */
+        border-bottom: 2px dashed rgba(255,255,255,0.2); /* ganti jadi garis bawah */
+        padding: 20px;
+        padding-bottom: 30px;
+      }
+
+      #reservation .card-left img {
+        width: 180px; /* kecilkan QR code */
+        height: 180px;
+      }
+
+      #reservation .card-right {
+        padding-left: 0;
+        margin-top: 20px;
+        text-align: center; /* center-kan teks di mobile */
+      }
+
+      #reservation .invite-header {
+        font-size: 20px;
+      }
+
+      #reservation .invite-detail {
+        font-size: 14px;
+      }
     }
     @media(max-width: 576px) {
       .profile-card {
@@ -578,6 +661,75 @@
           width: calc(100% - 130px);
           float: right;
           padding: 10px;
+      }
+      #reservation .card-left img {
+        width: 150px;
+        height: 150px;
+      }
+
+      /* Coakan kiri */
+      #reservation .invitation-card::before {
+        content: "";
+        position: absolute;
+        top: 46%;
+        left: -15px; /* keluar sedikit dari card */
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background: #ccc; /* sama dengan background section */
+        border-radius: 50%;
+      }
+
+      /* Coakan kanan */
+      #reservation .invitation-card::after {
+        content: "";
+        position: absolute;
+        top: 46%;
+        right: -15px; /* keluar sedikit dari card */
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background: #ccc;
+        border-radius: 50%;
+      }
+      #location .map-container {
+        max-width: 100%;       /* full width */
+        padding-bottom: 75%;   /* lebih tinggi biar jelas */
+        border-radius: 12px;   /* radius lebih kecil di layar kecil */
+      }
+
+      #location h2 {
+        font-size: 22px;
+      }
+    }
+    @media (max-width: 375px) {
+      #reservation .invitation-card {
+        grid-template-columns: 1fr;   /* ubah jadi 1 kolom */
+        text-align: center;
+        padding: 20px;
+      }
+
+      #reservation .card-left {
+        border-right: none;           /* hilangkan garis */
+        padding: 20px 0;              /* padding lebih kecil */
+      }
+
+      #reservation .card-left img {
+        width: 180px;                 /* perkecil QR */
+        height: 180px;
+      }
+
+      #reservation .card-right {
+        padding-left: 0;              /* reset padding */
+        margin-top: 15px;             /* jarak antara atas/bawah */
+      }
+
+      #reservation .invite-header {
+        font-size: 20px;              /* font lebih kecil */
+      }
+
+      #reservation .invite-detail {
+        font-size: 14px;
       }
     }
    
@@ -722,7 +874,7 @@
                   <h3>Gajah Mada 78-86</h3>
                   <h3>Semarang</h3>
                 </div>
-                <div class="col-lg-6 fade-content" style="margin-top: 12px !important; margin-bottom: 12px !important;">
+                <div class="col-lg-6 fade-content map-container" style="margin-top: 12px !important; margin-bottom: 12px !important;">
                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d723.9583492669938!2d110.42113368305529!3d-6.977976401848527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b548a1791f7%3A0xd5809cfdde700fdb!2sGBI%20Gajah%20Mada%20Semarang!5e1!3m2!1sen!2sid!4v1756993595815!5m2!1sen!2sid" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                   {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d723.9583492669938!2d110.42113368305529!3d-6.977976401848527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b548a1791f7%3A0xd5809cfdde700fdb!2sGBI%20Gajah%20Mada%20Semarang!5e1!3m2!1sen!2sid!4v1756993595815!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                 </div>
@@ -736,14 +888,7 @@
     <div class="fade-content">
       <h2 class="mb-4">Your Invitation</h2>
     </div>
-    {{-- <div class="p-4 shadow fade-content card" style="max-width: 450px;">
-      <div class="text-center">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=INV123456" alt="Invitation QR" class="mb-3">
-        <h5 class="fw-bold">John Doe</h5>
-        <p class="text-muted">You are invited to celebrate our wedding</p>
-        <p><strong>15 November 2025</strong><br>Jakarta Convention Center</p>
-      </div>
-    </div> --}}
+    <div class="container">
     <div class="invitation-card">
     <!-- Bagian kiri: Barcode -->
       <div class="card-left">
@@ -760,6 +905,7 @@
         <p class="invite-detail"><i class="bi bi-calendar-check fs-4"></i> Sabtu, 20 September 2025</p>
         <p class="invite-detail"><i class="bi bi-clock fs-4"></i> 19:00 WIB</p>
         <p class="invite-detail"><i class="bi bi-geo-alt fs-4"></i> Hotel Grand Ballroom, Jakarta</p>
+      </div>
       </div>
     </div>
   </section>
