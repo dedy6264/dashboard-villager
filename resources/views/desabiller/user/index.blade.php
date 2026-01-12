@@ -2,9 +2,9 @@
 @section('mainContent')
 <main>
     <div class="px-4 container-fluid">
-        <h1 class="mt-4">Category Product</h1>
+        <h1 class="mt-4">User</h1>
         <ol class="mb-4 breadcrumb">
-            <li class="breadcrumb-item active">Product \ Category Product</li>
+            <li class="breadcrumb-item active">User \ User</li>
         </ol>
         <div class="mb-4 card">
             <div class="card-body">
@@ -21,7 +21,8 @@
                     <thead>
                         <tr>
                             <th>Action</th>
-                            <th>Category Name</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                         </tr>
@@ -38,9 +39,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td v-text="item.productCategoryName"></td>
-                            <td v-text="item.createdAt"></td>
-                            <td v-text="item.updatedAt"></td>
+                            <td v-text="item.name"></td>
+                            <td v-text="item.email"></td>
+                            <td v-text="item.created_at"></td>
+                            <td v-text="item.updated_at"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,7 +53,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dataModalLabel" >@{{ (editMode?'Edit Category':'Tambah Category')}}</h5>
+                  <h5 class="modal-title" id="dataModalLabel" >@{{ (editMode?'Edit User':'Tambah User')}}</h5>
                   <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -59,8 +61,20 @@
                 <form @submit.prevent="editMode ? updateData() : createData()" >
                     <div class="modal-body">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Category Name</label>
-                          <input type="text"  class="form-control" v-model="form.product_category_name" aria-describedby="emailHelp" placeholder="Category .." autofocus>
+                          <label for="exampleInputEmail1">Name</label>
+                          <input type="text"  class="form-control" v-model="form.name" aria-describedby="emailHelp" placeholder="Nama.." autofocus>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Email</label>
+                          <input type="email"  class="form-control" v-model="form.email" aria-describedby="emailHelp" placeholder="Email.." autofocus>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Password</label>
+                          <input type="password"  class="form-control" v-model="form.password" aria-describedby="emailHelp" placeholder="Password.." autofocus>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -83,18 +97,18 @@
 
     createApp({
         setup(){
-            const mainData=ref([])
-            const filter=ref({
-                        id:0,
-                        product_category_name:"",
-                })
+            const mainData=ref();
             const form=ref({
                 id:0,
-                product_category_name:"",
+                name:"",
+                email:"",
+                password:"",
             })
             const editMode=ref(false);
             const createModal=()=>{
-                form.value.product_category_name='';
+                form.value.password='';
+                form.value.name='';
+                form.value.email='';
                 form.value.id=0;
                 $('#dataModal').modal('show')
             }
@@ -103,14 +117,17 @@
                     form.value.id=id;
                     mainData.value.forEach((data) => {
                         if(data.id==id){
-                            form.value.product_category_name=data.productCategoryName;
+                            form.value.name=data.name;
+                            form.value.email=data.email;
                         }
                     });
                     $('#dataModal').modal('show')
             }
             const createData=()=>{
-                axios.post('{{route('categoryProducts.store')}}', {
-                    product_category_name: form.value.product_category_name
+                axios.post('{{route('users.store')}}', {
+                    name: form.value.name,
+                    email: form.value.email,
+                    password: form.value.password,
                 })
                 .then(response => {
                     $('#dataModal').modal('hide');
@@ -124,8 +141,10 @@
                 });
             };
             const updateData=()=>{
-                axios.post('{{route('categoryProducts.update')}}',{
-                    product_category_name:form.value.product_category_name,
+                axios.post('{{route('users.update')}}',{
+                    password:form.value.password,
+                    email:form.value.email,
+                    name:form.value.name,
                     id:form.value.id,
                 })
                 .then(response => {
@@ -141,17 +160,16 @@
                 });
             };
             const refreshData=()=>{
-                axios.post('{{route('categoryProducts.getAll')}}')
+                $('#dataTbl').DataTable().destroy();
+                axios.post('{{route('users.getAll')}}')
                 .then(response => {
-                    console.log("refresh data");
-                    $('#dataTbl').DataTable().destroy();
                     mainData.value=response.data.data;
                     nextTick( () => {
                         $('#dataTbl').DataTable({
-                            responsive: true,
-                            autoWidth: false
+                        responsive: true,
+                        autoWidth: false
                         });
-                     });
+                    });
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
@@ -162,7 +180,7 @@
                 });
             }
             const deleteData=(id)=>{
-                axios.get(`{{route('categoryProducts.destroy','')}}/${id}`)
+                axios.get(`{{route('users.destroy','')}}/${id}`)
                 .then(response => {
                     refreshData();
                 })
@@ -186,7 +204,6 @@
                 createModal,
                 editMode,
                 mainData,
-                filter,
                 form,
                 refreshData,
             };

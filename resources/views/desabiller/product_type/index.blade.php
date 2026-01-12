@@ -1,10 +1,14 @@
 @extends('app')
+@php
+    $activePage = 'product_type';
+@endphp
 @section('mainContent')
+
 <main>
     <div class="px-4 container-fluid">
-        <h1 class="mt-4">Category Product</h1>
+        <h1 class="mt-4">Product Type</h1>
         <ol class="mb-4 breadcrumb">
-            <li class="breadcrumb-item active">Product \ Category Product</li>
+            <li class="breadcrumb-item active">Product \ Product Type</li>
         </ol>
         <div class="mb-4 card">
             <div class="card-body">
@@ -21,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>Action</th>
-                            <th>Category Name</th>
+                            <th>Type Name</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                         </tr>
@@ -38,7 +42,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td v-text="item.productCategoryName"></td>
+                            <td v-text="item.productTypeName"></td>
                             <td v-text="item.createdAt"></td>
                             <td v-text="item.updatedAt"></td>
                         </tr>
@@ -51,7 +55,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="dataModalLabel" >@{{ (editMode?'Edit Category':'Tambah Category')}}</h5>
+                  <h5 class="modal-title" id="dataModalLabel" >@{{ (editMode?'Edit Type':'Tambah Type')}}</h5>
                   <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -59,8 +63,8 @@
                 <form @submit.prevent="editMode ? updateData() : createData()" >
                     <div class="modal-body">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">Category Name</label>
-                          <input type="text"  class="form-control" v-model="form.product_category_name" aria-describedby="emailHelp" placeholder="Category .." autofocus>
+                          <label for="exampleInputEmail1">Type Name</label>
+                          <input type="text"  class="form-control" v-model="form.product_type_name" aria-describedby="emailHelp" placeholder="Type .." autofocus>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -86,15 +90,15 @@
             const mainData=ref([])
             const filter=ref({
                         id:0,
-                        product_category_name:"",
+                        product_type_name:"",
                 })
             const form=ref({
                 id:0,
-                product_category_name:"",
+                product_type_name:"",
             })
             const editMode=ref(false);
             const createModal=()=>{
-                form.value.product_category_name='';
+                form.value.product_type_name='';
                 form.value.id=0;
                 $('#dataModal').modal('show')
             }
@@ -103,14 +107,14 @@
                     form.value.id=id;
                     mainData.value.forEach((data) => {
                         if(data.id==id){
-                            form.value.product_category_name=data.productCategoryName;
+                            form.value.product_type_name=data.productTypeName;
                         }
                     });
                     $('#dataModal').modal('show')
             }
             const createData=()=>{
-                axios.post('{{route('categoryProducts.store')}}', {
-                    product_category_name: form.value.product_category_name
+                axios.post('{{route('productTypes.store')}}', {
+                    product_type_name: form.value.product_type_name
                 })
                 .then(response => {
                     $('#dataModal').modal('hide');
@@ -124,8 +128,8 @@
                 });
             };
             const updateData=()=>{
-                axios.post('{{route('categoryProducts.update')}}',{
-                    product_category_name:form.value.product_category_name,
+                axios.post('{{route('productTypes.update')}}',{
+                    product_type_name:form.value.product_type_name,
                     id:form.value.id,
                 })
                 .then(response => {
@@ -141,9 +145,8 @@
                 });
             };
             const refreshData=()=>{
-                axios.post('{{route('categoryProducts.getAll')}}')
+                axios.post('{{route('productTypes.getAll')}}')
                 .then(response => {
-                    console.log("refresh data");
                     $('#dataTbl').DataTable().destroy();
                     mainData.value=response.data.data;
                     nextTick( () => {
@@ -162,7 +165,7 @@
                 });
             }
             const deleteData=(id)=>{
-                axios.get(`{{route('categoryProducts.destroy','')}}/${id}`)
+                axios.get(`{{route('productTypes.destroy','')}}/${id}`)
                 .then(response => {
                     refreshData();
                 })

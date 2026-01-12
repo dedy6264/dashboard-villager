@@ -258,9 +258,6 @@ class MakariosController extends Controller
 
 
 
-
-
-
     public function group()
     {
         $dataClient=$this->getdataclient();

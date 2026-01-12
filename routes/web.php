@@ -6,12 +6,16 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\MerchantOutletController;
-use App\Http\Controllers\CategoryProductController;
-use App\Http\Controllers\ProductTypeController;
-use App\Http\Controllers\ProviderController;
-use App\Http\Controllers\ProductProviderController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Desabiller\CategoryProductController;
+use App\Http\Controllers\Desabiller\ProductTypeController;
+use App\Http\Controllers\Desabiller\ProductController;
+use App\Http\Controllers\Desabiller\CIFController;
+use App\Http\Controllers\Desabiller\AccountController;
+use App\Http\Controllers\Desabiller\SavingSegmentController;
+use App\Http\Controllers\Desabiller\SavingTypeController;
+use App\Http\Controllers\Desabiller\SavingTransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Desabiller\TransactionController;
 use App\Http\Controllers\Mobile\MobileLoginController;
 use App\Http\Controllers\Mobile\MobileHomeController;
 use App\Http\Controllers\Mobile\MobileProductController;
@@ -100,26 +104,48 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/productTypes/store', 'store')->name('productTypes.store');
         Route::get('/productTypes/destroy/{id}', 'destroy')->name('productTypes.destroy');
     });
-    Route::controller(ProviderController::class)->group(function () {
-        Route::get('/providers', 'index')->name('providers');
-        Route::post('/providers/getAll', 'getAll')->name('providers.getAll');
-        Route::post('/providers/update', 'update')->name('providers.update');
-        Route::post('/providers/store', 'store')->name('providers.store');
-        Route::get('/providers/destroy/{id}', 'destroy')->name('providers.destroy');
-    });
-    Route::controller(ProductProviderController::class)->group(function () {
-        Route::get('/productProviders', 'index')->name('productProviders');
-        Route::post('/productProviders/getAll', 'getAll')->name('productProviders.getAll');
-        Route::post('/productProviders/update', 'update')->name('productProviders.update');
-        Route::post('/productProviders/store', 'store')->name('productProviders.store');
-        Route::get('/productProviders/destroy/{id}', 'destroy')->name('productProviders.destroy');
-    });
     Route::controller(ProductController::class)->group(function () {
         Route::get('/products', 'index')->name('products');
         Route::post('/products/getAll', 'getAll')->name('products.getAll');
         Route::post('/products/update', 'update')->name('products.update');
         Route::post('/products/store', 'store')->name('products.store');
         Route::get('/products/destroy/{id}', 'destroy')->name('products.destroy');
+    });
+    Route::controller(CIFController::class)->group(function () {
+        Route::get('/cif', 'index')->name('cifs');
+        Route::post('/cif/getAll', 'getAll')->name('cifs.getAll');
+        Route::post('/cif/update', 'update')->name('cifs.update');
+        Route::post('/cif/store', 'store')->name('cifs.store');
+        Route::get('/cif/destroy/{id}', 'destroy')->name('cifs.destroy');
+    });
+    Route::controller(AccountController::class)->group(function () {
+        Route::get('/account', 'index')->name('accounts');
+        Route::post('/account/getAll', 'getAll')->name('accounts.getAll');
+        Route::post('/account/update', 'update')->name('accounts.update');
+        Route::post('/account/store', 'store')->name('accounts.store');
+        Route::get('/account/destroy/{id}', 'destroy')->name('accounts.destroy');
+    });
+    Route::controller(SavingSegmentController::class)->group(function () {
+        Route::get('/savingSegment', 'index')->name('savingSegment.index');
+        Route::post('/savingSegment/getAll', 'getAll')->name('savingSegment.getAll');
+        Route::post('/savingSegment/update', 'update')->name('savingSegment.update');
+        Route::post('/savingSegment/store', 'store')->name('savingSegment.store');
+        Route::get('/savingSegment/destroy/{id}', 'destroy')->name('savingSegment.destroy');
+    });
+    Route::controller(SavingTypeController::class)->group(function () {
+        Route::get('/savingType', 'index')->name('savingType.index');
+        Route::post('/savingType/getAll', 'getAll')->name('savingType.getAll');
+    });
+    Route::controller(SavingTransactionController::class)->group(function () {
+        Route::get('/savingTransaction', 'index')->name('savingTransaction.index');
+        Route::post('/savingTransaction/getAll', 'getAll')->name('savingTransaction.getAll');
+    });
+    Route::controller(TransactionController::class)->group(function () {
+        Route::get('/trx', 'index')->name('trxs');
+        Route::post('/trx/getAll', 'getAll')->name('trxs.getAll');
+        Route::post('/trx/update', 'update')->name('trxs.update');
+        Route::post('/trx/store', 'store')->name('trxs.store');
+        Route::get('/trx/destroy/{id}', 'destroy')->name('trxs.destroy');
     });
 });
 

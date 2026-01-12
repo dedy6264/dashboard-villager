@@ -450,6 +450,10 @@
       color: #fff;
       border-radius: 10px;
       transition: 0.3s;
+
+      padding: 50px 20px;
+      background: #f5f5f5;
+      text-align: center;
     }
     #gift .btn-pink:hover {
       background-color: #d63384;
@@ -477,6 +481,43 @@
       transform: translateY(20px);
       animation: fadeInUp 0.6s forwards;
     }
+
+    /* Kotak pesan */
+    #gift .message-box {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      
+      /* Scroll behavior */
+      max-height: 400px;   /* tinggi maksimal */
+      overflow-y: auto;    /* scroll jika konten lebih */
+    }
+
+    /* Card pesan */
+    #gift .message-card {
+      text-align: left;
+      background: #fafafa;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    #gift .message-card h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    #gift .message-card p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+
     @keyframes fadeInUp {
       to {
         opacity: 1;
@@ -1025,15 +1066,16 @@
       <!-- List Pesan -->
       <div class="mt-4 messages">
         <h5 class="mb-4 text-center">Pesan & Doa</h5>
-        <div id="" class="gap-3 messageList d-flex flex-column">
+        <div id="" class="gap-3 messageList d-flex flex-column message-box">
           <!-- Contoh Pesan -->
-          <div class="p-3 border-0 shadow-sm card">
-            <strong>Andi:</strong>
-            <p class="mb-0">Selamat menempuh hidup baru, semoga bahagia selalu!</p>
+          <div class="message-card">
+            <h4>John Doe</h4>
+            <p>Selamat menempuh hidup baru! Semoga bahagia selalu 🎉</p>
           </div>
-          <div class="p-3 border-0 shadow-sm card">
-            <strong>Bella:</strong>
-            <p class="mb-0">Doa terbaik untuk kalian berdua 💕</p>
+
+          <div class="message-card">
+            <h4>Jane Smith</h4>
+            <p>Best wishes untuk perjalanan baru kalian 💕</p>
           </div>
         </div>
       </div>

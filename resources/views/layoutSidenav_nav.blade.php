@@ -26,44 +26,55 @@
                         <a class="nav-link" href="{{ route('groups') }}">Permission</a>
                     </nav>
                 </div>
-
                 <!-- Product Area -->
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProductArea" aria-expanded="false" aria-controls="collapseProductArea">
+                @php
+                    $productPages = ['product_type', 'product_category', 'product'];
+                    $isProductActive = in_array($activePage ?? '', $productPages);
+                @endphp
+                <a class="{{ $isProductActive ? 'nav-link' : 'nav-link collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProductArea" aria-expanded="{{ $isProductActive ? true : false }}" aria-controls="collapseProductArea">
                     <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                     Product Area
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseProductArea" data-bs-parent="#sidenavAccordion">
+                <div class="{{ $isProductActive ?'' : ' collapse' }}" id="collapseProductArea" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionProductArea">
                         <!-- Product Submenu -->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseProduct">
+                        <a class="{{ $isProductActive ? 'nav-link' : 'nav-link collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="{{ $isProductActive ? true : false }}" aria-controls="collapseProduct">
                             <span>Product</span>
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseProduct" data-bs-parent="#sidenavAccordionProductArea">
+                        <div class="{{ $isProductActive ? '' : ' collapse' }}" id="collapseProduct" data-bs-parent="#sidenavAccordionProductArea">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('categoryProducts') }}">Category</a>
-                                <a class="nav-link" href="{{ route('productTypes') }}">Product Type</a>
-                                <a class="nav-link" href="{{ route('products') }}">Product</a>
-                            </nav>
-                        </div>
-                        <!-- Provider Submenu -->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProvider" aria-expanded="false" aria-controls="collapseProvider">
-                            <span>Provider</span>
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseProvider" data-bs-parent="#sidenavAccordionProductArea">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('providers') }}">Provider</a>
-                                <a class="nav-link" href="{{ route('productProviders') }}">Product Provider</a>
-                                <a class="nav-link" href="500.html">500 Page</a>
+                                <a class="nav-link {{ ($activePage ?? '') == 'product_category' ? '' : ' collapsed' }}" href="{{ route('categoryProducts') }}">Category</a>
+                                <a class="nav-link {{ ($activePage ?? '') == 'product_type' ? '' : ' collapsed' }}" href="{{ route('productTypes') }}">Product Type</a>
+                                <a class="nav-link {{ ($activePage ?? '') == 'product' ? '' : ' collapsed' }}" href="{{ route('products') }}">Product</a>
+                                <a class="nav-link" href="{{ route('trxs') }}">Transactions</a>
                             </nav>
                         </div>
                     </nav>
                 </div>
+                <!-- Saving Area -->
+                @php
+                    $accountPages = ['saving_type', 'saving_segment', 'saving_transaction','account','cifs'];
+                    $isSavingActive = in_array($activePage ?? '', $accountPages);
+                @endphp
+                <a class="{{ $isSavingActive ? 'nav-link' : 'nav-link collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccountArea" aria-expanded="{{ $isSavingActive ? true : false }}" aria-controls="collapseAccountArea">
+                    <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
+                    Accounts
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="{{ $isSavingActive ?'' : ' collapse' }}" id="collapseAccountArea" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav accordion" id="collapseAccountArea">
+                        <a class="nav-link {{ ($activePage ?? '') == 'cifs' ? '' : ' collapsed' }}" href="{{ route('cifs') }}">CIFs</a>
+                        <a class="nav-link {{ ($activePage ?? '') == 'saving_type' ? '' : ' collapsed' }}" href="{{ route('savingType.index') }}">Saving Type</a>
+                        <a class="nav-link {{ ($activePage ?? '') == 'account' ? '' : ' collapsed' }}" href="{{ route('accounts') }}">Saving Account</a>
+                        <a class="nav-link {{ ($activePage ?? '') == 'saving_segment' ? '' : ' collapsed' }}" href="{{ route('savingSegment.index') }}">Saving Segment</a>
+                        <a class="nav-link {{ ($activePage ?? '') == 'saving_transaction' ? '' : ' collapsed' }}" href="{{ route('savingTransaction.index') }}">Saving Transaction</a>
+                    </nav>
+                </div>
 
                 <!-- Addons -->
-                <div class="sb-sidenav-menu-heading">Addons</div>
+                {{-- <div class="sb-sidenav-menu-heading">Addons</div>
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Charts
@@ -71,7 +82,7 @@
                 <a class="nav-link" href="tables.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Tables
-                </a>
+                </a> --}}
             </div>
         </div>
         <div class="sb-sidenav-footer">

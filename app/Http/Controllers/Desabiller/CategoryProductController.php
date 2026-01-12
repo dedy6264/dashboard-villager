@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Desabiller;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\HostService;
-class ProviderController extends Controller
+class CategoryProductController extends Controller
 {
  protected $hostService;
     public function __construct(HostService $hostService){
@@ -13,13 +14,12 @@ class ProviderController extends Controller
     }
     public function index()
     {
-        return view('dashboard.provider.index');
+        return view('desabiller.category_product.index');
     }
-
-
     public function getAll()
     {
-        
+        // dd("response11");
+
         $filter=[
             "start"=>(int)request()->start,
             "length"=>(int)request()->length,
@@ -30,7 +30,7 @@ class ProviderController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/provider/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-category/get', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -38,31 +38,37 @@ class ProviderController extends Controller
         $response = $response['result'];
         return $response;    
     }
-
-
     public function store(Request $request)
     {
-        
-        $payload=[
-            "providerName"=>$request->provider_name,
+       
+        $filter=[
+            "productCategoryName"=>$request->product_category_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/provider/add', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-category/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
         $response = $response['result'];
         return true;
     }
-
-
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        
-        $payload=[
+       
+        $filter=[
             "id"=>(int)$request->id,
-            "providerName"=>$request->provider_name,
+            "productCategoryName"=>$request->product_category_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/provider/update', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-category/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -70,15 +76,18 @@ class ProviderController extends Controller
         $response = $response['result'];
         return true;
     }
-
-
     public function destroy($id)
     {
-        
-        $payload=[
+       
+        $filter=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/provider/drop', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-category/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

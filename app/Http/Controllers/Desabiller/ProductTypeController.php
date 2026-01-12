@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Desabiller;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +14,7 @@ class ProductTypeController extends Controller
     }
     public function index()
     {
-        return view('dashboard.product_type.index');
+        return view('desabiller.product_type.index');
     }
 
 
@@ -30,7 +31,7 @@ class ProductTypeController extends Controller
             "clientName"=>"",
             "filter"=>$filter,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/type/gets', $payload)->json();
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-type/get', $payload)->json();
         // dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
@@ -43,10 +44,15 @@ class ProductTypeController extends Controller
     public function store(Request $request)
     {
         
-        $payload=[
+        $filter=[
             "productTypeName"=>$request->product_type_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/type/add', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-type/add', $payload)->json();
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
         }
@@ -57,11 +63,16 @@ class ProductTypeController extends Controller
     public function update(Request $request)
     {
         
-        $payload=[
+        $filter=[
             "id"=>(int)$request->id,
             "productTypeName"=>$request->product_type_name,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/type/update', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-type/update', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);
@@ -74,10 +85,15 @@ class ProductTypeController extends Controller
     public function destroy($id)
     {
         
-        $payload=[
+        $filter=[
             "id"=>(int)$id,
         ];
-        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/type/drop', $payload)->json();
+         $payload=[
+            "id"=>0,
+            "clientName"=>"",
+            "filter"=>$filter,
+        ];
+        $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-type/drop', $payload)->json();
         // dd($response);
         if ($response['statusCode'] !=="00" ) {
             return response()->json(['error' => 'Failed'], 500);

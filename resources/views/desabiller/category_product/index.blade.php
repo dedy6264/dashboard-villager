@@ -1,4 +1,7 @@
 @extends('app')
+@php
+    $activePage = 'product_category';
+@endphp
 @section('mainContent')
 <main>
     <div class="px-4 container-fluid">
