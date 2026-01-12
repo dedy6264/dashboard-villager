@@ -32,7 +32,7 @@ class ProductTypeController extends Controller
             "filter"=>$filter,
         ];
         $response = Http::withBasicAuth('joe','secret')->post($this->hostService->GetUrl('v').'/public/product-type/get', $payload)->json();
-        // dd($response);
+        dd($response);
         if (!is_array($response) || !isset($response['result']) || !is_array($response['result'])) {
             return response()->json(['error' => 'Invalid API response format or data type'], 500);
         }
